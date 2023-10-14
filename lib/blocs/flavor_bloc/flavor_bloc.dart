@@ -40,10 +40,10 @@ class FlavorBloc extends Bloc<FlavorEvent, FlavorState> {
       // Set the instance of flavor which will be available later
       emit(FlavorState.loadSuccess(FlavorModel(flavorName: flavor)));
     } catch (error, stackTrace) {
-      await _logger.logError(
+      await _logger.log(
         error,
         stackTrace: stackTrace,
-        message: 'FAILED TO LOAD FLAVOR',
+        label: 'FAILED TO LOAD FLAVOR',
       );
       emit(const FlavorState.loadFailure(exception: 'Error loading flavor'));
     }
