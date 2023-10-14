@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "463104400333",
+    "project_id": "gorin-flutter-test",
+    "storage_bucket": "gorin-flutter-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463104400333:android:68e0ec0209077620dfc284",
+        "android_client_info": {
+          "package_name": "com.gorinsystems.test_project.gorin_test_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFtn1SMKErV4xGiEULCVeHBR349s2M_kY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
