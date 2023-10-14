@@ -32,6 +32,10 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final environment = context.watch<FlavorBloc>().state.whenOrNull(
+          loadSuccess: (flavor) => flavor.environment,
+        );
+
     return StatefulWrapper(
       onInit: () {
         context.read<FlavorBloc>().add(const FlavorEvent.flavorLoaded());
@@ -41,9 +45,6 @@ class App extends StatelessWidget {
           FutureProvider<FirebaseApp?>(
             create: (context) async {
               try {
-                final environment = context.read<FlavorBloc>().state.whenOrNull(
-                      loadSuccess: (flavor) => flavor.environment,
-                    );
                 return Firebase.initializeApp(
                   options: getFirebaseOptions(environment: environment),
                 );
@@ -59,9 +60,14 @@ class App extends StatelessWidget {
             initialData: null,
           ),
         ],
-        child: const MaterialApp(
-          home: Placeholder(),
-          debugShowCheckedModeBanner: false,
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => FirestoreBloc(environment)),
+          ],
+          child: const MaterialApp(
+            home: Placeholder(),
+            debugShowCheckedModeBanner: false,
+          ),
         ),
       ),
     );

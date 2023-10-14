@@ -4,6 +4,7 @@ linter:
   rules:
     flutter_style_todos: false
     public_member_api_docs: false
+    no_default_cases: ignore
 
 # To disable any linter warnings or errors in generated files
 analyzer:

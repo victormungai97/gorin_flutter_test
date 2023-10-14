@@ -3,8 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:gorin_test_project/models/flavors/flavor_model.dart';
-import 'package:gorin_test_project/services/logging_service.dart';
+import 'package:gorin_test_project/models/models.dart';
+import 'package:gorin_test_project/services/services.dart';
 
 part 'flavor_event.dart';
 part 'flavor_state.dart';
@@ -15,7 +15,7 @@ const _logger = LoggingService.instance;
 class FlavorBloc extends Bloc<FlavorEvent, FlavorState> {
   FlavorBloc() : super(const FlavorInitial()) {
     on<FlavorEvent>((event, emit) {
-      event.whenOrNull(
+      event.when(
         flavorLoaded: _loadFlavor,
         started: () => emit(const FlavorState.initial()),
       );
