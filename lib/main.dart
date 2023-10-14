@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gorin_test_project/blocs/blocs.dart';
 import 'package:gorin_test_project/firebase_options/firebase_options.dart';
+import 'package:gorin_test_project/navigation/navigation.dart';
 import 'package:gorin_test_project/services/services.dart';
+import 'package:gorin_test_project/utils/utils.dart';
 import 'package:gorin_test_project/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -64,10 +66,15 @@ class App extends StatelessWidget {
           providers: [
             BlocProvider(create: (context) => FirestoreBloc(environment)),
           ],
-          child: const MaterialApp(
-            home: Placeholder(),
-            debugShowCheckedModeBanner: false,
-          ),
+          child: Builder(builder: (_) {
+            final router = CustomRouter(
+              environment ?? Environment.unspecified,
+            );
+            return MaterialApp.router(
+              routerConfig: router.routerConfig,
+              debugShowCheckedModeBanner: false,
+            );
+          }),
         ),
       ),
     );

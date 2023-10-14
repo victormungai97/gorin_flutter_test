@@ -10,7 +10,7 @@ import 'firebase_options_staging.dart' as staging;
 FirebaseOptions? getFirebaseOptions({Environment? environment}) {
   return switch (environment) {
     Environment.local => local.DefaultFirebaseOptions.currentPlatform,
-    Environment.develop => dev.DefaultFirebaseOptions.currentPlatform,
+    Environment.development => dev.DefaultFirebaseOptions.currentPlatform,
     Environment.staging => staging.DefaultFirebaseOptions.currentPlatform,
     Environment.production => prod.DefaultFirebaseOptions.currentPlatform,
     _ => null,
