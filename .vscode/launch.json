@@ -1,0 +1,25 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Flutter",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--web-port",
+                "24973",
+                "--web-hostname",
+                "localhost",
+                "--web-renderer",
+                "canvaskit",
+                "--flavor",
+                "local",
+                "--dart-define=flavor=local"
+            ]
+        }
+    ]
+}
+// --web-hostname localhost --dart-define=flavor=local --web-port 56782 --web-renderer canvaskit --flavor local
