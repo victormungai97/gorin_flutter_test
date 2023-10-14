@@ -1,7 +1,7 @@
 /// List of flavors the application holds
 enum Environment {
   local,
-  develop,
+  development,
   staging,
   production,
   unspecified,
