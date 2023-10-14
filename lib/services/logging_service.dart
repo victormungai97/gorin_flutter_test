@@ -22,30 +22,43 @@ class LoggingService {
     int? logLevel,
     bool isException = true,
   }) async {
-    if (kDebugMode) {
+    try {
+      if (kDebugMode) {
+        dev.log(
+          label ?? (isException ? '' : 'Something went wrong'),
+          error: error,
+          stackTrace: stackTrace,
+          level: logLevel ??
+              (isException
+                  ? stackTrace == null
+                      ? Level.SEVERE.value
+                      : Level.SHOUT.value
+                  : Level.INFO.value),
+        );
+      }
+      if (!isException) {
+        if (error is FlutterErrorDetails) {
+          await _crashlytics.recordFlutterFatalError(error);
+          return;
+        }
+        if (stackTrace == null) {
+          await _crashlytics.log('`${label ?? "An error occurred"}` -> $error');
+          return;
+        }
+        await _crashlytics.recordError(
+          error,
+          stackTrace,
+          reason: label,
+          fatal: true,
+        );
+      }
+    } catch (error, stackTrace) {
       dev.log(
-        label ?? (isException ? '' : 'Something went wrong'),
+        'Error logging error',
         error: error,
         stackTrace: stackTrace,
-        level: logLevel ??
-            (isException
-                ? stackTrace == null
-                    ? Level.SEVERE.value
-                    : Level.SHOUT.value
-                : Level.INFO.value),
+        level: Level.SEVERE.value,
       );
-    }
-    if (!isException) {
-      if (error is FlutterErrorDetails) {
-        await _crashlytics.recordFlutterFatalError(error);
-        return;
-      }
-      if (stackTrace == null) {
-        await _crashlytics.log('`${label ?? "An error occurred"}` -> $error');
-        return;
-      }
-      final trac = stackTrace;
-      await _crashlytics.recordError(error, trac, reason: label, fatal: true);
     }
   }
 }
