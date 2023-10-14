@@ -1,33 +1,69 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gorin_test_project/firebase_options.dart';
+import 'package:gorin_test_project/blocs/blocs.dart';
+import 'package:gorin_test_project/firebase_options/firebase_options.dart';
+import 'package:gorin_test_project/services/services.dart';
+import 'package:gorin_test_project/widgets/widgets.dart';
+import 'package:provider/provider.dart';
+
+const _logger = LoggingService.instance;
 
 void main() async {
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const App());
+  FlutterError.onError = _logger.log;
+
+  PlatformDispatcher.instance.onError = (error, stackTrace) {
+    _logger.log(error, stackTrace: stackTrace);
+    return true;
+  };
+
+  Bloc.observer = const LocalBlocObserver();
+
+  runApp(
+    BlocProvider(create: (_) => FlavorBloc(), child: const App()),
+  );
 }
 
-/// Root widget for the application
 class App extends StatelessWidget {
-  /// Constructor for ``App``
   const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: const [
-        /*BlocProvider(
-          create: (context) => SubjectBloc(),
+    return StatefulWrapper(
+      onInit: () {
+        context.read<FlavorBloc>().add(const FlavorEvent.flavorLoaded());
+      },
+      child: MultiProvider(
+        providers: [
+          FutureProvider<FirebaseApp?>(
+            create: (context) async {
+              try {
+                final environment = context.read<FlavorBloc>().state.whenOrNull(
+                      loadSuccess: (flavor) => flavor.environment,
+                    );
+                return Firebase.initializeApp(
+                  options: getFirebaseOptions(environment: environment),
+                );
+              } catch (error, stackTrace) {
+                await _logger.log(
+                  error,
+                  label: 'Something went wrong while initializing Flavors',
+                  stackTrace: stackTrace,
+                );
+                return null;
+              }
+            },
+            initialData: null,
+          ),
+        ],
+        child: const MaterialApp(
+          home: Placeholder(),
+          debugShowCheckedModeBanner: false,
         ),
-        BlocProvider(
-          create: (context) => SubjectBloc(),
-        ),*/
-      ],
-      child: MaterialApp.router(),
+      ),
     );
   }
 }

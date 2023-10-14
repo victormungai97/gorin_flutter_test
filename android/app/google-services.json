@@ -23,6 +23,63 @@
           "other_platform_oauth_client": []
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463104400333:android:1385f60c9fba1d46dfc284",
+        "android_client_info": {
+          "package_name": "com.gorinsystems.test_project.gorin_test_project.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFtn1SMKErV4xGiEULCVeHBR349s2M_kY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463104400333:android:b9b1b32c94e68663dfc284",
+        "android_client_info": {
+          "package_name": "com.gorinsystems.test_project.gorin_test_project.local"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFtn1SMKErV4xGiEULCVeHBR349s2M_kY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463104400333:android:fbe4a5668f67ac1ddfc284",
+        "android_client_info": {
+          "package_name": "com.gorinsystems.test_project.gorin_test_project.stg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFtn1SMKErV4xGiEULCVeHBR349s2M_kY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
     }
   ],
   "configuration_version": "1"

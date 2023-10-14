@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart'
 ///
 /// Example:
 /// ```dart
-/// import 'firebase_options.dart';
+/// import 'firebase_options_dev.dart';
 /// // ...
 /// await Firebase.initializeApp(
 ///   options: DefaultFirebaseOptions.currentPlatform,
@@ -58,7 +58,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDFtn1SMKErV4xGiEULCVeHBR349s2M_kY',
-    appId: '1:463104400333:android:68e0ec0209077620dfc284',
+    appId: '1:463104400333:android:1385f60c9fba1d46dfc284',
     messagingSenderId: '463104400333',
     projectId: 'gorin-flutter-test',
     storageBucket: 'gorin-flutter-test.appspot.com',
@@ -66,10 +66,10 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyA_eMz-C4O95dBcRQvwqSXtc4rDM6gSEWE',
-    appId: '1:463104400333:ios:56be7408711c1ecbdfc284',
+    appId: '1:463104400333:ios:f92071e5cdd27e3cdfc284',
     messagingSenderId: '463104400333',
     projectId: 'gorin-flutter-test',
     storageBucket: 'gorin-flutter-test.appspot.com',
-    iosBundleId: 'com.gorinsystems.testproject.gorinTestProject',
+    iosBundleId: 'com.gorinsystems.testproject.gorinTestProject.dev',
   );
 }
