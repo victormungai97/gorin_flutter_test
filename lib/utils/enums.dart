@@ -6,3 +6,10 @@ enum Environment {
   production,
   unspecified,
 }
+
+/// Modes by which a user enters into the app
+enum Authentication {
+  LOGIN,
+
+  REGISTRATION,
+}
