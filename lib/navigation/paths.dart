@@ -7,4 +7,13 @@ part of 'navigation.dart';
 class Paths {
   /// Path to the default page
   static const root = '/';
+
+  /// Path to signup page
+  static const register = '/register';
+
+  /// Path to signin page
+  static const login = '/login';
+
+  /// Path to home page
+  static const home = '/home';
 }

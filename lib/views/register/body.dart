@@ -1,7 +1,7 @@
 part of 'register.dart';
 
 class _Body extends StatelessWidget {
-  const _Body() : super(key: const ValueKey('LoginBody'));
+  const _Body() : super(key: const ValueKey('RegisterBody'));
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class _Body extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: GestureDetector(
-                  onTap: null,
+                  onTap: () => context.navigateReplace(Paths.login),
                   child: Text(
                     "Login",
                     style: TextStyle(

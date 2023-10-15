@@ -36,7 +36,7 @@ class _Body extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: GestureDetector(
-                  onTap: null,
+                  onTap: () => context.navigateReplace(Paths.register),
                   child: Text(
                     "Sign Up",
                     style: TextStyle(
