@@ -1,4 +1,4 @@
-part of 'login.dart';
+part of 'register.dart';
 
 class _Form extends StatelessWidget {
   const _Form() : super(key: const ValueKey('LoginForm'));
@@ -13,6 +13,7 @@ class _Form extends StatelessWidget {
             'email': FormControl<String>(
               validators: [Validators.required, Validators.email],
             ),
+            'name': FormControl<String>(validators: [Validators.required]),
             'password': FormControl<String>(
               validators: [Validators.required, Validators.minLength(8)],
             ),
@@ -25,6 +26,44 @@ class _Form extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // picture
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 10),
+              child: Center(
+                child: CircleAvatar(
+                  radius: 40,
+                  backgroundColor: Colors.indigo.shade900.withOpacity(.55),
+                  child: Icon(Icons.person, color: Colors.white),
+                ),
+              ),
+            ),
+
+            //name
+            Container(
+              margin: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 24),
+              child: ReactiveTextField<String>(
+                formControlName: 'name',
+                keyboardType: TextInputType.name,
+                textInputAction: TextInputAction.next,
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  label: Text('Name'),
+                  labelStyle: TextStyle(
+                    color: Color(0xFF293567),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+                validationMessages: {
+                  ValidationMessage.required: (_) => 'Please enter your name',
+                },
+              ),
+            ),
+
             //email
             Container(
               margin: const EdgeInsets.fromLTRB(20, 8, 20, 8),
@@ -38,7 +77,7 @@ class _Form extends StatelessWidget {
                 textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(
                   border: InputBorder.none,
-                  label: Text('email'),
+                  label: Text('Email'),
                   labelStyle: TextStyle(
                     color: Color(0xFF293567),
                     fontSize: 14,
@@ -65,7 +104,7 @@ class _Form extends StatelessWidget {
                 keyboardType: TextInputType.visiblePassword,
                 textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
-                  label: Text('password'),
+                  label: Text('Password'),
                   labelStyle: const TextStyle(
                     color: Color(0xFF293567),
                     fontSize: 14,
@@ -93,33 +132,12 @@ class _Form extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 16),
-
-            //forgot password
-            Align(
-              alignment: Alignment.center,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: GestureDetector(
-                  onTap: null,
-                  child: Text(
-                    "Forgot Password ? ",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.indigo.shade800,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
             const SizedBox(height: 20),
 
             //sign in btn
             Center(
               child: PrimaryButton(
-                text: 'Login',
+                text: 'Sign Up',
                 onPressed: () {},
                 textColor: Colors.indigo.shade900,
               ),
