@@ -10,10 +10,10 @@ class _Form extends StatelessWidget {
 
     FormGroup buildForm() => fb.group(
           <String, Object>{
-            'email': FormControl<String>(
+            JsonKeys.email: FormControl<String>(
               validators: [Validators.required, Validators.email],
             ),
-            'password': FormControl<String>(
+            JsonKeys.password: FormControl<String>(
               validators: [Validators.required, Validators.minLength(8)],
             ),
           },
@@ -33,7 +33,7 @@ class _Form extends StatelessWidget {
               ),
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: ReactiveTextField<String>(
-                formControlName: 'email',
+                formControlName: JsonKeys.email,
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(
@@ -61,7 +61,7 @@ class _Form extends StatelessWidget {
               ),
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: ReactiveTextField<String>(
-                formControlName: 'password',
+                formControlName: JsonKeys.password,
                 keyboardType: TextInputType.visiblePassword,
                 textInputAction: TextInputAction.done,
                 decoration: InputDecoration(

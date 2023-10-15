@@ -6,8 +6,15 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider<PasswordObsureCubit>(
-        create: (_) => PasswordObsureCubit(),
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider<PasswordObsureCubit>(
+            create: (_) => PasswordObsureCubit(),
+          ),
+          BlocProvider<FormCubit>(
+            create: (context) => FormCubit(),
+          ),
+        ],
         child: const _Body(),
       ),
       backgroundColor: const Color(0xffdde0ec),

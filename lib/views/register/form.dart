@@ -5,16 +5,40 @@ class _Form extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.watch<PasswordObsureCubit>();
-    final obscureVal = cubit.state;
+    final obscure = context.watch<PasswordObsureCubit>();
+    final obscureVal = obscure.state;
+    final formCubit = context.watch<FormCubit>();
+
+    final auth = context.watch<AuthBloc>();
+    final loading = auth.state.whenOrNull(
+          authenticationInProgress: () => true,
+        ) ??
+        false;
+    final firestore = context.watch<FirestoreBloc>();
+    auth.state.whenOrNull(
+      authenticationSuccess: (user) {
+        final form = formCubit.state;
+        if (form == null) return;
+        final json = Map<String, dynamic>.from(form);
+        json[JsonKeys.id] = user.uid;
+        firestore.add(
+          FirestoreEvent.savedUser(UserModel.fromJson(json)),
+        );
+      },
+    );
+    firestore.state.whenOrNull(userSavingSuccess: (_) {
+      context.navigate(Paths.home);
+    });
 
     FormGroup buildForm() => fb.group(
           <String, Object>{
-            'email': FormControl<String>(
+            JsonKeys.email: FormControl<String>(
               validators: [Validators.required, Validators.email],
             ),
-            'name': FormControl<String>(validators: [Validators.required]),
-            'password': FormControl<String>(
+            JsonKeys.name: FormControl<String>(
+              validators: [Validators.required],
+            ),
+            JsonKeys.password: FormControl<String>(
               validators: [Validators.required, Validators.minLength(8)],
             ),
           },
@@ -46,7 +70,7 @@ class _Form extends StatelessWidget {
               ),
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: ReactiveTextField<String>(
-                formControlName: 'name',
+                formControlName: JsonKeys.name,
                 keyboardType: TextInputType.name,
                 textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(
@@ -72,7 +96,7 @@ class _Form extends StatelessWidget {
               ),
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: ReactiveTextField<String>(
-                formControlName: 'email',
+                formControlName: JsonKeys.email,
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(
@@ -100,7 +124,7 @@ class _Form extends StatelessWidget {
               ),
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: ReactiveTextField<String>(
-                formControlName: 'password',
+                formControlName: JsonKeys.password,
                 keyboardType: TextInputType.visiblePassword,
                 textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
@@ -111,7 +135,7 @@ class _Form extends StatelessWidget {
                     fontWeight: FontWeight.w300,
                   ),
                   suffixIcon: GestureDetector(
-                    onTap: cubit.toggle,
+                    onTap: obscure.toggle,
                     child: Icon(
                       obscureVal
                           ? Icons.visibility_rounded
@@ -134,16 +158,53 @@ class _Form extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            //sign in btn
-            Center(
-              child: PrimaryButton(
-                text: 'Sign Up',
-                onPressed: () {},
-                textColor: Colors.indigo.shade900,
-              ),
-            ),
+            if (!loading)
+              //sign in btn
+              Center(
+                child: PrimaryButton(
+                  text: 'Sign Up',
+                  onPressed: () {
+                    if (!form.valid) {
+                      form.markAllAsTouched();
+                      return;
+                    }
 
-            SizedBox(height: 16),
+                    auth.add(
+                      AuthEvent.registeredUser(
+                        "${form.control(JsonKeys.email).value}",
+                        "${form.control(JsonKeys.password).value}",
+                      ),
+                    );
+
+                    formCubit.saveForm(Map<String, Object?>.from(form.value));
+                  },
+                  textColor: Colors.indigo.shade900,
+                ),
+              )
+            else
+              const Center(child: CircularProgressIndicator()),
+
+            const SizedBox(height: 16),
+
+            auth.state.whenOrNull(
+                  authenticationFailure: (exception) {
+                    return Text(
+                      exception,
+                      style: const TextStyle(color: Colors.red, fontSize: 18),
+                      textAlign: TextAlign.center,
+                    );
+                  },
+                ) ??
+                const SizedBox.shrink(),
+
+            firestore.state.whenOrNull(userSavingFailure: (exception) {
+                  return Text(
+                    exception,
+                    style: const TextStyle(color: Colors.red, fontSize: 18),
+                    textAlign: TextAlign.center,
+                  );
+                }) ??
+                const SizedBox.shrink(),
           ],
         );
       },

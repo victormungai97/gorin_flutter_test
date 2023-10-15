@@ -26,9 +26,51 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
       }
 
       event.whenOrNull(
+        savedUser: _saveUser,
         started: () => emit(const FirestoreState.initial()),
       );
     });
+  }
+
+  Future<void> _saveUser(UserModel userModel) async {
+    try {
+      emit(const FirestoreState.userSavingInProgress());
+
+      final picture = userModel.profilePicture;
+      UserModel user;
+      if (picture == null || picture.isEmpty) {
+        user = userModel.copyWith(
+          profilePicture: 'https://ui-avatars.com/api/?name=${userModel.name}',
+        );
+      } else {
+        user = userModel;
+      }
+
+      final details = Map<String, dynamic>.from(user.toJson());
+      final userId = details.remove(JsonKeys.id) as String;
+
+      UserModel? person;
+      if (userId.isEmpty) {
+        person = await _users?.add(details).then((value) {
+          return user.copyWith(userId: value.id);
+        });
+      } else {
+        person = await _users?.doc(userId).set(details).then((_) => user);
+      }
+
+      emit(FirestoreState.userSavingSuccess(person));
+    } catch (error, stackTrace) {
+      await _logger.log(
+        error,
+        label: 'FAILED DURING USER SAVING',
+        stackTrace: stackTrace,
+      );
+      emit(
+        FirestoreState.userSavingFailure(
+          exception: 'Error while updating account',
+        ),
+      );
+    }
   }
 
   late final CollectionReference? _users;
