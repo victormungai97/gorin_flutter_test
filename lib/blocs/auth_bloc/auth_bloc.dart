@@ -124,6 +124,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         label: 'FAILED DURING $event',
         stackTrace: stackTrace,
       );
+      print(ex);
       emit(
         AuthState.authenticationFailure(
           exception: 'Error during ${event.toLowerCase()}',

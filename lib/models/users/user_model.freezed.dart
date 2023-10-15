@@ -20,13 +20,15 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserModel {
+  @JsonKey(name: JsonKeys.name)
   String get name => throw _privateConstructorUsedError;
-  @JsonKey(name: 'email')
+  @JsonKey(name: JsonKeys.email)
   String get emailAddress => throw _privateConstructorUsedError;
+  @JsonKey(name: JsonKeys.password)
   String get password => throw _privateConstructorUsedError;
-  @JsonKey(name: 'id')
+  @JsonKey(name: JsonKeys.id)
   String get userId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'profile_photo')
+  @JsonKey(name: JsonKeys.profile_photo)
   String? get profilePicture => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,11 +43,11 @@ abstract class $UserModelCopyWith<$Res> {
       _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
   $Res call(
-      {String name,
-      @JsonKey(name: 'email') String emailAddress,
-      String password,
-      @JsonKey(name: 'id') String userId,
-      @JsonKey(name: 'profile_photo') String? profilePicture});
+      {@JsonKey(name: JsonKeys.name) String name,
+      @JsonKey(name: JsonKeys.email) String emailAddress,
+      @JsonKey(name: JsonKeys.password) String password,
+      @JsonKey(name: JsonKeys.id) String userId,
+      @JsonKey(name: JsonKeys.profile_photo) String? profilePicture});
 }
 
 /// @nodoc
@@ -101,11 +103,11 @@ abstract class _$$UserModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String name,
-      @JsonKey(name: 'email') String emailAddress,
-      String password,
-      @JsonKey(name: 'id') String userId,
-      @JsonKey(name: 'profile_photo') String? profilePicture});
+      {@JsonKey(name: JsonKeys.name) String name,
+      @JsonKey(name: JsonKeys.email) String emailAddress,
+      @JsonKey(name: JsonKeys.password) String password,
+      @JsonKey(name: JsonKeys.id) String userId,
+      @JsonKey(name: JsonKeys.profile_photo) String? profilePicture});
 }
 
 /// @nodoc
@@ -155,27 +157,29 @@ class __$$UserModelImplCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$UserModelImpl implements _UserModel {
   const _$UserModelImpl(
-      {required this.name,
-      @JsonKey(name: 'email') required this.emailAddress,
-      required this.password,
-      @JsonKey(name: 'id') this.userId = '',
-      @JsonKey(name: 'profile_photo') this.profilePicture});
+      {@JsonKey(name: JsonKeys.name) required this.name,
+      @JsonKey(name: JsonKeys.email) required this.emailAddress,
+      @JsonKey(name: JsonKeys.password) required this.password,
+      @JsonKey(name: JsonKeys.id) this.userId = '',
+      @JsonKey(name: JsonKeys.profile_photo) this.profilePicture});
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
 
   @override
+  @JsonKey(name: JsonKeys.name)
   final String name;
   @override
-  @JsonKey(name: 'email')
+  @JsonKey(name: JsonKeys.email)
   final String emailAddress;
   @override
+  @JsonKey(name: JsonKeys.password)
   final String password;
   @override
-  @JsonKey(name: 'id')
+  @JsonKey(name: JsonKeys.id)
   final String userId;
   @override
-  @JsonKey(name: 'profile_photo')
+  @JsonKey(name: JsonKeys.profile_photo)
   final String? profilePicture;
 
   @override
@@ -214,28 +218,30 @@ class _$UserModelImpl implements _UserModel {
 
 abstract class _UserModel implements UserModel {
   const factory _UserModel(
-          {required final String name,
-          @JsonKey(name: 'email') required final String emailAddress,
-          required final String password,
-          @JsonKey(name: 'id') final String userId,
-          @JsonKey(name: 'profile_photo') final String? profilePicture}) =
-      _$UserModelImpl;
+      {@JsonKey(name: JsonKeys.name) required final String name,
+      @JsonKey(name: JsonKeys.email) required final String emailAddress,
+      @JsonKey(name: JsonKeys.password) required final String password,
+      @JsonKey(name: JsonKeys.id) final String userId,
+      @JsonKey(name: JsonKeys.profile_photo)
+      final String? profilePicture}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
 
   @override
+  @JsonKey(name: JsonKeys.name)
   String get name;
   @override
-  @JsonKey(name: 'email')
+  @JsonKey(name: JsonKeys.email)
   String get emailAddress;
   @override
+  @JsonKey(name: JsonKeys.password)
   String get password;
   @override
-  @JsonKey(name: 'id')
+  @JsonKey(name: JsonKeys.id)
   String get userId;
   @override
-  @JsonKey(name: 'profile_photo')
+  @JsonKey(name: JsonKeys.profile_photo)
   String? get profilePicture;
   @override
   @JsonKey(ignore: true)

@@ -65,6 +65,7 @@ class App extends StatelessWidget {
         child: MultiBlocProvider(
           providers: [
             BlocProvider(create: (context) => FirestoreBloc(environment)),
+            BlocProvider(create: (context) => AuthBloc()),
           ],
           child: Builder(builder: (_) {
             final router = CustomRouter(
