@@ -120,7 +120,7 @@ class _Form extends StatelessWidget {
             Center(
               child: PrimaryButton(
                 text: 'Login',
-                onPressed: () {},
+                onPressed: () => context.navigate(Paths.home),
                 textColor: Colors.indigo.shade900,
               ),
             ),
