@@ -11,7 +11,7 @@ class FlavorModel {
       case 'dev':
       case 'develop':
       case 'development':
-        environment = Environment.develop;
+        environment = Environment.development;
       case 'stg':
       case 'staging':
         environment = Environment.staging;

@@ -1,8 +1,15 @@
 /// List of flavors the application holds
 enum Environment {
   local,
-  develop,
+  development,
   staging,
   production,
   unspecified,
+}
+
+/// Modes by which a user enters into the app
+enum Authentication {
+  LOGIN,
+
+  REGISTRATION,
 }
