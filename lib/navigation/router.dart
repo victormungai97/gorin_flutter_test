@@ -16,12 +16,10 @@ class CustomRouter {
     // Set all routes to be used
     routes: <GoRoute>[
       GoRoute(path: Paths.root, builder: (_, state) => const LoginPage()),
-      // GoRoute(path: Paths.home, builder: (_, state) => const Placeholder()),
+      GoRoute(path: Paths.home, builder: (_, state) => const HomePage()),
       GoRoute(path: Paths.login, builder: (_, state) => const LoginPage()),
       GoRoute(
-        path: Paths.register,
-        builder: (_, state) => const RegisterPage(),
-      ),
+          path: Paths.register, builder: (_, state) => const RegisterPage()),
     ],
 
     // First route to be rendered when app starts
