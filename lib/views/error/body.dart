@@ -15,7 +15,7 @@ class _Body extends StatelessWidget {
             color: Colors.indigo.shade800,
             size: 128,
           ),
-          // const Spacer(),
+          const SizedBox(height: 18),
           Text(
             message ?? 'An error has been encountered',
             style: TextStyle(

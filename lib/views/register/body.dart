@@ -22,32 +22,36 @@ class _Body extends StatelessWidget {
             const SizedBox(height: 10),
             const _Form(),
             const SizedBox(height: 20),
-            Text(
-              'Already have an account?',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w300,
-                color: Colors.indigo.shade900,
-              ),
-            ),
-            const SizedBox(height: 5),
-            Align(
-              alignment: Alignment.center,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: GestureDetector(
-                  onTap: () => context.navigateReplace(Paths.login),
-                  child: Text(
-                    "Login",
+            GestureDetector(
+              onTap: () => context.navigateReplace(Paths.login),
+              child: Column(
+                children: [
+                  Text(
+                    'Already have an account?',
                     style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.indigo.shade800,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.indigo.shade900,
                     ),
                   ),
-                ),
+                  const SizedBox(height: 5),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Text(
+                        "Login",
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.indigo.shade800,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
+            )
           ],
         ),
       ),
