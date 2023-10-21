@@ -68,11 +68,13 @@ class App extends StatelessWidget {
                     },
                     initialData: null,
                   ),
+                  Provider(create: (_) => PermissionService()),
                 ],
                 child: MultiBlocProvider(
                   providers: [
                     BlocProvider(create: (_) => FirestoreBloc(environment)),
-                    BlocProvider(create: (context) => AuthBloc()),
+                    BlocProvider(create: (_) => AuthBloc()),
+                    BlocProvider(create: (_) => ImageBloc()),
                   ],
                   child: const _App(),
                 ),
@@ -105,6 +107,7 @@ class _ErrorApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: theme,
+      title: "Gorin Test Project",
       home: ErrorPage(message: message),
       debugShowCheckedModeBanner: true,
     );
@@ -131,6 +134,7 @@ class _App extends StatelessWidget {
         return MaterialApp.router(
           routerConfig: router.routerConfig,
           theme: theme,
+          title: "Gorin Test Project",
           debugShowCheckedModeBanner: false,
         );
       },

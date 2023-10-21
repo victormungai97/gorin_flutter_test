@@ -3,6 +3,8 @@ part of 'register.dart';
 class _Form extends StatelessWidget {
   const _Form() : super(key: const ValueKey('LoginForm'));
 
+  static const _logger = LoggingService.instance;
+
   @override
   Widget build(BuildContext context) {
     final obscure = context.watch<PasswordObsureCubit>();
@@ -29,9 +31,13 @@ class _Form extends StatelessWidget {
     firestore.state.whenOrNull(userSavingSuccess: (_) {
       context.navigate(Paths.home);
     });
+    final imageBloc = context.watch<ImageBloc>();
 
     FormGroup buildForm() => fb.group(
           <String, Object>{
+            JsonKeys.profile_photo: FormControl<XFile>(
+              validators: [Validators.required],
+            ),
             JsonKeys.email: FormControl<String>(
               validators: [Validators.required, Validators.email],
             ),
@@ -44,6 +50,8 @@ class _Form extends StatelessWidget {
           },
         );
 
+    final indigo = Colors.indigo.shade900;
+
     return ReactiveFormBuilder(
       form: buildForm,
       builder: (context, form, child) {
@@ -51,15 +59,140 @@ class _Form extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // picture
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Center(
-                child: CircleAvatar(
-                  radius: 40,
-                  backgroundColor: Colors.indigo.shade900.withOpacity(.55),
-                  child: Icon(Icons.person, color: Colors.white),
-                ),
-              ),
+            BlocConsumer<ImageBloc, ImageState>(
+              builder: (_, state) {
+                Widget? widget;
+                if (state is ImagePickingState) {
+                  widget = state.whenOrNull(
+                    loading: () {
+                      return const Center(child: CircularProgressIndicator());
+                    },
+                  );
+                }
+
+                if (widget != null) return widget;
+
+                return Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  child: Center(
+                    child: ReactiveValueListenableBuilder<XFile>(
+                      builder: (buildContext, control, widget) {
+                        final image = control.value;
+
+                        ImageProvider<Object>? bgImg;
+
+                        if (image != null) {
+                          if (kIsWeb) {
+                            bgImg = NetworkImage(image.path);
+                          } else {
+                            bgImg = FileImage(File(image.path));
+                          }
+                        }
+
+                        return Center(
+                          child: Column(
+                            children: [
+                              GestureDetector(
+                                onDoubleTap: bgImg != null
+                                    ? () async {
+                                        await showDialog<Object?>(
+                                          context: context,
+                                          builder: (_) {
+                                            return ImageFullScreen(
+                                              backgroundImage: bgImg!,
+                                            );
+                                          },
+                                        );
+                                      }
+                                    : null,
+                                onTap: () async {
+                                  try {
+                                    String source = 'gallery';
+                                    if (!kIsWeb) {
+                                      final option =
+                                          await showModalBottomSheet<String>(
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(10),
+                                          ),
+                                        ),
+                                        context: context,
+                                        builder: (_) {
+                                          return const ImagePickerDialog();
+                                        },
+                                        useRootNavigator: false,
+                                      );
+                                      if (option == null) return;
+                                      source = option;
+                                    }
+                                    control.markAsUntouched();
+                                    imageBloc.add(
+                                      ImageEvent.imagePicked(
+                                        source: source,
+                                        context: context,
+                                      ),
+                                    );
+                                  } catch (error, stackTrace) {
+                                    await _logger.log(
+                                      error,
+                                      label: 'Error choosing image source',
+                                      stackTrace: stackTrace,
+                                    );
+                                  }
+                                },
+                                child: CircleAvatar(
+                                  radius: 40,
+                                  backgroundColor: indigo.withOpacity(.55),
+                                  backgroundImage: bgImg,
+                                  child: image == null
+                                      ? const Icon(Icons.person)
+                                      : null,
+                                  foregroundColor: Colors.white,
+                                ),
+                              ),
+                              StreamBuilder(
+                                builder: (_, snapshot) {
+                                  final tap = snapshot.data ?? control.touched;
+                                  return tap && image == null
+                                      ? const Padding(
+                                          padding: EdgeInsets.all(12),
+                                          child: Text(
+                                            'Profile picture is needed',
+                                            style: TextStyle(
+                                              color: Color(0xFFB71C1C),
+                                              fontSize: 14,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        )
+                                      : const SizedBox.shrink();
+                                },
+                                stream: control.touchChanges,
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      formControlName: JsonKeys.profile_photo,
+                    ),
+                  ),
+                );
+              },
+              listener: (context, state) {
+                if (state is ImagePickingState) {
+                  final control = form.control(JsonKeys.profile_photo);
+                  state.whenOrNull(
+                    complete: (file) {
+                      control.value = file;
+                      control.markAsTouched();
+                    },
+                    exception: ((message) {
+                      control.markAsTouched();
+                      _logger.showToast(message);
+                    }),
+                  );
+                }
+              },
             ),
 
             //name
@@ -158,31 +291,72 @@ class _Form extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            if (!loading)
-              //sign in btn
-              Center(
-                child: PrimaryButton(
-                  text: 'Sign Up',
-                  onPressed: () {
-                    if (!form.valid) {
-                      form.markAllAsTouched();
-                      return;
-                    }
+            BlocConsumer<ImageBloc, ImageState>(
+              builder: (_, state) {
+                Widget? widget;
 
-                    auth.add(
-                      AuthEvent.registeredUser(
-                        "${form.control(JsonKeys.email).value}",
-                        "${form.control(JsonKeys.password).value}",
-                      ),
-                    );
+                if (state is FileUploadingState) {
+                  widget = state.whenOrNull(
+                    loading: (value) {
+                      return Column(
+                        children: [
+                          LinearProgressIndicator(value: value),
+                          Builder(
+                            builder: (context) {
+                              if (value == null) return const SizedBox.shrink();
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                ),
+                                child: Text(
+                                  '${(100 * value.round())}%',
+                                  textAlign: TextAlign.center,
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
 
-                    formCubit.saveForm(Map<String, Object?>.from(form.value));
-                  },
-                  textColor: Colors.indigo.shade900,
-                ),
-              )
-            else
-              const Center(child: CircularProgressIndicator()),
+                if (widget != null) return widget;
+
+                if (loading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                //sign in btn
+                return Center(
+                  child: PrimaryButton(
+                    text: 'Sign Up',
+                    onPressed: () {
+                      if (!form.valid) {
+                        form.markAllAsTouched();
+                        return;
+                      }
+
+                      final body = Map<String, Object?>.from(form.value);
+                      final img = body.remove(JsonKeys.profile_photo) as XFile?;
+
+                      imageBloc.add(ImageEvent.fileUploaded(image: img));
+
+                      formCubit.saveForm(body);
+                    },
+                    textColor: indigo,
+                  ),
+                );
+              },
+              listener: (_, state) async {
+                if (state is FileUploadingState) {
+                  await state.whenOrNull(
+                    complete: debugPrint,
+                    exception: _logger.showToast,
+                  );
+                }
+              },
+            ),
 
             const SizedBox(height: 16),
 
