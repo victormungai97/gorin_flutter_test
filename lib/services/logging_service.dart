@@ -1,7 +1,9 @@
 import 'dart:developer' as dev;
+import 'dart:ui';
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logging/logging.dart';
 
 /// Service for logging purposes
@@ -24,6 +26,7 @@ class LoggingService {
   }) async {
     try {
       if (kDebugMode) {
+        print(error);
         dev.log(
           label ?? (isException ? '' : 'Something went wrong'),
           error: error,
@@ -60,5 +63,18 @@ class LoggingService {
         level: Level.SEVERE.value,
       );
     }
+  }
+
+  Future<void> showToast(String message) async {
+    await Fluttertoast.showToast(
+      msg: message,
+      webBgColor: '#B71C1C',
+      gravity: ToastGravity.BOTTOM,
+      toastLength: Toast.LENGTH_SHORT,
+      backgroundColor: Color(0xFFB71C1C),
+      textColor: Color(0xffFFFFFF),
+      webPosition: 'center',
+      fontSize: 16,
+    );
   }
 }
