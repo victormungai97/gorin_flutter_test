@@ -13,18 +13,18 @@ const _logger = LoggingService.instance;
 
 class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
   FirestoreBloc(this._environment) : super(_Initial()) {
-    on<FirestoreEvent>((event, emit) {
-      final application = FirebaseFirestore.instance.collection('application');
-      switch (_environment) {
-        case Environment.local:
-        case Environment.development:
-        case Environment.staging:
-        case Environment.production:
-          _users = application.doc(_environment?.name).collection('users');
-        default:
-          _users = null;
-      }
+    final application = FirebaseFirestore.instance.collection('application');
+    switch (_environment) {
+      case Environment.local:
+      case Environment.development:
+      case Environment.staging:
+      case Environment.production:
+        _users = application.doc(_environment?.name).collection('users');
+      default:
+        _users = null;
+    }
 
+    on<FirestoreEvent>((event, emit) {
       event.whenOrNull(
         savedUser: _saveUser,
         started: () => emit(const FirestoreState.initial()),
@@ -37,14 +37,12 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
       emit(const FirestoreState.userSavingInProgress());
 
       final picture = userModel.profilePicture;
-      UserModel user;
-      if (picture == null || picture.isEmpty) {
-        user = userModel.copyWith(
-          profilePicture: 'https://ui-avatars.com/api/?name=${userModel.name}',
-        );
-      } else {
-        user = userModel;
-      }
+      final user = picture == null || picture.isEmpty
+          ? userModel.copyWith(
+              profilePicture:
+                  'https://ui-avatars.com/api/?name=${userModel.name}',
+            )
+          : userModel;
 
       final details = Map<String, dynamic>.from(user.toJson());
       final userId = details.remove(JsonKeys.id) as String;
@@ -66,7 +64,7 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
         stackTrace: stackTrace,
       );
       emit(
-        FirestoreState.userSavingFailure(
+        const FirestoreState.userSavingFailure(
           exception: 'Error while updating account',
         ),
       );

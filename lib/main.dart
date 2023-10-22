@@ -19,15 +19,6 @@ const _logger = LoggingService.instance;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  FlutterError.onError = _logger.log;
-
-  PlatformDispatcher.instance.onError = (error, stackTrace) {
-    _logger.log(error, stackTrace: stackTrace);
-    return true;
-  };
-
-  Bloc.observer = const LocalBlocObserver();
-
   runApp(
     BlocProvider(create: (_) => FlavorBloc(), child: const App()),
   );
@@ -74,7 +65,7 @@ class App extends StatelessWidget {
                   providers: [
                     BlocProvider(create: (_) => FirestoreBloc(environment)),
                     BlocProvider(create: (_) => AuthBloc()),
-                    BlocProvider(create: (_) => ImageBloc()),
+                    BlocProvider(create: (_) => ImageBloc(environment)),
                   ],
                   child: const _App(),
                 ),
@@ -123,20 +114,34 @@ class _App extends StatelessWidget {
           loadSuccess: (flavor) => flavor.environment,
         );
 
-    return Consumer<FirebaseApp?>(
-      builder: (context, firebaseApp, widget) {
-        if (firebaseApp == null) {
-          return const _ErrorApp(message: 'Please wait as the app initializes');
-        }
-        final router = CustomRouter(
-          environment ?? Environment.unspecified,
-        );
-        return MaterialApp.router(
-          routerConfig: router.routerConfig,
-          theme: theme,
-          title: "Gorin Test Project",
-          debugShowCheckedModeBanner: false,
-        );
+    return StatefulWrapper(
+      child: Consumer<FirebaseApp?>(
+        builder: (context, firebaseApp, widget) {
+          if (firebaseApp == null) {
+            return const _ErrorApp(message: 'Please wait as the app initializes');
+          }
+          final router = CustomRouter(
+            environment ?? Environment.unspecified,
+          );
+          return MaterialApp.router(
+            routerConfig: router.routerConfig,
+            theme: theme,
+            title: "Gorin Test Project",
+            debugShowCheckedModeBanner: false,
+          );
+        },
+      ),
+      onInit: () {
+
+        FlutterError.onError = _logger.log;
+
+        PlatformDispatcher.instance.onError = (error, stackTrace) {
+          _logger.log(error, stackTrace: stackTrace);
+          return true;
+        };
+
+        Bloc.observer = const LocalBlocObserver();
+
       },
     );
   }

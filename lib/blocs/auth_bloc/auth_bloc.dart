@@ -16,6 +16,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       event.when(
         registeredUser: _registerUser,
         started: () => emit(const AuthInitial()),
+        signedUserOut: _logUserOut,
         userLoggedIn: _logInUser,
       );
     });
@@ -95,7 +96,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         return;
       }
 
-      emit(AuthState.authenticationSuccess(user));
+      emit(AuthState.authenticationSuccess(user: user));
     } on FirebaseAuthException catch (e) {
       await _logger.log(
         e.message,
@@ -124,10 +125,28 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         label: 'FAILED DURING $event',
         stackTrace: stackTrace,
       );
-      print(ex);
       emit(
         AuthState.authenticationFailure(
           exception: 'Error during ${event.toLowerCase()}',
+        ),
+      );
+    }
+  }
+
+  Future<void> _logUserOut() async {
+    try {
+      await _firebaseAuth.signOut();
+      emit(const AuthState.authenticationSuccess());
+      await _logger.log('User logged out successfully', isException: false);
+    } catch (ex, stackTrace) {
+      await _logger.log(
+        ex,
+        label: 'FAILED DURING LOGOUT',
+        stackTrace: stackTrace,
+      );
+      emit(
+        AuthState.authenticationFailure(
+          exception: 'Error during logging out',
         ),
       );
     }

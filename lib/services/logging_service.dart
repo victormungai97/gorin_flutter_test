@@ -17,6 +17,10 @@ class LoggingService {
   static final _crashlytics = FirebaseCrashlytics.instance;
 
   /// Track and record exceptions and failures
+  Future<void> logError(Object? error, [StackTrace? stackTrace]) async =>
+      log(error, stackTrace: stackTrace);
+
+  /// Record any information
   Future<void> log(
     Object? error, {
     String? label,
