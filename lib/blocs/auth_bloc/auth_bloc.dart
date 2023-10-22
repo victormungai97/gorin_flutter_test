@@ -103,18 +103,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         stackTrace: e.stackTrace,
         label: e.code,
       );
-      String exception = 'Error occurred while authenticating user';
+
+      String exception;
+      final code =
+          e.code.replaceAll('-', ' ').replaceAll('_', ' ').toLowerCase();
+
       switch (authentication) {
         case Authentication.LOGIN:
-          exception = switch (e.code) {
-            'user-not-found' => "User not found for given email",
-            'wrong-password' => "Wrong password provided for that user",
+          exception = switch (code) {
+            'user not found' => "User not found for given email",
+            'wrong password' => "Wrong password provided for that user",
+            'invalid login credentials' => 'Invalid email or password entered',
             _ => "Something went wrong. Please contact support",
           };
         case Authentication.REGISTRATION:
-          exception = switch (e.code) {
-            'email-already-in-use' => "User with given email already created",
-            'weak-password' => "The password provided is too weak",
+          exception = switch (code) {
+            'email already in use' => "User with given email already created",
+            'weak password' => "The password provided is too weak",
             _ => "Something went wrong. Please contact support",
           };
       }

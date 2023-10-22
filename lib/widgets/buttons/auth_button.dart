@@ -55,7 +55,11 @@ class AuthButton extends StatelessWidget {
 
                   if (widget != null) return widget;
 
-                  return PrimaryButton(text: text, onPressed: onPressed);
+                  return PrimaryButton(
+                    text: text,
+                    onPressed: onPressed,
+                    textColor: const Color(0xFF1A237E),
+                  );
                 }),
                 listener: ((context, state) {
                   state.whenOrNull(
@@ -88,6 +92,7 @@ class AuthButton extends StatelessWidget {
               );
             },
           ),
+          const SizedBox(height: 25),
           if (message != null && message.isNotEmpty)
             Text(
               message,
