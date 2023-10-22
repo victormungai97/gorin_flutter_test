@@ -13,18 +13,18 @@ const _logger = LoggingService.instance;
 
 class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
   FirestoreBloc(this._environment) : super(_Initial()) {
-    on<FirestoreEvent>((event, emit) {
-      final application = FirebaseFirestore.instance.collection('application');
-      switch (_environment) {
-        case Environment.local:
-        case Environment.development:
-        case Environment.staging:
-        case Environment.production:
-          _users = application.doc(_environment?.name).collection('users');
-        default:
-          _users = null;
-      }
+    final application = FirebaseFirestore.instance.collection('application');
+    switch (_environment) {
+      case Environment.local:
+      case Environment.development:
+      case Environment.staging:
+      case Environment.production:
+        _users = application.doc(_environment?.name).collection('users');
+      default:
+        _users = null;
+    }
 
+    on<FirestoreEvent>((event, emit) {
       event.whenOrNull(
         savedUser: _saveUser,
         started: () => emit(const FirestoreState.initial()),
@@ -71,7 +71,7 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
     }
   }
 
-  CollectionReference? _users;
+  late final CollectionReference? _users;
 
   final Environment? _environment;
 }

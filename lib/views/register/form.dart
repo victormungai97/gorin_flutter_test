@@ -4,6 +4,7 @@ class _Form extends StatelessWidget {
   const _Form() : super(key: const ValueKey('RegisterForm'));
 
   static const _logger = LoggingService.instance;
+  static final _uploadProgress = ValueNotifier<double>(0);
 
   @override
   Widget build(BuildContext context) {
@@ -11,26 +12,6 @@ class _Form extends StatelessWidget {
     final obscureVal = obscure.state;
     final formCubit = context.watch<FormCubit>();
 
-    final auth = context.watch<AuthBloc>();
-    final loading = auth.state.whenOrNull(
-          authenticationInProgress: () => true,
-        ) ??
-        false;
-    final firestore = context.watch<FirestoreBloc>();
-    auth.state.whenOrNull(
-      authenticationSuccess: (user) {
-        final form = formCubit.state;
-        if (form == null) return;
-        final json = Map<String, dynamic>.from(form);
-        json[JsonKeys.id] = user?.uid;
-        firestore.add(
-          FirestoreEvent.savedUser(UserModel.fromJson(json)),
-        );
-      },
-    );
-    firestore.state.whenOrNull(
-      userSavingSuccess: (_) => context.navigateReplace(Paths.home),
-    );
     final imageBloc = context.watch<ImageBloc>();
 
     FormGroup buildForm() => fb.group(
@@ -65,12 +46,46 @@ class _Form extends StatelessWidget {
                 if (state is ImagePickingState) {
                   widget = state.whenOrNull(
                     loading: () {
-                      return const Center(child: CircularProgressIndicator());
+                      return const CircularProgressIndicator();
                     },
                   );
                 }
 
-                if (widget != null) return widget;
+                if (state is FileUploadingState) {
+                  widget = state.whenOrNull(loading: (_) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: SimpleCircularProgressBar(
+                        valueNotifier: _uploadProgress,
+                        mergeMode: true,
+                        onGetText: (double value) {
+                          return Text(
+                            '${value.toInt()}%',
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF293567),
+                            ),
+                          );
+                        },
+                        progressColors: const [
+                          Colors.cyan,
+                          Colors.green,
+                          Colors.amberAccent,
+                          Colors.redAccent,
+                          Colors.purpleAccent
+                        ],
+                        size: 80,
+                        backStrokeWidth: 5,
+                        progressStrokeWidth: 10,
+                        fullProgressColor: indigo,
+                        backColor: Colors.blueGrey,
+                      ),
+                    );
+                  });
+                }
+
+                if (widget != null) return Center(child: widget);
 
                 return Padding(
                   padding: EdgeInsets.symmetric(vertical: 10),
@@ -179,6 +194,12 @@ class _Form extends StatelessWidget {
                 );
               },
               listener: (context, state) {
+                if (state is ImageInitial) {
+                  final control = form.control(JsonKeys.profile_photo);
+                  control.value = null;
+                  control.markAsUntouched();
+                }
+
                 if (state is ImagePickingState) {
                   final control = form.control(JsonKeys.profile_photo);
                   state.whenOrNull(
@@ -190,6 +211,13 @@ class _Form extends StatelessWidget {
                       control.markAsTouched();
                       _logger.showToast(message);
                     }),
+                  );
+                }
+
+                if (state is FileUploadingState) {
+                  state.whenOrNull(
+                    complete: (_) => imageBloc.add(const ImageEvent.started()),
+                    loading: (progres) => _uploadProgress.value = progres ?? 0,
                   );
                 }
               },
@@ -297,55 +325,31 @@ class _Form extends StatelessWidget {
 
                 if (state is FileUploadingState) {
                   widget = state.whenOrNull(
-                    loading: (value) {
-                      return Column(
-                        children: [
-                          LinearProgressIndicator(value: value),
-                          Builder(
-                            builder: (context) {
-                              if (value == null) return const SizedBox.shrink();
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 12,
-                                ),
-                                child: Text(
-                                  '${(100 * value.round())}%',
-                                  textAlign: TextAlign.center,
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      );
-                    },
+                    loading: (_) => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   );
                 }
 
                 if (widget != null) return widget;
 
-                if (loading) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-
                 //sign in btn
-                return Center(
-                  child: PrimaryButton(
-                    text: 'Sign Up',
-                    onPressed: () {
-                      if (!form.valid) {
-                        form.markAllAsTouched();
-                        return;
-                      }
+                return AuthButton(
+                  text: 'Sign Up',
+                  onPressed: () {
+                    if (!form.valid) {
+                      form.markAllAsTouched();
+                      return;
+                    }
 
-                      final body = Map<String, Object?>.from(form.value);
-                      final img = body.remove(JsonKeys.profile_photo) as XFile?;
+                    final body = Map<String, Object?>.from(form.value);
+                    final img = body.remove(JsonKeys.profile_photo) as XFile?;
 
-                      imageBloc.add(ImageEvent.fileUploaded(image: img));
+                    imageBloc.add(ImageEvent.fileUploaded(image: img));
 
-                      formCubit.saveForm(body);
-                    },
-                    textColor: indigo,
-                  ),
+                    formCubit.saveForm(body);
+                  },
+                  authentication: Authentication.REGISTRATION,
                 );
               },
               listener: (_, state) async {
@@ -362,6 +366,7 @@ class _Form extends StatelessWidget {
                       final email = (json[JsonKeys.email] as String?) ?? '';
                       final password = json[JsonKeys.password] as String? ?? '';
 
+                      final auth = context.read<AuthBloc>();
                       auth.add(AuthEvent.registeredUser(email, password));
                     },
                     exception: _logger.showToast,
@@ -371,26 +376,6 @@ class _Form extends StatelessWidget {
             ),
 
             const SizedBox(height: 16),
-
-            auth.state.whenOrNull(
-                  authenticationFailure: (exception) {
-                    return Text(
-                      exception,
-                      style: const TextStyle(color: Colors.red, fontSize: 18),
-                      textAlign: TextAlign.center,
-                    );
-                  },
-                ) ??
-                const SizedBox.shrink(),
-
-            firestore.state.whenOrNull(userSavingFailure: (exception) {
-                  return Text(
-                    exception,
-                    style: const TextStyle(color: Colors.red, fontSize: 18),
-                    textAlign: TextAlign.center,
-                  );
-                }) ??
-                const SizedBox.shrink(),
           ],
         );
       },

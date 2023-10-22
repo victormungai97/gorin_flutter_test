@@ -22,4 +22,4 @@
         }
     ]
 }
-// --web-hostname localhost --dart-define=flavor=local --web-port 56782 --web-renderer canvaskit --flavor local
+// --web-hostname localhost --dart-define=flavor=local --web-port 24973 --web-renderer canvaskit --flavor local
