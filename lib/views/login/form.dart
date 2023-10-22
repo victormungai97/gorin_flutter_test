@@ -117,12 +117,22 @@ class _Form extends StatelessWidget {
             const SizedBox(height: 20),
 
             //sign in btn
-            Center(
-              child: PrimaryButton(
-                text: 'Login',
-                onPressed: () => context.navigateReplace(Paths.home),
-                textColor: Colors.indigo.shade900,
-              ),
+            AuthButton(
+              text: 'Login',
+              onPressed: () {
+                if (!form.valid) {
+                  form.markAllAsTouched();
+                  return;
+                }
+
+                context.read<AuthBloc>().add(
+                      AuthEvent.userLoggedIn(
+                        "${form.control(JsonKeys.email).value ?? ''}",
+                        "${form.control(JsonKeys.password).value ?? ''}",
+                      ),
+                    );
+              },
+              authentication: Authentication.LOGIN,
             ),
 
             SizedBox(height: 16),

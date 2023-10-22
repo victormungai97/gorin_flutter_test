@@ -32,7 +32,7 @@ class LoggingService {
       if (kDebugMode) {
         print(error);
         dev.log(
-          label ?? (isException ? '' : 'Something went wrong'),
+          label ?? (isException ? 'Something went wrong' : 'An event occurred'),
           error: error,
           stackTrace: stackTrace,
           level: logLevel ??
