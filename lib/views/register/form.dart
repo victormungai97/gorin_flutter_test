@@ -1,7 +1,7 @@
 part of 'register.dart';
 
 class _Form extends StatelessWidget {
-  const _Form() : super(key: const ValueKey('LoginForm'));
+  const _Form() : super(key: const ValueKey('RegisterForm'));
 
   static const _logger = LoggingService.instance;
 
@@ -22,15 +22,15 @@ class _Form extends StatelessWidget {
         final form = formCubit.state;
         if (form == null) return;
         final json = Map<String, dynamic>.from(form);
-        json[JsonKeys.id] = user.uid;
+        json[JsonKeys.id] = user?.uid;
         firestore.add(
           FirestoreEvent.savedUser(UserModel.fromJson(json)),
         );
       },
     );
-    firestore.state.whenOrNull(userSavingSuccess: (_) {
-      context.navigate(Paths.home);
-    });
+    firestore.state.whenOrNull(
+      userSavingSuccess: (_) => context.navigateReplace(Paths.home),
+    );
     final imageBloc = context.watch<ImageBloc>();
 
     FormGroup buildForm() => fb.group(
@@ -351,7 +351,19 @@ class _Form extends StatelessWidget {
               listener: (_, state) async {
                 if (state is FileUploadingState) {
                   await state.whenOrNull(
-                    complete: debugPrint,
+                    complete: (imageUrl) {
+                      final form = formCubit.state;
+                      if (form == null) return;
+
+                      final json = Map<String, dynamic>.from(form);
+                      json[JsonKeys.profile_photo] = imageUrl;
+                      formCubit.saveForm(json);
+
+                      final email = (json[JsonKeys.email] as String?) ?? '';
+                      final password = json[JsonKeys.password] as String? ?? '';
+
+                      auth.add(AuthEvent.registeredUser(email, password));
+                    },
                     exception: _logger.showToast,
                   );
                 }

@@ -37,14 +37,12 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
       emit(const FirestoreState.userSavingInProgress());
 
       final picture = userModel.profilePicture;
-      UserModel user;
-      if (picture == null || picture.isEmpty) {
-        user = userModel.copyWith(
-          profilePicture: 'https://ui-avatars.com/api/?name=${userModel.name}',
-        );
-      } else {
-        user = userModel;
-      }
+      final user = picture == null || picture.isEmpty
+          ? userModel.copyWith(
+              profilePicture:
+                  'https://ui-avatars.com/api/?name=${userModel.name}',
+            )
+          : userModel;
 
       final details = Map<String, dynamic>.from(user.toJson());
       final userId = details.remove(JsonKeys.id) as String;
@@ -66,14 +64,14 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
         stackTrace: stackTrace,
       );
       emit(
-        FirestoreState.userSavingFailure(
+        const FirestoreState.userSavingFailure(
           exception: 'Error while updating account',
         ),
       );
     }
   }
 
-  late final CollectionReference? _users;
+  CollectionReference? _users;
 
   final Environment? _environment;
 }

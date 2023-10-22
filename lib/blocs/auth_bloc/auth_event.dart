@@ -13,4 +13,6 @@ class AuthEvent with _$AuthEvent {
     String emailAddress,
     String password,
   ) = _RegisteredUser;
+
+  const factory AuthEvent.signedUserOut() = __UserLoggedOut;
 }

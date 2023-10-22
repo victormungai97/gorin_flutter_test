@@ -6,6 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:firebase_storage/firebase_storage.dart' as fs;
 import 'package:gorin_test_project/services/services.dart';
+import 'package:gorin_test_project/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 import 'package:permission_handler/permission_handler.dart' as perm;
@@ -17,7 +18,7 @@ part 'image_bloc.freezed.dart';
 const _logger = LoggingService.instance;
 
 class ImageBloc extends Bloc<ImageEvent, ImageState> {
-  ImageBloc() : super(ImageInitial()) {
+  ImageBloc(this._environment) : super(ImageInitial()) {
     on<ImageEvent>((event, emit) {
       event.when(
         imagePicked: _pickImage,
@@ -137,7 +138,9 @@ class ImageBloc extends Bloc<ImageEvent, ImageState> {
       }
 
       final fileName = image.name;
-      final destination = 'images/$fileName';
+      final env = _environment;
+      final parent = env == null ? '' : '${env.name}/';
+      final destination = '${parent}images/$fileName';
 
       try {
         // Create the file metadata
@@ -217,4 +220,6 @@ class ImageBloc extends Bloc<ImageEvent, ImageState> {
       );
     }
   }
+
+  final Environment? _environment;
 }

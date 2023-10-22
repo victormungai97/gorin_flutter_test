@@ -74,7 +74,7 @@ class App extends StatelessWidget {
                   providers: [
                     BlocProvider(create: (_) => FirestoreBloc(environment)),
                     BlocProvider(create: (_) => AuthBloc()),
-                    BlocProvider(create: (_) => ImageBloc()),
+                    BlocProvider(create: (_) => ImageBloc(environment)),
                   ],
                   child: const _App(),
                 ),
