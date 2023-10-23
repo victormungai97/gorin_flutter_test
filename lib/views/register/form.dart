@@ -16,7 +16,7 @@ class _Form extends StatelessWidget {
 
     FormGroup buildForm() => fb.group(
           <String, Object>{
-            JsonKeys.profile_photo: FormControl<XFile>(
+            'picture': FormControl<XFile>(
               validators: [Validators.required],
             ),
             JsonKeys.email: FormControl<String>(
@@ -188,20 +188,20 @@ class _Form extends StatelessWidget {
                           ),
                         );
                       },
-                      formControlName: JsonKeys.profile_photo,
+                      formControlName: 'picture',
                     ),
                   ),
                 );
               },
               listener: (context, state) {
                 if (state is ImageInitial) {
-                  final control = form.control(JsonKeys.profile_photo);
+                  final control = form.control('picture');
                   control.value = null;
                   control.markAsUntouched();
                 }
 
                 if (state is ImagePickingState) {
-                  final control = form.control(JsonKeys.profile_photo);
+                  final control = form.control('picture');
                   state.whenOrNull(
                     complete: (file) {
                       control.value = file;
@@ -319,60 +319,43 @@ class _Form extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            BlocConsumer<ImageBloc, ImageState>(
-              builder: (_, state) {
-                Widget? widget;
-
-                if (state is FileUploadingState) {
-                  widget = state.whenOrNull(
-                    loading: (_) => const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
+            //sign up btn
+            AuthButton(
+              text: 'Sign Up',
+              onPressed: () {
+                if (!form.valid) {
+                  form.markAllAsTouched();
+                  return;
                 }
 
-                if (widget != null) return widget;
+                final body = Map<String, Object?>.from(form.value);
 
-                //sign in btn
-                return AuthButton(
-                  text: 'Sign Up',
-                  onPressed: () {
-                    if (!form.valid) {
-                      form.markAllAsTouched();
-                      return;
-                    }
+                formCubit.saveForm(body);
 
-                    final body = Map<String, Object?>.from(form.value);
-                    final img = body.remove(JsonKeys.profile_photo) as XFile?;
-
-                    imageBloc.add(ImageEvent.fileUploaded(image: img));
-
-                    formCubit.saveForm(body);
-                  },
-                  authentication: Authentication.REGISTRATION,
-                );
-              },
-              listener: (_, state) async {
-                if (state is FileUploadingState) {
-                  await state.whenOrNull(
-                    complete: (imageUrl) {
-                      final form = formCubit.state;
-                      if (form == null) return;
-
-                      final json = Map<String, dynamic>.from(form);
-                      json[JsonKeys.profile_photo] = imageUrl;
-                      formCubit.saveForm(json);
-
-                      final email = (json[JsonKeys.email] as String?) ?? '';
-                      final password = json[JsonKeys.password] as String? ?? '';
-
-                      final auth = context.read<AuthBloc>();
-                      auth.add(AuthEvent.registeredUser(email, password));
-                    },
-                    exception: _logger.showToast,
-                  );
+                final email = body[JsonKeys.email];
+                if (email == null) {
+                  _logger.showToast('Please provide an email address');
+                  return;
                 }
+                if (email is! String) {
+                  _logger.logError('Invalid email address provided');
+                  return;
+                }
+                final password = body[JsonKeys.password];
+                if (password == null) {
+                  _logger.showToast('Please provide a password');
+                  return;
+                }
+                if (password is! String) {
+                  _logger.logError('Invalid password provided');
+                  return;
+                }
+
+                context.read<AuthBloc>().add(
+                      AuthEvent.registeredUser(email, password),
+                    );
               },
+              authentication: Authentication.REGISTRATION,
             ),
 
             const SizedBox(height: 16),
