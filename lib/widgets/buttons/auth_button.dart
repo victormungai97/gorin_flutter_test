@@ -1,4 +1,5 @@
 import 'package:bcrypt/bcrypt.dart' as bcrypt;
+import 'package:firebase_auth/firebase_auth.dart' as fAuth;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gorin_test_project/blocs/blocs.dart';
@@ -7,6 +8,7 @@ import 'package:gorin_test_project/models/models.dart';
 import 'package:gorin_test_project/navigation/navigation.dart';
 import 'package:gorin_test_project/utils/utils.dart';
 import 'package:gorin_test_project/widgets/widgets.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AuthButton extends StatelessWidget {
   const AuthButton({
@@ -25,6 +27,9 @@ class AuthButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formCubit = context.watch<FormCubit>();
+    final form = formCubit.state;
+
     return Center(
       child: Column(
         children: [
@@ -32,8 +37,6 @@ class AuthButton extends StatelessWidget {
             listener: (context, state) {
               _loading.value = state is UserSavingInProgress ||
                   state is ObtainUserInProgress;
-              // _loading.value = (state is UserSavingState) &&
-              //     (state.whenOrNull(userSavingInProgress: () => true) ?? false);
 
               if (state is UserSavingState) {
                 state.whenOrNull(
@@ -55,7 +58,8 @@ class AuthButton extends StatelessWidget {
                   obtainUserSuccess: (user) {
                     switch (authentication) {
                       case Authentication.LOGIN:
-                        final form = context.read<FormCubit>().state;
+                        /* INCASE THERE IS NEED TO VALIDATE PASSWORD LOCALLY
+
                         if (form == null) {
                           _message.value = 'Cannot get user details';
                           return;
@@ -73,6 +77,8 @@ class AuthButton extends StatelessWidget {
                           _message.value = 'Invalid password provided';
                           return;
                         }
+
+                        */
                         context.read<AuthenticatedUserCubit>().save(user);
                         context.navigateReplace(Paths.home);
                         break;
@@ -101,10 +107,54 @@ class AuthButton extends StatelessWidget {
 
                   if (widget != null) return widget;
 
-                  return PrimaryButton(
-                    text: text,
-                    onPressed: onPressed,
-                    textColor: const Color(0xFF1A237E),
+                  return BlocConsumer<ImageBloc, ImageState>(
+                    builder: (_, state) {
+                      Widget? widget;
+
+                      if (state is FileUploadingState) {
+                        widget = state.whenOrNull(
+                          loading: (_) => const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      }
+
+                      if (widget != null) return widget;
+
+                      return PrimaryButton(
+                        text: text,
+                        onPressed: onPressed,
+                        textColor: const Color(0xFF1A237E),
+                      );
+                    },
+                    listener: (_, state) async {
+                      _loading.value = state is FileUploadingLoading ||
+                          state is ImagePickingLoading;
+
+                      if (state is FileUploadingState) {
+                        await state.whenOrNull(
+                          complete: (imageUrl) {
+                            if (form == null) return;
+
+                            final json = Map<String, dynamic>.from(form);
+                            json[JsonKeys.profile_photo] = imageUrl;
+                            final user = json.remove('user') as fAuth.User?;
+                            json[JsonKeys.id] = user?.uid;
+                            final person = UserModel.fromJson(json);
+                            final userModel = person.copyWith(
+                              password: bcrypt.BCrypt.hashpw(
+                                person.password,
+                                bcrypt.BCrypt.gensalt(),
+                              ),
+                            );
+                            context.read<FirestoreBloc>().add(
+                                  FirestoreEvent.savedUser(userModel),
+                                );
+                          },
+                          exception: (error) => _message.value = error,
+                        );
+                      }
+                    },
                   );
                 }),
                 listener: ((context, state) {
@@ -112,25 +162,21 @@ class AuthButton extends StatelessWidget {
 
                   state.whenOrNull(
                     authenticationSuccess: (user) {
-                      final form = context.read<FormCubit>().state;
                       if (form == null) {
                         _message.value = 'Cannot get user details';
                         return;
                       }
 
-                      FirestoreEvent event;
                       switch (authentication) {
                         case Authentication.REGISTRATION:
-                          final json = Map<String, dynamic>.from(form);
-                          json[JsonKeys.id] = user?.uid;
-                          final person = UserModel.fromJson(json);
-                          final userModel = person.copyWith(
-                            password: bcrypt.BCrypt.hashpw(
-                              person.password,
-                              bcrypt.BCrypt.gensalt(),
-                            ),
-                          );
-                          event = FirestoreEvent.savedUser(userModel);
+                          final body = Map<String, dynamic>.from(form);
+                          final img = body.remove('picture') as XFile?;
+                          body['user'] = user;
+
+                          final imageBloc = context.read<ImageBloc>();
+                          imageBloc.add(ImageEvent.fileUploaded(image: img));
+                          formCubit.saveForm(body);
+
                           break;
                         case Authentication.LOGIN:
                           final email = form[JsonKeys.email];
@@ -138,10 +184,11 @@ class AuthButton extends StatelessWidget {
                             _message.value = 'Cannot get user email address';
                             return;
                           }
-                          event = FirestoreEvent.userGot(email);
+                          context.read<FirestoreBloc>().add(
+                                FirestoreEvent.userGot(email),
+                              );
                           break;
                       }
-                      context.read<FirestoreBloc>().add(event);
                     },
                     authenticationFailure: (error) => _message.value = error,
                   );
@@ -157,6 +204,13 @@ class AuthButton extends StatelessWidget {
                   if (state || message == null || message.isEmpty) {
                     return const SizedBox.shrink();
                   }
+
+                  // Clear error message
+                  Future.delayed(
+                    const Duration(milliseconds: 1800),
+                    () => _message.value = null,
+                  );
+
                   return Padding(
                     padding: const EdgeInsets.only(top: 25),
                     child: Text(
