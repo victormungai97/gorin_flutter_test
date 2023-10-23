@@ -20,18 +20,21 @@ mixin _$FirestoreEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(UserModel user) savedUser,
+    required TResult Function(String emailAddress) userGot,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(UserModel user)? savedUser,
+    TResult? Function(String emailAddress)? userGot,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(UserModel user)? savedUser,
+    TResult Function(String emailAddress)? userGot,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +42,21 @@ mixin _$FirestoreEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
     required TResult Function(_SavedUser value) savedUser,
+    required TResult Function(_UserGot value) userGot,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
     TResult? Function(_SavedUser value)? savedUser,
+    TResult? Function(_UserGot value)? userGot,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
     TResult Function(_SavedUser value)? savedUser,
+    TResult Function(_UserGot value)? userGot,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -114,6 +120,7 @@ class _$StartedImpl implements _Started {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(UserModel user) savedUser,
+    required TResult Function(String emailAddress) userGot,
   }) {
     return started();
   }
@@ -123,6 +130,7 @@ class _$StartedImpl implements _Started {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(UserModel user)? savedUser,
+    TResult? Function(String emailAddress)? userGot,
   }) {
     return started?.call();
   }
@@ -132,6 +140,7 @@ class _$StartedImpl implements _Started {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(UserModel user)? savedUser,
+    TResult Function(String emailAddress)? userGot,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -145,6 +154,7 @@ class _$StartedImpl implements _Started {
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
     required TResult Function(_SavedUser value) savedUser,
+    required TResult Function(_UserGot value) userGot,
   }) {
     return started(this);
   }
@@ -154,6 +164,7 @@ class _$StartedImpl implements _Started {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
     TResult? Function(_SavedUser value)? savedUser,
+    TResult? Function(_UserGot value)? userGot,
   }) {
     return started?.call(this);
   }
@@ -163,6 +174,7 @@ class _$StartedImpl implements _Started {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
     TResult Function(_SavedUser value)? savedUser,
+    TResult Function(_UserGot value)? userGot,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -252,6 +264,7 @@ class _$SavedUserImpl implements _SavedUser {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(UserModel user) savedUser,
+    required TResult Function(String emailAddress) userGot,
   }) {
     return savedUser(user);
   }
@@ -261,6 +274,7 @@ class _$SavedUserImpl implements _SavedUser {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(UserModel user)? savedUser,
+    TResult? Function(String emailAddress)? userGot,
   }) {
     return savedUser?.call(user);
   }
@@ -270,6 +284,7 @@ class _$SavedUserImpl implements _SavedUser {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(UserModel user)? savedUser,
+    TResult Function(String emailAddress)? userGot,
     required TResult orElse(),
   }) {
     if (savedUser != null) {
@@ -283,6 +298,7 @@ class _$SavedUserImpl implements _SavedUser {
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
     required TResult Function(_SavedUser value) savedUser,
+    required TResult Function(_UserGot value) userGot,
   }) {
     return savedUser(this);
   }
@@ -292,6 +308,7 @@ class _$SavedUserImpl implements _SavedUser {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
     TResult? Function(_SavedUser value)? savedUser,
+    TResult? Function(_UserGot value)? userGot,
   }) {
     return savedUser?.call(this);
   }
@@ -301,6 +318,7 @@ class _$SavedUserImpl implements _SavedUser {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
     TResult Function(_SavedUser value)? savedUser,
+    TResult Function(_UserGot value)? userGot,
     required TResult orElse(),
   }) {
     if (savedUser != null) {
@@ -320,12 +338,152 @@ abstract class _SavedUser implements FirestoreEvent {
 }
 
 /// @nodoc
-mixin _$FirestoreState {
+abstract class _$$UserGotImplCopyWith<$Res> {
+  factory _$$UserGotImplCopyWith(
+          _$UserGotImpl value, $Res Function(_$UserGotImpl) then) =
+      __$$UserGotImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String emailAddress});
+}
+
+/// @nodoc
+class __$$UserGotImplCopyWithImpl<$Res>
+    extends _$FirestoreEventCopyWithImpl<$Res, _$UserGotImpl>
+    implements _$$UserGotImplCopyWith<$Res> {
+  __$$UserGotImplCopyWithImpl(
+      _$UserGotImpl _value, $Res Function(_$UserGotImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? emailAddress = null,
+  }) {
+    return _then(_$UserGotImpl(
+      null == emailAddress
+          ? _value.emailAddress
+          : emailAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$UserGotImpl implements _UserGot {
+  const _$UserGotImpl(this.emailAddress);
+
+  @override
+  final String emailAddress;
+
+  @override
+  String toString() {
+    return 'FirestoreEvent.userGot(emailAddress: $emailAddress)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UserGotImpl &&
+            (identical(other.emailAddress, emailAddress) ||
+                other.emailAddress == emailAddress));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, emailAddress);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UserGotImplCopyWith<_$UserGotImpl> get copyWith =>
+      __$$UserGotImplCopyWithImpl<_$UserGotImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(UserModel user) savedUser,
+    required TResult Function(String emailAddress) userGot,
+  }) {
+    return userGot(emailAddress);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(UserModel user)? savedUser,
+    TResult? Function(String emailAddress)? userGot,
+  }) {
+    return userGot?.call(emailAddress);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(UserModel user)? savedUser,
+    TResult Function(String emailAddress)? userGot,
+    required TResult orElse(),
+  }) {
+    if (userGot != null) {
+      return userGot(emailAddress);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_SavedUser value) savedUser,
+    required TResult Function(_UserGot value) userGot,
+  }) {
+    return userGot(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_SavedUser value)? savedUser,
+    TResult? Function(_UserGot value)? userGot,
+  }) {
+    return userGot?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_SavedUser value)? savedUser,
+    TResult Function(_UserGot value)? userGot,
+    required TResult orElse(),
+  }) {
+    if (userGot != null) {
+      return userGot(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UserGot implements FirestoreEvent {
+  const factory _UserGot(final String emailAddress) = _$UserGotImpl;
+
+  String get emailAddress;
+  @JsonKey(ignore: true)
+  _$$UserGotImplCopyWith<_$UserGotImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$UserSavingState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() userSavingInProgress,
-    required TResult Function(UserModel? user) userSavingSuccess,
+    required TResult Function(UserModel user) userSavingSuccess,
     required TResult Function(String exception) userSavingFailure,
   }) =>
       throw _privateConstructorUsedError;
@@ -333,7 +491,7 @@ mixin _$FirestoreState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? userSavingInProgress,
-    TResult? Function(UserModel? user)? userSavingSuccess,
+    TResult? Function(UserModel user)? userSavingSuccess,
     TResult? Function(String exception)? userSavingFailure,
   }) =>
       throw _privateConstructorUsedError;
@@ -341,14 +499,14 @@ mixin _$FirestoreState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? userSavingInProgress,
-    TResult Function(UserModel? user)? userSavingSuccess,
+    TResult Function(UserModel user)? userSavingSuccess,
     TResult Function(String exception)? userSavingFailure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
+    required TResult Function(UserSavingInitial value) initial,
     required TResult Function(UserSavingInProgress value) userSavingInProgress,
     required TResult Function(UserSavingSuccess value) userSavingSuccess,
     required TResult Function(UserSavingFailure value) userSavingFailure,
@@ -356,7 +514,7 @@ mixin _$FirestoreState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
+    TResult? Function(UserSavingInitial value)? initial,
     TResult? Function(UserSavingInProgress value)? userSavingInProgress,
     TResult? Function(UserSavingSuccess value)? userSavingSuccess,
     TResult? Function(UserSavingFailure value)? userSavingFailure,
@@ -364,7 +522,7 @@ mixin _$FirestoreState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
+    TResult Function(UserSavingInitial value)? initial,
     TResult Function(UserSavingInProgress value)? userSavingInProgress,
     TResult Function(UserSavingSuccess value)? userSavingSuccess,
     TResult Function(UserSavingFailure value)? userSavingFailure,
@@ -374,16 +532,16 @@ mixin _$FirestoreState {
 }
 
 /// @nodoc
-abstract class $FirestoreStateCopyWith<$Res> {
-  factory $FirestoreStateCopyWith(
-          FirestoreState value, $Res Function(FirestoreState) then) =
-      _$FirestoreStateCopyWithImpl<$Res, FirestoreState>;
+abstract class $UserSavingStateCopyWith<$Res> {
+  factory $UserSavingStateCopyWith(
+          UserSavingState value, $Res Function(UserSavingState) then) =
+      _$UserSavingStateCopyWithImpl<$Res, UserSavingState>;
 }
 
 /// @nodoc
-class _$FirestoreStateCopyWithImpl<$Res, $Val extends FirestoreState>
-    implements $FirestoreStateCopyWith<$Res> {
-  _$FirestoreStateCopyWithImpl(this._value, this._then);
+class _$UserSavingStateCopyWithImpl<$Res, $Val extends UserSavingState>
+    implements $UserSavingStateCopyWith<$Res> {
+  _$UserSavingStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -392,35 +550,35 @@ class _$FirestoreStateCopyWithImpl<$Res, $Val extends FirestoreState>
 }
 
 /// @nodoc
-abstract class _$$InitialImplCopyWith<$Res> {
-  factory _$$InitialImplCopyWith(
-          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
-      __$$InitialImplCopyWithImpl<$Res>;
+abstract class _$$UserSavingInitialImplCopyWith<$Res> {
+  factory _$$UserSavingInitialImplCopyWith(_$UserSavingInitialImpl value,
+          $Res Function(_$UserSavingInitialImpl) then) =
+      __$$UserSavingInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$InitialImplCopyWithImpl<$Res>
-    extends _$FirestoreStateCopyWithImpl<$Res, _$InitialImpl>
-    implements _$$InitialImplCopyWith<$Res> {
-  __$$InitialImplCopyWithImpl(
-      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
+class __$$UserSavingInitialImplCopyWithImpl<$Res>
+    extends _$UserSavingStateCopyWithImpl<$Res, _$UserSavingInitialImpl>
+    implements _$$UserSavingInitialImplCopyWith<$Res> {
+  __$$UserSavingInitialImplCopyWithImpl(_$UserSavingInitialImpl _value,
+      $Res Function(_$UserSavingInitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$InitialImpl implements _Initial {
-  const _$InitialImpl();
+class _$UserSavingInitialImpl implements UserSavingInitial {
+  const _$UserSavingInitialImpl();
 
   @override
   String toString() {
-    return 'FirestoreState.initial()';
+    return 'UserSavingState.initial()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InitialImpl);
+        (other.runtimeType == runtimeType && other is _$UserSavingInitialImpl);
   }
 
   @override
@@ -431,7 +589,7 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() userSavingInProgress,
-    required TResult Function(UserModel? user) userSavingSuccess,
+    required TResult Function(UserModel user) userSavingSuccess,
     required TResult Function(String exception) userSavingFailure,
   }) {
     return initial();
@@ -442,7 +600,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? userSavingInProgress,
-    TResult? Function(UserModel? user)? userSavingSuccess,
+    TResult? Function(UserModel user)? userSavingSuccess,
     TResult? Function(String exception)? userSavingFailure,
   }) {
     return initial?.call();
@@ -453,7 +611,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? userSavingInProgress,
-    TResult Function(UserModel? user)? userSavingSuccess,
+    TResult Function(UserModel user)? userSavingSuccess,
     TResult Function(String exception)? userSavingFailure,
     required TResult orElse(),
   }) {
@@ -466,7 +624,7 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
+    required TResult Function(UserSavingInitial value) initial,
     required TResult Function(UserSavingInProgress value) userSavingInProgress,
     required TResult Function(UserSavingSuccess value) userSavingSuccess,
     required TResult Function(UserSavingFailure value) userSavingFailure,
@@ -477,7 +635,7 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
+    TResult? Function(UserSavingInitial value)? initial,
     TResult? Function(UserSavingInProgress value)? userSavingInProgress,
     TResult? Function(UserSavingSuccess value)? userSavingSuccess,
     TResult? Function(UserSavingFailure value)? userSavingFailure,
@@ -488,7 +646,7 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
+    TResult Function(UserSavingInitial value)? initial,
     TResult Function(UserSavingInProgress value)? userSavingInProgress,
     TResult Function(UserSavingSuccess value)? userSavingSuccess,
     TResult Function(UserSavingFailure value)? userSavingFailure,
@@ -501,8 +659,8 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements FirestoreState {
-  const factory _Initial() = _$InitialImpl;
+abstract class UserSavingInitial implements UserSavingState {
+  const factory UserSavingInitial() = _$UserSavingInitialImpl;
 }
 
 /// @nodoc
@@ -514,7 +672,7 @@ abstract class _$$UserSavingInProgressImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$UserSavingInProgressImplCopyWithImpl<$Res>
-    extends _$FirestoreStateCopyWithImpl<$Res, _$UserSavingInProgressImpl>
+    extends _$UserSavingStateCopyWithImpl<$Res, _$UserSavingInProgressImpl>
     implements _$$UserSavingInProgressImplCopyWith<$Res> {
   __$$UserSavingInProgressImplCopyWithImpl(_$UserSavingInProgressImpl _value,
       $Res Function(_$UserSavingInProgressImpl) _then)
@@ -528,7 +686,7 @@ class _$UserSavingInProgressImpl implements UserSavingInProgress {
 
   @override
   String toString() {
-    return 'FirestoreState.userSavingInProgress()';
+    return 'UserSavingState.userSavingInProgress()';
   }
 
   @override
@@ -546,7 +704,7 @@ class _$UserSavingInProgressImpl implements UserSavingInProgress {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() userSavingInProgress,
-    required TResult Function(UserModel? user) userSavingSuccess,
+    required TResult Function(UserModel user) userSavingSuccess,
     required TResult Function(String exception) userSavingFailure,
   }) {
     return userSavingInProgress();
@@ -557,7 +715,7 @@ class _$UserSavingInProgressImpl implements UserSavingInProgress {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? userSavingInProgress,
-    TResult? Function(UserModel? user)? userSavingSuccess,
+    TResult? Function(UserModel user)? userSavingSuccess,
     TResult? Function(String exception)? userSavingFailure,
   }) {
     return userSavingInProgress?.call();
@@ -568,7 +726,7 @@ class _$UserSavingInProgressImpl implements UserSavingInProgress {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? userSavingInProgress,
-    TResult Function(UserModel? user)? userSavingSuccess,
+    TResult Function(UserModel user)? userSavingSuccess,
     TResult Function(String exception)? userSavingFailure,
     required TResult orElse(),
   }) {
@@ -581,7 +739,7 @@ class _$UserSavingInProgressImpl implements UserSavingInProgress {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
+    required TResult Function(UserSavingInitial value) initial,
     required TResult Function(UserSavingInProgress value) userSavingInProgress,
     required TResult Function(UserSavingSuccess value) userSavingSuccess,
     required TResult Function(UserSavingFailure value) userSavingFailure,
@@ -592,7 +750,7 @@ class _$UserSavingInProgressImpl implements UserSavingInProgress {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
+    TResult? Function(UserSavingInitial value)? initial,
     TResult? Function(UserSavingInProgress value)? userSavingInProgress,
     TResult? Function(UserSavingSuccess value)? userSavingSuccess,
     TResult? Function(UserSavingFailure value)? userSavingFailure,
@@ -603,7 +761,7 @@ class _$UserSavingInProgressImpl implements UserSavingInProgress {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
+    TResult Function(UserSavingInitial value)? initial,
     TResult Function(UserSavingInProgress value)? userSavingInProgress,
     TResult Function(UserSavingSuccess value)? userSavingSuccess,
     TResult Function(UserSavingFailure value)? userSavingFailure,
@@ -616,7 +774,7 @@ class _$UserSavingInProgressImpl implements UserSavingInProgress {
   }
 }
 
-abstract class UserSavingInProgress implements FirestoreState {
+abstract class UserSavingInProgress implements UserSavingState {
   const factory UserSavingInProgress() = _$UserSavingInProgressImpl;
 }
 
@@ -626,14 +784,14 @@ abstract class _$$UserSavingSuccessImplCopyWith<$Res> {
           $Res Function(_$UserSavingSuccessImpl) then) =
       __$$UserSavingSuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({UserModel? user});
+  $Res call({UserModel user});
 
-  $UserModelCopyWith<$Res>? get user;
+  $UserModelCopyWith<$Res> get user;
 }
 
 /// @nodoc
 class __$$UserSavingSuccessImplCopyWithImpl<$Res>
-    extends _$FirestoreStateCopyWithImpl<$Res, _$UserSavingSuccessImpl>
+    extends _$UserSavingStateCopyWithImpl<$Res, _$UserSavingSuccessImpl>
     implements _$$UserSavingSuccessImplCopyWith<$Res> {
   __$$UserSavingSuccessImplCopyWithImpl(_$UserSavingSuccessImpl _value,
       $Res Function(_$UserSavingSuccessImpl) _then)
@@ -642,24 +800,20 @@ class __$$UserSavingSuccessImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = freezed,
+    Object? user = null,
   }) {
     return _then(_$UserSavingSuccessImpl(
-      freezed == user
+      null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as UserModel?,
+              as UserModel,
     ));
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $UserModelCopyWith<$Res>? get user {
-    if (_value.user == null) {
-      return null;
-    }
-
-    return $UserModelCopyWith<$Res>(_value.user!, (value) {
+  $UserModelCopyWith<$Res> get user {
+    return $UserModelCopyWith<$Res>(_value.user, (value) {
       return _then(_value.copyWith(user: value));
     });
   }
@@ -671,11 +825,11 @@ class _$UserSavingSuccessImpl implements UserSavingSuccess {
   const _$UserSavingSuccessImpl(this.user);
 
   @override
-  final UserModel? user;
+  final UserModel user;
 
   @override
   String toString() {
-    return 'FirestoreState.userSavingSuccess(user: $user)';
+    return 'UserSavingState.userSavingSuccess(user: $user)';
   }
 
   @override
@@ -701,7 +855,7 @@ class _$UserSavingSuccessImpl implements UserSavingSuccess {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() userSavingInProgress,
-    required TResult Function(UserModel? user) userSavingSuccess,
+    required TResult Function(UserModel user) userSavingSuccess,
     required TResult Function(String exception) userSavingFailure,
   }) {
     return userSavingSuccess(user);
@@ -712,7 +866,7 @@ class _$UserSavingSuccessImpl implements UserSavingSuccess {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? userSavingInProgress,
-    TResult? Function(UserModel? user)? userSavingSuccess,
+    TResult? Function(UserModel user)? userSavingSuccess,
     TResult? Function(String exception)? userSavingFailure,
   }) {
     return userSavingSuccess?.call(user);
@@ -723,7 +877,7 @@ class _$UserSavingSuccessImpl implements UserSavingSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? userSavingInProgress,
-    TResult Function(UserModel? user)? userSavingSuccess,
+    TResult Function(UserModel user)? userSavingSuccess,
     TResult Function(String exception)? userSavingFailure,
     required TResult orElse(),
   }) {
@@ -736,7 +890,7 @@ class _$UserSavingSuccessImpl implements UserSavingSuccess {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
+    required TResult Function(UserSavingInitial value) initial,
     required TResult Function(UserSavingInProgress value) userSavingInProgress,
     required TResult Function(UserSavingSuccess value) userSavingSuccess,
     required TResult Function(UserSavingFailure value) userSavingFailure,
@@ -747,7 +901,7 @@ class _$UserSavingSuccessImpl implements UserSavingSuccess {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
+    TResult? Function(UserSavingInitial value)? initial,
     TResult? Function(UserSavingInProgress value)? userSavingInProgress,
     TResult? Function(UserSavingSuccess value)? userSavingSuccess,
     TResult? Function(UserSavingFailure value)? userSavingFailure,
@@ -758,7 +912,7 @@ class _$UserSavingSuccessImpl implements UserSavingSuccess {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
+    TResult Function(UserSavingInitial value)? initial,
     TResult Function(UserSavingInProgress value)? userSavingInProgress,
     TResult Function(UserSavingSuccess value)? userSavingSuccess,
     TResult Function(UserSavingFailure value)? userSavingFailure,
@@ -771,11 +925,11 @@ class _$UserSavingSuccessImpl implements UserSavingSuccess {
   }
 }
 
-abstract class UserSavingSuccess implements FirestoreState {
-  const factory UserSavingSuccess(final UserModel? user) =
+abstract class UserSavingSuccess implements UserSavingState {
+  const factory UserSavingSuccess(final UserModel user) =
       _$UserSavingSuccessImpl;
 
-  UserModel? get user;
+  UserModel get user;
   @JsonKey(ignore: true)
   _$$UserSavingSuccessImplCopyWith<_$UserSavingSuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -792,7 +946,7 @@ abstract class _$$UserSavingFailureImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$UserSavingFailureImplCopyWithImpl<$Res>
-    extends _$FirestoreStateCopyWithImpl<$Res, _$UserSavingFailureImpl>
+    extends _$UserSavingStateCopyWithImpl<$Res, _$UserSavingFailureImpl>
     implements _$$UserSavingFailureImplCopyWith<$Res> {
   __$$UserSavingFailureImplCopyWithImpl(_$UserSavingFailureImpl _value,
       $Res Function(_$UserSavingFailureImpl) _then)
@@ -822,7 +976,7 @@ class _$UserSavingFailureImpl implements UserSavingFailure {
 
   @override
   String toString() {
-    return 'FirestoreState.userSavingFailure(exception: $exception)';
+    return 'UserSavingState.userSavingFailure(exception: $exception)';
   }
 
   @override
@@ -849,7 +1003,7 @@ class _$UserSavingFailureImpl implements UserSavingFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() userSavingInProgress,
-    required TResult Function(UserModel? user) userSavingSuccess,
+    required TResult Function(UserModel user) userSavingSuccess,
     required TResult Function(String exception) userSavingFailure,
   }) {
     return userSavingFailure(exception);
@@ -860,7 +1014,7 @@ class _$UserSavingFailureImpl implements UserSavingFailure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? userSavingInProgress,
-    TResult? Function(UserModel? user)? userSavingSuccess,
+    TResult? Function(UserModel user)? userSavingSuccess,
     TResult? Function(String exception)? userSavingFailure,
   }) {
     return userSavingFailure?.call(exception);
@@ -871,7 +1025,7 @@ class _$UserSavingFailureImpl implements UserSavingFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? userSavingInProgress,
-    TResult Function(UserModel? user)? userSavingSuccess,
+    TResult Function(UserModel user)? userSavingSuccess,
     TResult Function(String exception)? userSavingFailure,
     required TResult orElse(),
   }) {
@@ -884,7 +1038,7 @@ class _$UserSavingFailureImpl implements UserSavingFailure {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
+    required TResult Function(UserSavingInitial value) initial,
     required TResult Function(UserSavingInProgress value) userSavingInProgress,
     required TResult Function(UserSavingSuccess value) userSavingSuccess,
     required TResult Function(UserSavingFailure value) userSavingFailure,
@@ -895,7 +1049,7 @@ class _$UserSavingFailureImpl implements UserSavingFailure {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
+    TResult? Function(UserSavingInitial value)? initial,
     TResult? Function(UserSavingInProgress value)? userSavingInProgress,
     TResult? Function(UserSavingSuccess value)? userSavingSuccess,
     TResult? Function(UserSavingFailure value)? userSavingFailure,
@@ -906,7 +1060,7 @@ class _$UserSavingFailureImpl implements UserSavingFailure {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
+    TResult Function(UserSavingInitial value)? initial,
     TResult Function(UserSavingInProgress value)? userSavingInProgress,
     TResult Function(UserSavingSuccess value)? userSavingSuccess,
     TResult Function(UserSavingFailure value)? userSavingFailure,
@@ -919,12 +1073,618 @@ class _$UserSavingFailureImpl implements UserSavingFailure {
   }
 }
 
-abstract class UserSavingFailure implements FirestoreState {
+abstract class UserSavingFailure implements UserSavingState {
   const factory UserSavingFailure({required final String exception}) =
       _$UserSavingFailureImpl;
 
   String get exception;
   @JsonKey(ignore: true)
   _$$UserSavingFailureImplCopyWith<_$UserSavingFailureImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$ObtainUserState {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() obtainUserInProgress,
+    required TResult Function(UserModel user) obtainUserSuccess,
+    required TResult Function(String exception) obtainUserFailure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? obtainUserInProgress,
+    TResult? Function(UserModel user)? obtainUserSuccess,
+    TResult? Function(String exception)? obtainUserFailure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? obtainUserInProgress,
+    TResult Function(UserModel user)? obtainUserSuccess,
+    TResult Function(String exception)? obtainUserFailure,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ObtainUserInitial value) initial,
+    required TResult Function(ObtainUserInProgress value) obtainUserInProgress,
+    required TResult Function(ObtainUserSuccess value) obtainUserSuccess,
+    required TResult Function(ObtainUserFailure value) obtainUserFailure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ObtainUserInitial value)? initial,
+    TResult? Function(ObtainUserInProgress value)? obtainUserInProgress,
+    TResult? Function(ObtainUserSuccess value)? obtainUserSuccess,
+    TResult? Function(ObtainUserFailure value)? obtainUserFailure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ObtainUserInitial value)? initial,
+    TResult Function(ObtainUserInProgress value)? obtainUserInProgress,
+    TResult Function(ObtainUserSuccess value)? obtainUserSuccess,
+    TResult Function(ObtainUserFailure value)? obtainUserFailure,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ObtainUserStateCopyWith<$Res> {
+  factory $ObtainUserStateCopyWith(
+          ObtainUserState value, $Res Function(ObtainUserState) then) =
+      _$ObtainUserStateCopyWithImpl<$Res, ObtainUserState>;
+}
+
+/// @nodoc
+class _$ObtainUserStateCopyWithImpl<$Res, $Val extends ObtainUserState>
+    implements $ObtainUserStateCopyWith<$Res> {
+  _$ObtainUserStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$ObtainUserInitialImplCopyWith<$Res> {
+  factory _$$ObtainUserInitialImplCopyWith(_$ObtainUserInitialImpl value,
+          $Res Function(_$ObtainUserInitialImpl) then) =
+      __$$ObtainUserInitialImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$ObtainUserInitialImplCopyWithImpl<$Res>
+    extends _$ObtainUserStateCopyWithImpl<$Res, _$ObtainUserInitialImpl>
+    implements _$$ObtainUserInitialImplCopyWith<$Res> {
+  __$$ObtainUserInitialImplCopyWithImpl(_$ObtainUserInitialImpl _value,
+      $Res Function(_$ObtainUserInitialImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$ObtainUserInitialImpl implements ObtainUserInitial {
+  const _$ObtainUserInitialImpl();
+
+  @override
+  String toString() {
+    return 'ObtainUserState.initial()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$ObtainUserInitialImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() obtainUserInProgress,
+    required TResult Function(UserModel user) obtainUserSuccess,
+    required TResult Function(String exception) obtainUserFailure,
+  }) {
+    return initial();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? obtainUserInProgress,
+    TResult? Function(UserModel user)? obtainUserSuccess,
+    TResult? Function(String exception)? obtainUserFailure,
+  }) {
+    return initial?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? obtainUserInProgress,
+    TResult Function(UserModel user)? obtainUserSuccess,
+    TResult Function(String exception)? obtainUserFailure,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ObtainUserInitial value) initial,
+    required TResult Function(ObtainUserInProgress value) obtainUserInProgress,
+    required TResult Function(ObtainUserSuccess value) obtainUserSuccess,
+    required TResult Function(ObtainUserFailure value) obtainUserFailure,
+  }) {
+    return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ObtainUserInitial value)? initial,
+    TResult? Function(ObtainUserInProgress value)? obtainUserInProgress,
+    TResult? Function(ObtainUserSuccess value)? obtainUserSuccess,
+    TResult? Function(ObtainUserFailure value)? obtainUserFailure,
+  }) {
+    return initial?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ObtainUserInitial value)? initial,
+    TResult Function(ObtainUserInProgress value)? obtainUserInProgress,
+    TResult Function(ObtainUserSuccess value)? obtainUserSuccess,
+    TResult Function(ObtainUserFailure value)? obtainUserFailure,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ObtainUserInitial implements ObtainUserState {
+  const factory ObtainUserInitial() = _$ObtainUserInitialImpl;
+}
+
+/// @nodoc
+abstract class _$$ObtainUserInProgressImplCopyWith<$Res> {
+  factory _$$ObtainUserInProgressImplCopyWith(_$ObtainUserInProgressImpl value,
+          $Res Function(_$ObtainUserInProgressImpl) then) =
+      __$$ObtainUserInProgressImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$ObtainUserInProgressImplCopyWithImpl<$Res>
+    extends _$ObtainUserStateCopyWithImpl<$Res, _$ObtainUserInProgressImpl>
+    implements _$$ObtainUserInProgressImplCopyWith<$Res> {
+  __$$ObtainUserInProgressImplCopyWithImpl(_$ObtainUserInProgressImpl _value,
+      $Res Function(_$ObtainUserInProgressImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$ObtainUserInProgressImpl implements ObtainUserInProgress {
+  const _$ObtainUserInProgressImpl();
+
+  @override
+  String toString() {
+    return 'ObtainUserState.obtainUserInProgress()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ObtainUserInProgressImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() obtainUserInProgress,
+    required TResult Function(UserModel user) obtainUserSuccess,
+    required TResult Function(String exception) obtainUserFailure,
+  }) {
+    return obtainUserInProgress();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? obtainUserInProgress,
+    TResult? Function(UserModel user)? obtainUserSuccess,
+    TResult? Function(String exception)? obtainUserFailure,
+  }) {
+    return obtainUserInProgress?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? obtainUserInProgress,
+    TResult Function(UserModel user)? obtainUserSuccess,
+    TResult Function(String exception)? obtainUserFailure,
+    required TResult orElse(),
+  }) {
+    if (obtainUserInProgress != null) {
+      return obtainUserInProgress();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ObtainUserInitial value) initial,
+    required TResult Function(ObtainUserInProgress value) obtainUserInProgress,
+    required TResult Function(ObtainUserSuccess value) obtainUserSuccess,
+    required TResult Function(ObtainUserFailure value) obtainUserFailure,
+  }) {
+    return obtainUserInProgress(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ObtainUserInitial value)? initial,
+    TResult? Function(ObtainUserInProgress value)? obtainUserInProgress,
+    TResult? Function(ObtainUserSuccess value)? obtainUserSuccess,
+    TResult? Function(ObtainUserFailure value)? obtainUserFailure,
+  }) {
+    return obtainUserInProgress?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ObtainUserInitial value)? initial,
+    TResult Function(ObtainUserInProgress value)? obtainUserInProgress,
+    TResult Function(ObtainUserSuccess value)? obtainUserSuccess,
+    TResult Function(ObtainUserFailure value)? obtainUserFailure,
+    required TResult orElse(),
+  }) {
+    if (obtainUserInProgress != null) {
+      return obtainUserInProgress(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ObtainUserInProgress implements ObtainUserState {
+  const factory ObtainUserInProgress() = _$ObtainUserInProgressImpl;
+}
+
+/// @nodoc
+abstract class _$$ObtainUserSuccessImplCopyWith<$Res> {
+  factory _$$ObtainUserSuccessImplCopyWith(_$ObtainUserSuccessImpl value,
+          $Res Function(_$ObtainUserSuccessImpl) then) =
+      __$$ObtainUserSuccessImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({UserModel user});
+
+  $UserModelCopyWith<$Res> get user;
+}
+
+/// @nodoc
+class __$$ObtainUserSuccessImplCopyWithImpl<$Res>
+    extends _$ObtainUserStateCopyWithImpl<$Res, _$ObtainUserSuccessImpl>
+    implements _$$ObtainUserSuccessImplCopyWith<$Res> {
+  __$$ObtainUserSuccessImplCopyWithImpl(_$ObtainUserSuccessImpl _value,
+      $Res Function(_$ObtainUserSuccessImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = null,
+  }) {
+    return _then(_$ObtainUserSuccessImpl(
+      null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserModel,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserModelCopyWith<$Res> get user {
+    return $UserModelCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$ObtainUserSuccessImpl implements ObtainUserSuccess {
+  const _$ObtainUserSuccessImpl(this.user);
+
+  @override
+  final UserModel user;
+
+  @override
+  String toString() {
+    return 'ObtainUserState.obtainUserSuccess(user: $user)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ObtainUserSuccessImpl &&
+            (identical(other.user, user) || other.user == user));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, user);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ObtainUserSuccessImplCopyWith<_$ObtainUserSuccessImpl> get copyWith =>
+      __$$ObtainUserSuccessImplCopyWithImpl<_$ObtainUserSuccessImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() obtainUserInProgress,
+    required TResult Function(UserModel user) obtainUserSuccess,
+    required TResult Function(String exception) obtainUserFailure,
+  }) {
+    return obtainUserSuccess(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? obtainUserInProgress,
+    TResult? Function(UserModel user)? obtainUserSuccess,
+    TResult? Function(String exception)? obtainUserFailure,
+  }) {
+    return obtainUserSuccess?.call(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? obtainUserInProgress,
+    TResult Function(UserModel user)? obtainUserSuccess,
+    TResult Function(String exception)? obtainUserFailure,
+    required TResult orElse(),
+  }) {
+    if (obtainUserSuccess != null) {
+      return obtainUserSuccess(user);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ObtainUserInitial value) initial,
+    required TResult Function(ObtainUserInProgress value) obtainUserInProgress,
+    required TResult Function(ObtainUserSuccess value) obtainUserSuccess,
+    required TResult Function(ObtainUserFailure value) obtainUserFailure,
+  }) {
+    return obtainUserSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ObtainUserInitial value)? initial,
+    TResult? Function(ObtainUserInProgress value)? obtainUserInProgress,
+    TResult? Function(ObtainUserSuccess value)? obtainUserSuccess,
+    TResult? Function(ObtainUserFailure value)? obtainUserFailure,
+  }) {
+    return obtainUserSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ObtainUserInitial value)? initial,
+    TResult Function(ObtainUserInProgress value)? obtainUserInProgress,
+    TResult Function(ObtainUserSuccess value)? obtainUserSuccess,
+    TResult Function(ObtainUserFailure value)? obtainUserFailure,
+    required TResult orElse(),
+  }) {
+    if (obtainUserSuccess != null) {
+      return obtainUserSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ObtainUserSuccess implements ObtainUserState {
+  const factory ObtainUserSuccess(final UserModel user) =
+      _$ObtainUserSuccessImpl;
+
+  UserModel get user;
+  @JsonKey(ignore: true)
+  _$$ObtainUserSuccessImplCopyWith<_$ObtainUserSuccessImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ObtainUserFailureImplCopyWith<$Res> {
+  factory _$$ObtainUserFailureImplCopyWith(_$ObtainUserFailureImpl value,
+          $Res Function(_$ObtainUserFailureImpl) then) =
+      __$$ObtainUserFailureImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String exception});
+}
+
+/// @nodoc
+class __$$ObtainUserFailureImplCopyWithImpl<$Res>
+    extends _$ObtainUserStateCopyWithImpl<$Res, _$ObtainUserFailureImpl>
+    implements _$$ObtainUserFailureImplCopyWith<$Res> {
+  __$$ObtainUserFailureImplCopyWithImpl(_$ObtainUserFailureImpl _value,
+      $Res Function(_$ObtainUserFailureImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? exception = null,
+  }) {
+    return _then(_$ObtainUserFailureImpl(
+      exception: null == exception
+          ? _value.exception
+          : exception // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ObtainUserFailureImpl implements ObtainUserFailure {
+  const _$ObtainUserFailureImpl({required this.exception});
+
+  @override
+  final String exception;
+
+  @override
+  String toString() {
+    return 'ObtainUserState.obtainUserFailure(exception: $exception)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ObtainUserFailureImpl &&
+            (identical(other.exception, exception) ||
+                other.exception == exception));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, exception);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ObtainUserFailureImplCopyWith<_$ObtainUserFailureImpl> get copyWith =>
+      __$$ObtainUserFailureImplCopyWithImpl<_$ObtainUserFailureImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() obtainUserInProgress,
+    required TResult Function(UserModel user) obtainUserSuccess,
+    required TResult Function(String exception) obtainUserFailure,
+  }) {
+    return obtainUserFailure(exception);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? obtainUserInProgress,
+    TResult? Function(UserModel user)? obtainUserSuccess,
+    TResult? Function(String exception)? obtainUserFailure,
+  }) {
+    return obtainUserFailure?.call(exception);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? obtainUserInProgress,
+    TResult Function(UserModel user)? obtainUserSuccess,
+    TResult Function(String exception)? obtainUserFailure,
+    required TResult orElse(),
+  }) {
+    if (obtainUserFailure != null) {
+      return obtainUserFailure(exception);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ObtainUserInitial value) initial,
+    required TResult Function(ObtainUserInProgress value) obtainUserInProgress,
+    required TResult Function(ObtainUserSuccess value) obtainUserSuccess,
+    required TResult Function(ObtainUserFailure value) obtainUserFailure,
+  }) {
+    return obtainUserFailure(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ObtainUserInitial value)? initial,
+    TResult? Function(ObtainUserInProgress value)? obtainUserInProgress,
+    TResult? Function(ObtainUserSuccess value)? obtainUserSuccess,
+    TResult? Function(ObtainUserFailure value)? obtainUserFailure,
+  }) {
+    return obtainUserFailure?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ObtainUserInitial value)? initial,
+    TResult Function(ObtainUserInProgress value)? obtainUserInProgress,
+    TResult Function(ObtainUserSuccess value)? obtainUserSuccess,
+    TResult Function(ObtainUserFailure value)? obtainUserFailure,
+    required TResult orElse(),
+  }) {
+    if (obtainUserFailure != null) {
+      return obtainUserFailure(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ObtainUserFailure implements ObtainUserState {
+  const factory ObtainUserFailure({required final String exception}) =
+      _$ObtainUserFailureImpl;
+
+  String get exception;
+  @JsonKey(ignore: true)
+  _$$ObtainUserFailureImplCopyWith<_$ObtainUserFailureImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

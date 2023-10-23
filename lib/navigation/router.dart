@@ -15,13 +15,16 @@ class CustomRouter {
     debugLogDiagnostics: _environment != Environment.production,
     // Set all routes to be used
     routes: <GoRoute>[
-      GoRoute(path: Paths.root, builder: (_, state) => const LoginPage()),
+      GoRoute(
+        path: Paths.root,
+        builder: (context, state) {
+          final state = context.read<AuthenticatedUserCubit>().state;
+          return state == null ? const LoginPage() : const HomePage();
+        },
+      ),
       GoRoute(path: Paths.home, builder: (_, state) => const HomePage()),
       GoRoute(path: Paths.login, builder: (_, state) => const LoginPage()),
-      GoRoute(
-        path: Paths.register,
-        builder: (_, state) => const RegisterPage(),
-      ),
+      GoRoute(path: Paths.register, builder: (_, s) => const RegisterPage()),
     ],
 
     // First route to be rendered when app starts

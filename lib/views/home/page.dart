@@ -11,9 +11,13 @@ class HomePage extends StatelessWidget {
           BlocConsumer<AuthBloc, AuthState>(
             listener: (context, state) {
               state.whenOrNull(
-                authenticationSuccess: (_) => context.navigateReplace(
-                  Paths.login,
-                ),
+                authenticationSuccess: (_) {
+                  context.read<AuthenticatedUserCubit>().remove();
+                  context.read<FirestoreBloc>().add(
+                        const FirestoreEvent.started(),
+                      );
+                  context.navigateReplace(Paths.login);
+                },
                 authenticationFailure: LoggingService.instance.log,
               );
             },
