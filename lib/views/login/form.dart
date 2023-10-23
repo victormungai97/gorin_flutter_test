@@ -131,6 +131,10 @@ class _Form extends StatelessWidget {
                         "${form.control(JsonKeys.password).value ?? ''}",
                       ),
                     );
+
+                context.read<FormCubit>().saveForm(
+                      Map<String, Object?>.from(form.value),
+                    );
               },
               authentication: Authentication.LOGIN,
             ),

@@ -12,7 +12,7 @@ part 'firestore_bloc.freezed.dart';
 const _logger = LoggingService.instance;
 
 class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
-  FirestoreBloc(this._environment) : super(_Initial()) {
+  FirestoreBloc(this._environment) : super(const FirestoreInitial()) {
     final application = FirebaseFirestore.instance.collection('application');
     switch (_environment) {
       case Environment.local:
@@ -25,16 +25,17 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
     }
 
     on<FirestoreEvent>((event, emit) {
-      event.whenOrNull(
+      event.when(
         savedUser: _saveUser,
-        started: () => emit(const FirestoreState.initial()),
+        started: () => emit(const FirestoreInitial()),
+        userGot: _getUser,
       );
     });
   }
 
   Future<void> _saveUser(UserModel userModel) async {
     try {
-      emit(const FirestoreState.userSavingInProgress());
+      emit(const UserSavingState.userSavingInProgress());
 
       final picture = userModel.profilePicture;
       final user = picture == null || picture.isEmpty
@@ -49,14 +50,23 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
 
       UserModel? person;
       if (userId.isEmpty) {
-        person = await _users?.add(details).then((value) {
-          return user.copyWith(userId: value.id);
+        person = await _users?.add(details).then((doc) {
+          return user.copyWith(userId: doc.id);
         });
       } else {
         person = await _users?.doc(userId).set(details).then((_) => user);
       }
 
-      emit(FirestoreState.userSavingSuccess(person));
+      if (person == null) {
+        emit(
+          const UserSavingState.userSavingFailure(
+            exception: 'Unable to get user account',
+          ),
+        );
+        return;
+      }
+
+      emit(UserSavingState.userSavingSuccess(person));
     } catch (error, stackTrace) {
       await _logger.log(
         error,
@@ -64,8 +74,50 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
         stackTrace: stackTrace,
       );
       emit(
-        const FirestoreState.userSavingFailure(
+        const UserSavingState.userSavingFailure(
           exception: 'Error while updating account',
+        ),
+      );
+    }
+  }
+
+  Future<void> _getUser(String emailAddress) async {
+    try {
+      emit(const ObtainUserState.obtainUserInProgress());
+
+      final querySnapshot = await _users
+          ?.where(
+            JsonKeys.email,
+            isEqualTo: emailAddress,
+          )
+          .get();
+      if (querySnapshot == null) {
+        emit(const ObtainUserFailure(exception: 'User details not got'));
+        return;
+      }
+
+      final doc = querySnapshot.docs.firstOrNull;
+      final json = doc?.data();
+      if (json == null) {
+        emit(const ObtainUserFailure(exception: 'User details not retrieved'));
+        return;
+      }
+      if (json is! Map<String, dynamic>) {
+        emit(const ObtainUserFailure(exception: 'Invalid user details'));
+        return;
+      }
+
+      final user = UserModel.fromJson(json).copyWith(userId: doc?.id ?? '');
+      emit(ObtainUserState.obtainUserSuccess(user));
+    } catch (error, stackTrace) {
+      await _logger.log(
+        error,
+        label: 'FAILED GETTING USER',
+        stackTrace: stackTrace,
+      );
+      emit(
+        const ObtainUserState.obtainUserFailure(
+          exception: 'Error while getting account',
         ),
       );
     }

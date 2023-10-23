@@ -27,40 +27,25 @@ class _Body extends StatelessWidget {
             MultiBlocListener(
               listeners: [
                 BlocListener<AuthBloc, AuthState>(
-                  listener: (context, state) {
-                    _ongoing.value = state.whenOrNull(
-                          authenticationInProgress: () => true,
-                        ) ??
-                        false;
+                  listener: (_, state) {
+                    _ongoing.value = state is AuthenticationInProgress;
                   },
                 ),
                 BlocListener<FirestoreBloc, FirestoreState>(
-                  listener: (context, state) {
-                    _ongoing.value = state.whenOrNull(
-                          userSavingInProgress: () => true,
-                        ) ??
-                        false;
+                  listener: (_, state) {
+                    _ongoing.value = state is UserSavingInProgress;
                   },
                 ),
                 BlocListener<ImageBloc, ImageState>(
-                  listener: (context, state) {
-                    if (state is FileUploadingState) {
-                      Future(() {
-                        _ongoing.value = state.whenOrNull(
-                              loading: (_) => true,
-                            ) ??
-                            false;
-                      });
-                    } else {
-                      _ongoing.value = false;
-                    }
+                  listener: (_, state) {
+                    _ongoing.value = state is FileUploadingLoading;
                   },
                 ),
               ],
               child: ValueListenableBuilder(
                 builder: (buildContext, state, child) {
-                  debugPrint('REGISTRATION ONGOING!!\t${state}');
                   if (state) return const SizedBox.shrink();
+
                   return GestureDetector(
                     onTap: () => context.navigateReplace(Paths.login),
                     child: Column(

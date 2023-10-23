@@ -5,19 +5,28 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gorin_test_project/blocs/blocs.dart';
+import 'package:gorin_test_project/cubits/cubits.dart';
 import 'package:gorin_test_project/firebase_options/firebase_options.dart';
 import 'package:gorin_test_project/navigation/navigation.dart';
 import 'package:gorin_test_project/services/services.dart';
 import 'package:gorin_test_project/utils/utils.dart';
 import 'package:gorin_test_project/views/error/error.dart';
 import 'package:gorin_test_project/widgets/widgets.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
+import 'package:path_provider/path_provider.dart';
 
 const _logger = LoggingService.instance;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: kIsWeb
+        ? HydratedStorage.webStorageDirectory
+        : await getTemporaryDirectory(),
+  );
 
   runApp(
     BlocProvider(create: (_) => FlavorBloc(), child: const App()),
@@ -66,6 +75,7 @@ class App extends StatelessWidget {
                     BlocProvider(create: (_) => FirestoreBloc(environment)),
                     BlocProvider(create: (_) => AuthBloc()),
                     BlocProvider(create: (_) => ImageBloc(environment)),
+                    BlocProvider(create: (_) => AuthenticatedUserCubit()),
                   ],
                   child: const _App(),
                 ),
@@ -118,7 +128,8 @@ class _App extends StatelessWidget {
       child: Consumer<FirebaseApp?>(
         builder: (context, firebaseApp, widget) {
           if (firebaseApp == null) {
-            return const _ErrorApp(message: 'Please wait as the app initializes');
+            return const _ErrorApp(
+                message: 'Please wait as the app initializes');
           }
           final router = CustomRouter(
             environment ?? Environment.unspecified,
@@ -132,7 +143,6 @@ class _App extends StatelessWidget {
         },
       ),
       onInit: () {
-
         FlutterError.onError = _logger.log;
 
         PlatformDispatcher.instance.onError = (error, stackTrace) {
@@ -141,7 +151,6 @@ class _App extends StatelessWidget {
         };
 
         Bloc.observer = const LocalBlocObserver();
-
       },
     );
   }
