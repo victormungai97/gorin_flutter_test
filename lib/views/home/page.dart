@@ -5,38 +5,14 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          BlocConsumer<AuthBloc, AuthState>(
-            listener: (context, state) {
-              state.whenOrNull(
-                authenticationSuccess: (_) {
-                  context.read<AuthenticatedUserCubit>().remove();
-                  context.read<FirestoreBloc>().add(
-                        const FirestoreEvent.started(),
-                      );
-                  context.navigateReplace(Paths.login);
-                },
-                authenticationFailure: LoggingService.instance.log,
-              );
-            },
-            builder: (context, state) {
-              if (state is AuthenticationInProgress) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              return IconButton(
-                onPressed: () => context.read<AuthBloc>().add(
-                      AuthEvent.signedUserOut(),
-                    ),
-                icon: Icon(Icons.logout),
-              );
-            },
-          ),
-        ],
+    return StatefulWrapper(
+      child: Scaffold(
+        body: const _Body(),
+        backgroundColor: const Color(0xffdde0ec),
       ),
-      body: _Body(),
-      backgroundColor: const Color(0xffdde0ec),
+      onInit: () => context.read<FirestoreBloc>().add(
+            const FirestoreEvent.retrievedUsers(),
+          ),
     );
   }
 }

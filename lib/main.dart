@@ -87,7 +87,7 @@ class App extends StatelessWidget {
                 error: exception,
                 level: Level.SEVERE.value,
               );
-              return const _ErrorApp(
+              return const _TempApp(
                 message: 'There was a problem starting the application',
               );
             },
@@ -99,17 +99,21 @@ class App extends StatelessWidget {
   }
 }
 
-class _ErrorApp extends StatelessWidget {
-  const _ErrorApp({this.message}) : super(key: const ValueKey('_ErrorPage'));
+class _TempApp extends StatelessWidget {
+  const _TempApp({this.message, this.isLoading = false})
+      : super(
+          key: const ValueKey('_TempPage'),
+        );
 
   final String? message;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: theme,
       title: "Gorin Test Project",
-      home: ErrorPage(message: message),
+      home: ErrorPage(message: message, loading: isLoading),
       debugShowCheckedModeBanner: true,
     );
   }
@@ -128,8 +132,10 @@ class _App extends StatelessWidget {
       child: Consumer<FirebaseApp?>(
         builder: (context, firebaseApp, widget) {
           if (firebaseApp == null) {
-            return const _ErrorApp(
-                message: 'Please wait as the app initializes');
+            return const _TempApp(
+              message: 'Please wait as the app initializes',
+              isLoading: true,
+            );
           }
           final router = CustomRouter(
             environment ?? Environment.unspecified,

@@ -4,6 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:gorin_test_project/models/models.dart';
 import 'package:gorin_test_project/services/services.dart';
 import 'package:gorin_test_project/utils/utils.dart';
+import 'package:tuple/tuple.dart';
 
 part 'firestore_event.dart';
 part 'firestore_state.dart';
@@ -19,13 +20,14 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
       case Environment.development:
       case Environment.staging:
       case Environment.production:
-        _users = application.doc(_environment?.name).collection('users');
+        users = application.doc(_environment?.name).collection('users');
       default:
-        _users = null;
+        users = null;
     }
 
     on<FirestoreEvent>((event, emit) {
       event.when(
+        retrievedUsers: _retrieveUsers,
         savedUser: _saveUser,
         started: () => emit(const FirestoreInitial()),
         userGot: _getUser,
@@ -50,11 +52,11 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
 
       UserModel? person;
       if (userId.isEmpty) {
-        person = await _users?.add(details).then((doc) {
+        person = await users?.add(details).then((doc) {
           return user.copyWith(userId: doc.id);
         });
       } else {
-        person = await _users?.doc(userId).set(details).then((_) => user);
+        person = await users?.doc(userId).set(details).then((_) => user);
       }
 
       if (person == null) {
@@ -85,7 +87,7 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
     try {
       emit(const ObtainUserState.obtainUserInProgress());
 
-      final querySnapshot = await _users
+      final querySnapshot = await users
           ?.where(
             JsonKeys.email,
             isEqualTo: emailAddress,
@@ -123,7 +125,60 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
     }
   }
 
-  late final CollectionReference? _users;
+  Future<void> _retrieveUsers() async {
+    try {
+      emit(const RetrieveUsersState.retrieveUsersInProgress());
+
+      final snapshot = await users?.get();
+
+      if (snapshot == null) {
+        emit(
+          const RetrieveUsersState.retrieveUsersFailure(
+            exception: 'Could not obtain users',
+          ),
+        );
+        return;
+      }
+      final _users = <UserModel>[];
+      final jsons = snapshot.docs.map((e) => Tuple2(e.id, e.data())).toList();
+      for (final pair in jsons.indexed) {
+        final index = pair.$1;
+        final tuple = pair.$2;
+        final id = tuple.item1;
+        final json = tuple.item2;
+        if (json == null) {
+          await _logger.logError('Details for user ${index + 1} not retrieved');
+          continue;
+        }
+        if (json is! Map<String, dynamic>) {
+          await _logger.logError('Invalid details for user ${index + 1}');
+          continue;
+        }
+        _users.add(UserModel.fromJson(json).copyWith(userId: id));
+      }
+      if (_users.isEmpty) {
+        emit(
+          const RetrieveUsersState.retrieveUsersFailure(
+            exception: 'No users found',
+          ),
+        );
+      }
+      emit(RetrieveUsersSuccess(_users));
+    } catch (error, stackTrace) {
+      await _logger.log(
+        error,
+        label: 'FAILED RETRIEVING USERS',
+        stackTrace: stackTrace,
+      );
+      emit(
+        const ObtainUserState.obtainUserFailure(
+          exception: 'Error while retrieving users',
+        ),
+      );
+    }
+  }
+
+  late final CollectionReference? users;
 
   final Environment? _environment;
 }

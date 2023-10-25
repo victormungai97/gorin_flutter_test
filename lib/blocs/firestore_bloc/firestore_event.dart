@@ -7,4 +7,6 @@ class FirestoreEvent with _$FirestoreEvent {
   const factory FirestoreEvent.savedUser(UserModel user) = _SavedUser;
 
   const factory FirestoreEvent.userGot(String emailAddress) = _UserGot;
+
+  const factory FirestoreEvent.retrievedUsers() = _RetrievedUsers;
 }
