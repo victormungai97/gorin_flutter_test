@@ -21,6 +21,7 @@ mixin _$FirestoreEvent {
     required TResult Function() started,
     required TResult Function(UserModel user) savedUser,
     required TResult Function(String emailAddress) userGot,
+    required TResult Function() retrievedUsers,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -28,6 +29,7 @@ mixin _$FirestoreEvent {
     TResult? Function()? started,
     TResult? Function(UserModel user)? savedUser,
     TResult? Function(String emailAddress)? userGot,
+    TResult? Function()? retrievedUsers,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -35,6 +37,7 @@ mixin _$FirestoreEvent {
     TResult Function()? started,
     TResult Function(UserModel user)? savedUser,
     TResult Function(String emailAddress)? userGot,
+    TResult Function()? retrievedUsers,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -43,6 +46,7 @@ mixin _$FirestoreEvent {
     required TResult Function(_Started value) started,
     required TResult Function(_SavedUser value) savedUser,
     required TResult Function(_UserGot value) userGot,
+    required TResult Function(_RetrievedUsers value) retrievedUsers,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -50,6 +54,7 @@ mixin _$FirestoreEvent {
     TResult? Function(_Started value)? started,
     TResult? Function(_SavedUser value)? savedUser,
     TResult? Function(_UserGot value)? userGot,
+    TResult? Function(_RetrievedUsers value)? retrievedUsers,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -57,6 +62,7 @@ mixin _$FirestoreEvent {
     TResult Function(_Started value)? started,
     TResult Function(_SavedUser value)? savedUser,
     TResult Function(_UserGot value)? userGot,
+    TResult Function(_RetrievedUsers value)? retrievedUsers,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -121,6 +127,7 @@ class _$StartedImpl implements _Started {
     required TResult Function() started,
     required TResult Function(UserModel user) savedUser,
     required TResult Function(String emailAddress) userGot,
+    required TResult Function() retrievedUsers,
   }) {
     return started();
   }
@@ -131,6 +138,7 @@ class _$StartedImpl implements _Started {
     TResult? Function()? started,
     TResult? Function(UserModel user)? savedUser,
     TResult? Function(String emailAddress)? userGot,
+    TResult? Function()? retrievedUsers,
   }) {
     return started?.call();
   }
@@ -141,6 +149,7 @@ class _$StartedImpl implements _Started {
     TResult Function()? started,
     TResult Function(UserModel user)? savedUser,
     TResult Function(String emailAddress)? userGot,
+    TResult Function()? retrievedUsers,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -155,6 +164,7 @@ class _$StartedImpl implements _Started {
     required TResult Function(_Started value) started,
     required TResult Function(_SavedUser value) savedUser,
     required TResult Function(_UserGot value) userGot,
+    required TResult Function(_RetrievedUsers value) retrievedUsers,
   }) {
     return started(this);
   }
@@ -165,6 +175,7 @@ class _$StartedImpl implements _Started {
     TResult? Function(_Started value)? started,
     TResult? Function(_SavedUser value)? savedUser,
     TResult? Function(_UserGot value)? userGot,
+    TResult? Function(_RetrievedUsers value)? retrievedUsers,
   }) {
     return started?.call(this);
   }
@@ -175,6 +186,7 @@ class _$StartedImpl implements _Started {
     TResult Function(_Started value)? started,
     TResult Function(_SavedUser value)? savedUser,
     TResult Function(_UserGot value)? userGot,
+    TResult Function(_RetrievedUsers value)? retrievedUsers,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -265,6 +277,7 @@ class _$SavedUserImpl implements _SavedUser {
     required TResult Function() started,
     required TResult Function(UserModel user) savedUser,
     required TResult Function(String emailAddress) userGot,
+    required TResult Function() retrievedUsers,
   }) {
     return savedUser(user);
   }
@@ -275,6 +288,7 @@ class _$SavedUserImpl implements _SavedUser {
     TResult? Function()? started,
     TResult? Function(UserModel user)? savedUser,
     TResult? Function(String emailAddress)? userGot,
+    TResult? Function()? retrievedUsers,
   }) {
     return savedUser?.call(user);
   }
@@ -285,6 +299,7 @@ class _$SavedUserImpl implements _SavedUser {
     TResult Function()? started,
     TResult Function(UserModel user)? savedUser,
     TResult Function(String emailAddress)? userGot,
+    TResult Function()? retrievedUsers,
     required TResult orElse(),
   }) {
     if (savedUser != null) {
@@ -299,6 +314,7 @@ class _$SavedUserImpl implements _SavedUser {
     required TResult Function(_Started value) started,
     required TResult Function(_SavedUser value) savedUser,
     required TResult Function(_UserGot value) userGot,
+    required TResult Function(_RetrievedUsers value) retrievedUsers,
   }) {
     return savedUser(this);
   }
@@ -309,6 +325,7 @@ class _$SavedUserImpl implements _SavedUser {
     TResult? Function(_Started value)? started,
     TResult? Function(_SavedUser value)? savedUser,
     TResult? Function(_UserGot value)? userGot,
+    TResult? Function(_RetrievedUsers value)? retrievedUsers,
   }) {
     return savedUser?.call(this);
   }
@@ -319,6 +336,7 @@ class _$SavedUserImpl implements _SavedUser {
     TResult Function(_Started value)? started,
     TResult Function(_SavedUser value)? savedUser,
     TResult Function(_UserGot value)? userGot,
+    TResult Function(_RetrievedUsers value)? retrievedUsers,
     required TResult orElse(),
   }) {
     if (savedUser != null) {
@@ -405,6 +423,7 @@ class _$UserGotImpl implements _UserGot {
     required TResult Function() started,
     required TResult Function(UserModel user) savedUser,
     required TResult Function(String emailAddress) userGot,
+    required TResult Function() retrievedUsers,
   }) {
     return userGot(emailAddress);
   }
@@ -415,6 +434,7 @@ class _$UserGotImpl implements _UserGot {
     TResult? Function()? started,
     TResult? Function(UserModel user)? savedUser,
     TResult? Function(String emailAddress)? userGot,
+    TResult? Function()? retrievedUsers,
   }) {
     return userGot?.call(emailAddress);
   }
@@ -425,6 +445,7 @@ class _$UserGotImpl implements _UserGot {
     TResult Function()? started,
     TResult Function(UserModel user)? savedUser,
     TResult Function(String emailAddress)? userGot,
+    TResult Function()? retrievedUsers,
     required TResult orElse(),
   }) {
     if (userGot != null) {
@@ -439,6 +460,7 @@ class _$UserGotImpl implements _UserGot {
     required TResult Function(_Started value) started,
     required TResult Function(_SavedUser value) savedUser,
     required TResult Function(_UserGot value) userGot,
+    required TResult Function(_RetrievedUsers value) retrievedUsers,
   }) {
     return userGot(this);
   }
@@ -449,6 +471,7 @@ class _$UserGotImpl implements _UserGot {
     TResult? Function(_Started value)? started,
     TResult? Function(_SavedUser value)? savedUser,
     TResult? Function(_UserGot value)? userGot,
+    TResult? Function(_RetrievedUsers value)? retrievedUsers,
   }) {
     return userGot?.call(this);
   }
@@ -459,6 +482,7 @@ class _$UserGotImpl implements _UserGot {
     TResult Function(_Started value)? started,
     TResult Function(_SavedUser value)? savedUser,
     TResult Function(_UserGot value)? userGot,
+    TResult Function(_RetrievedUsers value)? retrievedUsers,
     required TResult orElse(),
   }) {
     if (userGot != null) {
@@ -475,6 +499,120 @@ abstract class _UserGot implements FirestoreEvent {
   @JsonKey(ignore: true)
   _$$UserGotImplCopyWith<_$UserGotImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$RetrievedUsersImplCopyWith<$Res> {
+  factory _$$RetrievedUsersImplCopyWith(_$RetrievedUsersImpl value,
+          $Res Function(_$RetrievedUsersImpl) then) =
+      __$$RetrievedUsersImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$RetrievedUsersImplCopyWithImpl<$Res>
+    extends _$FirestoreEventCopyWithImpl<$Res, _$RetrievedUsersImpl>
+    implements _$$RetrievedUsersImplCopyWith<$Res> {
+  __$$RetrievedUsersImplCopyWithImpl(
+      _$RetrievedUsersImpl _value, $Res Function(_$RetrievedUsersImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$RetrievedUsersImpl implements _RetrievedUsers {
+  const _$RetrievedUsersImpl();
+
+  @override
+  String toString() {
+    return 'FirestoreEvent.retrievedUsers()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$RetrievedUsersImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(UserModel user) savedUser,
+    required TResult Function(String emailAddress) userGot,
+    required TResult Function() retrievedUsers,
+  }) {
+    return retrievedUsers();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(UserModel user)? savedUser,
+    TResult? Function(String emailAddress)? userGot,
+    TResult? Function()? retrievedUsers,
+  }) {
+    return retrievedUsers?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(UserModel user)? savedUser,
+    TResult Function(String emailAddress)? userGot,
+    TResult Function()? retrievedUsers,
+    required TResult orElse(),
+  }) {
+    if (retrievedUsers != null) {
+      return retrievedUsers();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_SavedUser value) savedUser,
+    required TResult Function(_UserGot value) userGot,
+    required TResult Function(_RetrievedUsers value) retrievedUsers,
+  }) {
+    return retrievedUsers(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_SavedUser value)? savedUser,
+    TResult? Function(_UserGot value)? userGot,
+    TResult? Function(_RetrievedUsers value)? retrievedUsers,
+  }) {
+    return retrievedUsers?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_SavedUser value)? savedUser,
+    TResult Function(_UserGot value)? userGot,
+    TResult Function(_RetrievedUsers value)? retrievedUsers,
+    required TResult orElse(),
+  }) {
+    if (retrievedUsers != null) {
+      return retrievedUsers(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RetrievedUsers implements FirestoreEvent {
+  const factory _RetrievedUsers() = _$RetrievedUsersImpl;
 }
 
 /// @nodoc
@@ -1687,4 +1825,618 @@ abstract class ObtainUserFailure implements ObtainUserState {
   @JsonKey(ignore: true)
   _$$ObtainUserFailureImplCopyWith<_$ObtainUserFailureImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$RetrieveUsersState {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() retrieveUsersInProgress,
+    required TResult Function(List<UserModel> users) retrieveUsersSuccess,
+    required TResult Function(String exception) retrieveUsersFailure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? retrieveUsersInProgress,
+    TResult? Function(List<UserModel> users)? retrieveUsersSuccess,
+    TResult? Function(String exception)? retrieveUsersFailure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? retrieveUsersInProgress,
+    TResult Function(List<UserModel> users)? retrieveUsersSuccess,
+    TResult Function(String exception)? retrieveUsersFailure,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(RetrieveUsersInitial value) initial,
+    required TResult Function(RetrieveUsersInProgress value)
+        retrieveUsersInProgress,
+    required TResult Function(RetrieveUsersSuccess value) retrieveUsersSuccess,
+    required TResult Function(RetrieveUsersFailure value) retrieveUsersFailure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(RetrieveUsersInitial value)? initial,
+    TResult? Function(RetrieveUsersInProgress value)? retrieveUsersInProgress,
+    TResult? Function(RetrieveUsersSuccess value)? retrieveUsersSuccess,
+    TResult? Function(RetrieveUsersFailure value)? retrieveUsersFailure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(RetrieveUsersInitial value)? initial,
+    TResult Function(RetrieveUsersInProgress value)? retrieveUsersInProgress,
+    TResult Function(RetrieveUsersSuccess value)? retrieveUsersSuccess,
+    TResult Function(RetrieveUsersFailure value)? retrieveUsersFailure,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RetrieveUsersStateCopyWith<$Res> {
+  factory $RetrieveUsersStateCopyWith(
+          RetrieveUsersState value, $Res Function(RetrieveUsersState) then) =
+      _$RetrieveUsersStateCopyWithImpl<$Res, RetrieveUsersState>;
+}
+
+/// @nodoc
+class _$RetrieveUsersStateCopyWithImpl<$Res, $Val extends RetrieveUsersState>
+    implements $RetrieveUsersStateCopyWith<$Res> {
+  _$RetrieveUsersStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$RetrieveUsersInitialImplCopyWith<$Res> {
+  factory _$$RetrieveUsersInitialImplCopyWith(_$RetrieveUsersInitialImpl value,
+          $Res Function(_$RetrieveUsersInitialImpl) then) =
+      __$$RetrieveUsersInitialImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$RetrieveUsersInitialImplCopyWithImpl<$Res>
+    extends _$RetrieveUsersStateCopyWithImpl<$Res, _$RetrieveUsersInitialImpl>
+    implements _$$RetrieveUsersInitialImplCopyWith<$Res> {
+  __$$RetrieveUsersInitialImplCopyWithImpl(_$RetrieveUsersInitialImpl _value,
+      $Res Function(_$RetrieveUsersInitialImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$RetrieveUsersInitialImpl implements RetrieveUsersInitial {
+  const _$RetrieveUsersInitialImpl();
+
+  @override
+  String toString() {
+    return 'RetrieveUsersState.initial()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RetrieveUsersInitialImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() retrieveUsersInProgress,
+    required TResult Function(List<UserModel> users) retrieveUsersSuccess,
+    required TResult Function(String exception) retrieveUsersFailure,
+  }) {
+    return initial();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? retrieveUsersInProgress,
+    TResult? Function(List<UserModel> users)? retrieveUsersSuccess,
+    TResult? Function(String exception)? retrieveUsersFailure,
+  }) {
+    return initial?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? retrieveUsersInProgress,
+    TResult Function(List<UserModel> users)? retrieveUsersSuccess,
+    TResult Function(String exception)? retrieveUsersFailure,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(RetrieveUsersInitial value) initial,
+    required TResult Function(RetrieveUsersInProgress value)
+        retrieveUsersInProgress,
+    required TResult Function(RetrieveUsersSuccess value) retrieveUsersSuccess,
+    required TResult Function(RetrieveUsersFailure value) retrieveUsersFailure,
+  }) {
+    return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(RetrieveUsersInitial value)? initial,
+    TResult? Function(RetrieveUsersInProgress value)? retrieveUsersInProgress,
+    TResult? Function(RetrieveUsersSuccess value)? retrieveUsersSuccess,
+    TResult? Function(RetrieveUsersFailure value)? retrieveUsersFailure,
+  }) {
+    return initial?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(RetrieveUsersInitial value)? initial,
+    TResult Function(RetrieveUsersInProgress value)? retrieveUsersInProgress,
+    TResult Function(RetrieveUsersSuccess value)? retrieveUsersSuccess,
+    TResult Function(RetrieveUsersFailure value)? retrieveUsersFailure,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class RetrieveUsersInitial implements RetrieveUsersState {
+  const factory RetrieveUsersInitial() = _$RetrieveUsersInitialImpl;
+}
+
+/// @nodoc
+abstract class _$$RetrieveUsersInProgressImplCopyWith<$Res> {
+  factory _$$RetrieveUsersInProgressImplCopyWith(
+          _$RetrieveUsersInProgressImpl value,
+          $Res Function(_$RetrieveUsersInProgressImpl) then) =
+      __$$RetrieveUsersInProgressImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$RetrieveUsersInProgressImplCopyWithImpl<$Res>
+    extends _$RetrieveUsersStateCopyWithImpl<$Res,
+        _$RetrieveUsersInProgressImpl>
+    implements _$$RetrieveUsersInProgressImplCopyWith<$Res> {
+  __$$RetrieveUsersInProgressImplCopyWithImpl(
+      _$RetrieveUsersInProgressImpl _value,
+      $Res Function(_$RetrieveUsersInProgressImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$RetrieveUsersInProgressImpl implements RetrieveUsersInProgress {
+  const _$RetrieveUsersInProgressImpl();
+
+  @override
+  String toString() {
+    return 'RetrieveUsersState.retrieveUsersInProgress()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RetrieveUsersInProgressImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() retrieveUsersInProgress,
+    required TResult Function(List<UserModel> users) retrieveUsersSuccess,
+    required TResult Function(String exception) retrieveUsersFailure,
+  }) {
+    return retrieveUsersInProgress();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? retrieveUsersInProgress,
+    TResult? Function(List<UserModel> users)? retrieveUsersSuccess,
+    TResult? Function(String exception)? retrieveUsersFailure,
+  }) {
+    return retrieveUsersInProgress?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? retrieveUsersInProgress,
+    TResult Function(List<UserModel> users)? retrieveUsersSuccess,
+    TResult Function(String exception)? retrieveUsersFailure,
+    required TResult orElse(),
+  }) {
+    if (retrieveUsersInProgress != null) {
+      return retrieveUsersInProgress();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(RetrieveUsersInitial value) initial,
+    required TResult Function(RetrieveUsersInProgress value)
+        retrieveUsersInProgress,
+    required TResult Function(RetrieveUsersSuccess value) retrieveUsersSuccess,
+    required TResult Function(RetrieveUsersFailure value) retrieveUsersFailure,
+  }) {
+    return retrieveUsersInProgress(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(RetrieveUsersInitial value)? initial,
+    TResult? Function(RetrieveUsersInProgress value)? retrieveUsersInProgress,
+    TResult? Function(RetrieveUsersSuccess value)? retrieveUsersSuccess,
+    TResult? Function(RetrieveUsersFailure value)? retrieveUsersFailure,
+  }) {
+    return retrieveUsersInProgress?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(RetrieveUsersInitial value)? initial,
+    TResult Function(RetrieveUsersInProgress value)? retrieveUsersInProgress,
+    TResult Function(RetrieveUsersSuccess value)? retrieveUsersSuccess,
+    TResult Function(RetrieveUsersFailure value)? retrieveUsersFailure,
+    required TResult orElse(),
+  }) {
+    if (retrieveUsersInProgress != null) {
+      return retrieveUsersInProgress(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class RetrieveUsersInProgress implements RetrieveUsersState {
+  const factory RetrieveUsersInProgress() = _$RetrieveUsersInProgressImpl;
+}
+
+/// @nodoc
+abstract class _$$RetrieveUsersSuccessImplCopyWith<$Res> {
+  factory _$$RetrieveUsersSuccessImplCopyWith(_$RetrieveUsersSuccessImpl value,
+          $Res Function(_$RetrieveUsersSuccessImpl) then) =
+      __$$RetrieveUsersSuccessImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<UserModel> users});
+}
+
+/// @nodoc
+class __$$RetrieveUsersSuccessImplCopyWithImpl<$Res>
+    extends _$RetrieveUsersStateCopyWithImpl<$Res, _$RetrieveUsersSuccessImpl>
+    implements _$$RetrieveUsersSuccessImplCopyWith<$Res> {
+  __$$RetrieveUsersSuccessImplCopyWithImpl(_$RetrieveUsersSuccessImpl _value,
+      $Res Function(_$RetrieveUsersSuccessImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? users = null,
+  }) {
+    return _then(_$RetrieveUsersSuccessImpl(
+      null == users
+          ? _value._users
+          : users // ignore: cast_nullable_to_non_nullable
+              as List<UserModel>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$RetrieveUsersSuccessImpl implements RetrieveUsersSuccess {
+  const _$RetrieveUsersSuccessImpl(final List<UserModel> users)
+      : _users = users;
+
+  final List<UserModel> _users;
+  @override
+  List<UserModel> get users {
+    if (_users is EqualUnmodifiableListView) return _users;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_users);
+  }
+
+  @override
+  String toString() {
+    return 'RetrieveUsersState.retrieveUsersSuccess(users: $users)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RetrieveUsersSuccessImpl &&
+            const DeepCollectionEquality().equals(other._users, _users));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_users));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RetrieveUsersSuccessImplCopyWith<_$RetrieveUsersSuccessImpl>
+      get copyWith =>
+          __$$RetrieveUsersSuccessImplCopyWithImpl<_$RetrieveUsersSuccessImpl>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() retrieveUsersInProgress,
+    required TResult Function(List<UserModel> users) retrieveUsersSuccess,
+    required TResult Function(String exception) retrieveUsersFailure,
+  }) {
+    return retrieveUsersSuccess(users);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? retrieveUsersInProgress,
+    TResult? Function(List<UserModel> users)? retrieveUsersSuccess,
+    TResult? Function(String exception)? retrieveUsersFailure,
+  }) {
+    return retrieveUsersSuccess?.call(users);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? retrieveUsersInProgress,
+    TResult Function(List<UserModel> users)? retrieveUsersSuccess,
+    TResult Function(String exception)? retrieveUsersFailure,
+    required TResult orElse(),
+  }) {
+    if (retrieveUsersSuccess != null) {
+      return retrieveUsersSuccess(users);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(RetrieveUsersInitial value) initial,
+    required TResult Function(RetrieveUsersInProgress value)
+        retrieveUsersInProgress,
+    required TResult Function(RetrieveUsersSuccess value) retrieveUsersSuccess,
+    required TResult Function(RetrieveUsersFailure value) retrieveUsersFailure,
+  }) {
+    return retrieveUsersSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(RetrieveUsersInitial value)? initial,
+    TResult? Function(RetrieveUsersInProgress value)? retrieveUsersInProgress,
+    TResult? Function(RetrieveUsersSuccess value)? retrieveUsersSuccess,
+    TResult? Function(RetrieveUsersFailure value)? retrieveUsersFailure,
+  }) {
+    return retrieveUsersSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(RetrieveUsersInitial value)? initial,
+    TResult Function(RetrieveUsersInProgress value)? retrieveUsersInProgress,
+    TResult Function(RetrieveUsersSuccess value)? retrieveUsersSuccess,
+    TResult Function(RetrieveUsersFailure value)? retrieveUsersFailure,
+    required TResult orElse(),
+  }) {
+    if (retrieveUsersSuccess != null) {
+      return retrieveUsersSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class RetrieveUsersSuccess implements RetrieveUsersState {
+  const factory RetrieveUsersSuccess(final List<UserModel> users) =
+      _$RetrieveUsersSuccessImpl;
+
+  List<UserModel> get users;
+  @JsonKey(ignore: true)
+  _$$RetrieveUsersSuccessImplCopyWith<_$RetrieveUsersSuccessImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$RetrieveUsersFailureImplCopyWith<$Res> {
+  factory _$$RetrieveUsersFailureImplCopyWith(_$RetrieveUsersFailureImpl value,
+          $Res Function(_$RetrieveUsersFailureImpl) then) =
+      __$$RetrieveUsersFailureImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String exception});
+}
+
+/// @nodoc
+class __$$RetrieveUsersFailureImplCopyWithImpl<$Res>
+    extends _$RetrieveUsersStateCopyWithImpl<$Res, _$RetrieveUsersFailureImpl>
+    implements _$$RetrieveUsersFailureImplCopyWith<$Res> {
+  __$$RetrieveUsersFailureImplCopyWithImpl(_$RetrieveUsersFailureImpl _value,
+      $Res Function(_$RetrieveUsersFailureImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? exception = null,
+  }) {
+    return _then(_$RetrieveUsersFailureImpl(
+      exception: null == exception
+          ? _value.exception
+          : exception // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$RetrieveUsersFailureImpl implements RetrieveUsersFailure {
+  const _$RetrieveUsersFailureImpl({required this.exception});
+
+  @override
+  final String exception;
+
+  @override
+  String toString() {
+    return 'RetrieveUsersState.retrieveUsersFailure(exception: $exception)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RetrieveUsersFailureImpl &&
+            (identical(other.exception, exception) ||
+                other.exception == exception));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, exception);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RetrieveUsersFailureImplCopyWith<_$RetrieveUsersFailureImpl>
+      get copyWith =>
+          __$$RetrieveUsersFailureImplCopyWithImpl<_$RetrieveUsersFailureImpl>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() retrieveUsersInProgress,
+    required TResult Function(List<UserModel> users) retrieveUsersSuccess,
+    required TResult Function(String exception) retrieveUsersFailure,
+  }) {
+    return retrieveUsersFailure(exception);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? retrieveUsersInProgress,
+    TResult? Function(List<UserModel> users)? retrieveUsersSuccess,
+    TResult? Function(String exception)? retrieveUsersFailure,
+  }) {
+    return retrieveUsersFailure?.call(exception);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? retrieveUsersInProgress,
+    TResult Function(List<UserModel> users)? retrieveUsersSuccess,
+    TResult Function(String exception)? retrieveUsersFailure,
+    required TResult orElse(),
+  }) {
+    if (retrieveUsersFailure != null) {
+      return retrieveUsersFailure(exception);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(RetrieveUsersInitial value) initial,
+    required TResult Function(RetrieveUsersInProgress value)
+        retrieveUsersInProgress,
+    required TResult Function(RetrieveUsersSuccess value) retrieveUsersSuccess,
+    required TResult Function(RetrieveUsersFailure value) retrieveUsersFailure,
+  }) {
+    return retrieveUsersFailure(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(RetrieveUsersInitial value)? initial,
+    TResult? Function(RetrieveUsersInProgress value)? retrieveUsersInProgress,
+    TResult? Function(RetrieveUsersSuccess value)? retrieveUsersSuccess,
+    TResult? Function(RetrieveUsersFailure value)? retrieveUsersFailure,
+  }) {
+    return retrieveUsersFailure?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(RetrieveUsersInitial value)? initial,
+    TResult Function(RetrieveUsersInProgress value)? retrieveUsersInProgress,
+    TResult Function(RetrieveUsersSuccess value)? retrieveUsersSuccess,
+    TResult Function(RetrieveUsersFailure value)? retrieveUsersFailure,
+    required TResult orElse(),
+  }) {
+    if (retrieveUsersFailure != null) {
+      return retrieveUsersFailure(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class RetrieveUsersFailure implements RetrieveUsersState {
+  const factory RetrieveUsersFailure({required final String exception}) =
+      _$RetrieveUsersFailureImpl;
+
+  String get exception;
+  @JsonKey(ignore: true)
+  _$$RetrieveUsersFailureImplCopyWith<_$RetrieveUsersFailureImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

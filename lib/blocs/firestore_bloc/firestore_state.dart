@@ -32,3 +32,16 @@ class ObtainUserState extends FirestoreState with _$ObtainUserState {
     required String exception,
   }) = ObtainUserFailure;
 }
+
+@freezed
+class RetrieveUsersState extends FirestoreState with _$RetrieveUsersState {
+  const factory RetrieveUsersState.initial() = RetrieveUsersInitial;
+  const factory RetrieveUsersState.retrieveUsersInProgress() =
+      RetrieveUsersInProgress;
+  const factory RetrieveUsersState.retrieveUsersSuccess(
+    List<UserModel> users,
+  ) = RetrieveUsersSuccess;
+  const factory RetrieveUsersState.retrieveUsersFailure({
+    required String exception,
+  }) = RetrieveUsersFailure;
+}
