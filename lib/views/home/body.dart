@@ -56,12 +56,24 @@ class _Body extends StatelessWidget {
                           'https://ui-avatars.com/api/?name=${user.name}';
                       return ListTile(
                         contentPadding: EdgeInsets.zero,
-                        leading: CircleAvatar(
-                          backgroundImage: NetworkImage(url),
-                          onBackgroundImageError: (error, stackTrace) async {
-                            await _logger.log(error, stackTrace: stackTrace);
+                        leading: GestureDetector(
+                          onTap: () async {
+                            await showDialog<Object?>(
+                              context: context,
+                              builder: (_) {
+                                return ImageFullScreen(
+                                  backgroundImage: NetworkImage(url),
+                                );
+                              },
+                            );
                           },
-                          backgroundColor: Colors.indigo[600],
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(url),
+                            onBackgroundImageError: (error, trace) async {
+                              await _logger.log(error, stackTrace: trace);
+                            },
+                            backgroundColor: Colors.indigo[600],
+                          ),
                         ),
                         title: Text(user.name),
                       );
