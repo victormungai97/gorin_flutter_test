@@ -7,6 +7,7 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     final loaded = ValueNotifier(false);
     final size = MediaQuery.sizeOf(context);
+
     return SafeArea(
       child: SingleChildScrollView(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
@@ -56,8 +57,11 @@ class _Body extends StatelessWidget {
                       return ListTile(
                         contentPadding: EdgeInsets.zero,
                         leading: CircleAvatar(
-                          backgroundColor: Colors.indigo[600],
                           backgroundImage: NetworkImage(url),
+                          onBackgroundImageError: (error, stackTrace) async {
+                            await _logger.log(error, stackTrace: stackTrace);
+                          },
+                          backgroundColor: Colors.indigo[600],
                         ),
                         title: Text(user.name),
                       );
@@ -71,8 +75,16 @@ class _Body extends StatelessWidget {
                   child: child,
                 );
               },
-              listener: (context, state) {
-                loaded.value = state is RetrieveUsersSuccess;
+              listener: (context, state) async {
+                try {
+                  loaded.value = (state as RetrieveUsersState).whenOrNull(
+                        retrieveUsersSuccess: (_) => true,
+                      ) ??
+                      false;
+                } catch (error, stackTrace) {
+                  await _logger.logError(error, stackTrace);
+                  loaded.value = false;
+                }
               },
             ),
             BlocConsumer<AuthBloc, AuthState>(
@@ -85,7 +97,7 @@ class _Body extends StatelessWidget {
                         );
                     context.navigateReplace(Paths.login);
                   },
-                  authenticationFailure: LoggingService.instance.log,
+                  authenticationFailure: _logger.logError,
                 );
               },
               builder: (context, state) {
