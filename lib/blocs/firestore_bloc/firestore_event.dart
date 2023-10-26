@@ -11,4 +11,8 @@ class FirestoreEvent with _$FirestoreEvent {
   const factory FirestoreEvent.retrievedUsers({
     @Default(true) bool reload,
   }) = _RetrievedUsers;
+
+  const factory FirestoreEvent.firestoreSubscriptionUpdated({
+    @Default(true) bool connect,
+  }) = _FirestoreSubscriptionUpdated;
 }

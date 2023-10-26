@@ -22,6 +22,7 @@ mixin _$FirestoreEvent {
     required TResult Function(UserModel user) savedUser,
     required TResult Function(String emailAddress) userGot,
     required TResult Function(bool reload) retrievedUsers,
+    required TResult Function(bool connect) firestoreSubscriptionUpdated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -30,6 +31,7 @@ mixin _$FirestoreEvent {
     TResult? Function(UserModel user)? savedUser,
     TResult? Function(String emailAddress)? userGot,
     TResult? Function(bool reload)? retrievedUsers,
+    TResult? Function(bool connect)? firestoreSubscriptionUpdated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,6 +40,7 @@ mixin _$FirestoreEvent {
     TResult Function(UserModel user)? savedUser,
     TResult Function(String emailAddress)? userGot,
     TResult Function(bool reload)? retrievedUsers,
+    TResult Function(bool connect)? firestoreSubscriptionUpdated,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -47,6 +50,8 @@ mixin _$FirestoreEvent {
     required TResult Function(_SavedUser value) savedUser,
     required TResult Function(_UserGot value) userGot,
     required TResult Function(_RetrievedUsers value) retrievedUsers,
+    required TResult Function(_FirestoreSubscriptionUpdated value)
+        firestoreSubscriptionUpdated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,6 +60,8 @@ mixin _$FirestoreEvent {
     TResult? Function(_SavedUser value)? savedUser,
     TResult? Function(_UserGot value)? userGot,
     TResult? Function(_RetrievedUsers value)? retrievedUsers,
+    TResult? Function(_FirestoreSubscriptionUpdated value)?
+        firestoreSubscriptionUpdated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,6 +70,8 @@ mixin _$FirestoreEvent {
     TResult Function(_SavedUser value)? savedUser,
     TResult Function(_UserGot value)? userGot,
     TResult Function(_RetrievedUsers value)? retrievedUsers,
+    TResult Function(_FirestoreSubscriptionUpdated value)?
+        firestoreSubscriptionUpdated,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -104,12 +113,18 @@ class __$$StartedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$StartedImpl implements _Started {
+class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
   const _$StartedImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'FirestoreEvent.started()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'FirestoreEvent.started'));
   }
 
   @override
@@ -128,6 +143,7 @@ class _$StartedImpl implements _Started {
     required TResult Function(UserModel user) savedUser,
     required TResult Function(String emailAddress) userGot,
     required TResult Function(bool reload) retrievedUsers,
+    required TResult Function(bool connect) firestoreSubscriptionUpdated,
   }) {
     return started();
   }
@@ -139,6 +155,7 @@ class _$StartedImpl implements _Started {
     TResult? Function(UserModel user)? savedUser,
     TResult? Function(String emailAddress)? userGot,
     TResult? Function(bool reload)? retrievedUsers,
+    TResult? Function(bool connect)? firestoreSubscriptionUpdated,
   }) {
     return started?.call();
   }
@@ -150,6 +167,7 @@ class _$StartedImpl implements _Started {
     TResult Function(UserModel user)? savedUser,
     TResult Function(String emailAddress)? userGot,
     TResult Function(bool reload)? retrievedUsers,
+    TResult Function(bool connect)? firestoreSubscriptionUpdated,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -165,6 +183,8 @@ class _$StartedImpl implements _Started {
     required TResult Function(_SavedUser value) savedUser,
     required TResult Function(_UserGot value) userGot,
     required TResult Function(_RetrievedUsers value) retrievedUsers,
+    required TResult Function(_FirestoreSubscriptionUpdated value)
+        firestoreSubscriptionUpdated,
   }) {
     return started(this);
   }
@@ -176,6 +196,8 @@ class _$StartedImpl implements _Started {
     TResult? Function(_SavedUser value)? savedUser,
     TResult? Function(_UserGot value)? userGot,
     TResult? Function(_RetrievedUsers value)? retrievedUsers,
+    TResult? Function(_FirestoreSubscriptionUpdated value)?
+        firestoreSubscriptionUpdated,
   }) {
     return started?.call(this);
   }
@@ -187,6 +209,8 @@ class _$StartedImpl implements _Started {
     TResult Function(_SavedUser value)? savedUser,
     TResult Function(_UserGot value)? userGot,
     TResult Function(_RetrievedUsers value)? retrievedUsers,
+    TResult Function(_FirestoreSubscriptionUpdated value)?
+        firestoreSubscriptionUpdated,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -243,15 +267,23 @@ class __$$SavedUserImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SavedUserImpl implements _SavedUser {
+class _$SavedUserImpl with DiagnosticableTreeMixin implements _SavedUser {
   const _$SavedUserImpl(this.user);
 
   @override
   final UserModel user;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'FirestoreEvent.savedUser(user: $user)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'FirestoreEvent.savedUser'))
+      ..add(DiagnosticsProperty('user', user));
   }
 
   @override
@@ -278,6 +310,7 @@ class _$SavedUserImpl implements _SavedUser {
     required TResult Function(UserModel user) savedUser,
     required TResult Function(String emailAddress) userGot,
     required TResult Function(bool reload) retrievedUsers,
+    required TResult Function(bool connect) firestoreSubscriptionUpdated,
   }) {
     return savedUser(user);
   }
@@ -289,6 +322,7 @@ class _$SavedUserImpl implements _SavedUser {
     TResult? Function(UserModel user)? savedUser,
     TResult? Function(String emailAddress)? userGot,
     TResult? Function(bool reload)? retrievedUsers,
+    TResult? Function(bool connect)? firestoreSubscriptionUpdated,
   }) {
     return savedUser?.call(user);
   }
@@ -300,6 +334,7 @@ class _$SavedUserImpl implements _SavedUser {
     TResult Function(UserModel user)? savedUser,
     TResult Function(String emailAddress)? userGot,
     TResult Function(bool reload)? retrievedUsers,
+    TResult Function(bool connect)? firestoreSubscriptionUpdated,
     required TResult orElse(),
   }) {
     if (savedUser != null) {
@@ -315,6 +350,8 @@ class _$SavedUserImpl implements _SavedUser {
     required TResult Function(_SavedUser value) savedUser,
     required TResult Function(_UserGot value) userGot,
     required TResult Function(_RetrievedUsers value) retrievedUsers,
+    required TResult Function(_FirestoreSubscriptionUpdated value)
+        firestoreSubscriptionUpdated,
   }) {
     return savedUser(this);
   }
@@ -326,6 +363,8 @@ class _$SavedUserImpl implements _SavedUser {
     TResult? Function(_SavedUser value)? savedUser,
     TResult? Function(_UserGot value)? userGot,
     TResult? Function(_RetrievedUsers value)? retrievedUsers,
+    TResult? Function(_FirestoreSubscriptionUpdated value)?
+        firestoreSubscriptionUpdated,
   }) {
     return savedUser?.call(this);
   }
@@ -337,6 +376,8 @@ class _$SavedUserImpl implements _SavedUser {
     TResult Function(_SavedUser value)? savedUser,
     TResult Function(_UserGot value)? userGot,
     TResult Function(_RetrievedUsers value)? retrievedUsers,
+    TResult Function(_FirestoreSubscriptionUpdated value)?
+        firestoreSubscriptionUpdated,
     required TResult orElse(),
   }) {
     if (savedUser != null) {
@@ -388,15 +429,23 @@ class __$$UserGotImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserGotImpl implements _UserGot {
+class _$UserGotImpl with DiagnosticableTreeMixin implements _UserGot {
   const _$UserGotImpl(this.emailAddress);
 
   @override
   final String emailAddress;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'FirestoreEvent.userGot(emailAddress: $emailAddress)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'FirestoreEvent.userGot'))
+      ..add(DiagnosticsProperty('emailAddress', emailAddress));
   }
 
   @override
@@ -424,6 +473,7 @@ class _$UserGotImpl implements _UserGot {
     required TResult Function(UserModel user) savedUser,
     required TResult Function(String emailAddress) userGot,
     required TResult Function(bool reload) retrievedUsers,
+    required TResult Function(bool connect) firestoreSubscriptionUpdated,
   }) {
     return userGot(emailAddress);
   }
@@ -435,6 +485,7 @@ class _$UserGotImpl implements _UserGot {
     TResult? Function(UserModel user)? savedUser,
     TResult? Function(String emailAddress)? userGot,
     TResult? Function(bool reload)? retrievedUsers,
+    TResult? Function(bool connect)? firestoreSubscriptionUpdated,
   }) {
     return userGot?.call(emailAddress);
   }
@@ -446,6 +497,7 @@ class _$UserGotImpl implements _UserGot {
     TResult Function(UserModel user)? savedUser,
     TResult Function(String emailAddress)? userGot,
     TResult Function(bool reload)? retrievedUsers,
+    TResult Function(bool connect)? firestoreSubscriptionUpdated,
     required TResult orElse(),
   }) {
     if (userGot != null) {
@@ -461,6 +513,8 @@ class _$UserGotImpl implements _UserGot {
     required TResult Function(_SavedUser value) savedUser,
     required TResult Function(_UserGot value) userGot,
     required TResult Function(_RetrievedUsers value) retrievedUsers,
+    required TResult Function(_FirestoreSubscriptionUpdated value)
+        firestoreSubscriptionUpdated,
   }) {
     return userGot(this);
   }
@@ -472,6 +526,8 @@ class _$UserGotImpl implements _UserGot {
     TResult? Function(_SavedUser value)? savedUser,
     TResult? Function(_UserGot value)? userGot,
     TResult? Function(_RetrievedUsers value)? retrievedUsers,
+    TResult? Function(_FirestoreSubscriptionUpdated value)?
+        firestoreSubscriptionUpdated,
   }) {
     return userGot?.call(this);
   }
@@ -483,6 +539,8 @@ class _$UserGotImpl implements _UserGot {
     TResult Function(_SavedUser value)? savedUser,
     TResult Function(_UserGot value)? userGot,
     TResult Function(_RetrievedUsers value)? retrievedUsers,
+    TResult Function(_FirestoreSubscriptionUpdated value)?
+        firestoreSubscriptionUpdated,
     required TResult orElse(),
   }) {
     if (userGot != null) {
@@ -534,7 +592,9 @@ class __$$RetrievedUsersImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$RetrievedUsersImpl implements _RetrievedUsers {
+class _$RetrievedUsersImpl
+    with DiagnosticableTreeMixin
+    implements _RetrievedUsers {
   const _$RetrievedUsersImpl({this.reload = true});
 
   @override
@@ -542,8 +602,16 @@ class _$RetrievedUsersImpl implements _RetrievedUsers {
   final bool reload;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'FirestoreEvent.retrievedUsers(reload: $reload)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'FirestoreEvent.retrievedUsers'))
+      ..add(DiagnosticsProperty('reload', reload));
   }
 
   @override
@@ -571,6 +639,7 @@ class _$RetrievedUsersImpl implements _RetrievedUsers {
     required TResult Function(UserModel user) savedUser,
     required TResult Function(String emailAddress) userGot,
     required TResult Function(bool reload) retrievedUsers,
+    required TResult Function(bool connect) firestoreSubscriptionUpdated,
   }) {
     return retrievedUsers(reload);
   }
@@ -582,6 +651,7 @@ class _$RetrievedUsersImpl implements _RetrievedUsers {
     TResult? Function(UserModel user)? savedUser,
     TResult? Function(String emailAddress)? userGot,
     TResult? Function(bool reload)? retrievedUsers,
+    TResult? Function(bool connect)? firestoreSubscriptionUpdated,
   }) {
     return retrievedUsers?.call(reload);
   }
@@ -593,6 +663,7 @@ class _$RetrievedUsersImpl implements _RetrievedUsers {
     TResult Function(UserModel user)? savedUser,
     TResult Function(String emailAddress)? userGot,
     TResult Function(bool reload)? retrievedUsers,
+    TResult Function(bool connect)? firestoreSubscriptionUpdated,
     required TResult orElse(),
   }) {
     if (retrievedUsers != null) {
@@ -608,6 +679,8 @@ class _$RetrievedUsersImpl implements _RetrievedUsers {
     required TResult Function(_SavedUser value) savedUser,
     required TResult Function(_UserGot value) userGot,
     required TResult Function(_RetrievedUsers value) retrievedUsers,
+    required TResult Function(_FirestoreSubscriptionUpdated value)
+        firestoreSubscriptionUpdated,
   }) {
     return retrievedUsers(this);
   }
@@ -619,6 +692,8 @@ class _$RetrievedUsersImpl implements _RetrievedUsers {
     TResult? Function(_SavedUser value)? savedUser,
     TResult? Function(_UserGot value)? userGot,
     TResult? Function(_RetrievedUsers value)? retrievedUsers,
+    TResult? Function(_FirestoreSubscriptionUpdated value)?
+        firestoreSubscriptionUpdated,
   }) {
     return retrievedUsers?.call(this);
   }
@@ -630,6 +705,8 @@ class _$RetrievedUsersImpl implements _RetrievedUsers {
     TResult Function(_SavedUser value)? savedUser,
     TResult Function(_UserGot value)? userGot,
     TResult Function(_RetrievedUsers value)? retrievedUsers,
+    TResult Function(_FirestoreSubscriptionUpdated value)?
+        firestoreSubscriptionUpdated,
     required TResult orElse(),
   }) {
     if (retrievedUsers != null) {
@@ -646,6 +723,179 @@ abstract class _RetrievedUsers implements FirestoreEvent {
   @JsonKey(ignore: true)
   _$$RetrievedUsersImplCopyWith<_$RetrievedUsersImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$FirestoreSubscriptionUpdatedImplCopyWith<$Res> {
+  factory _$$FirestoreSubscriptionUpdatedImplCopyWith(
+          _$FirestoreSubscriptionUpdatedImpl value,
+          $Res Function(_$FirestoreSubscriptionUpdatedImpl) then) =
+      __$$FirestoreSubscriptionUpdatedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({bool connect});
+}
+
+/// @nodoc
+class __$$FirestoreSubscriptionUpdatedImplCopyWithImpl<$Res>
+    extends _$FirestoreEventCopyWithImpl<$Res,
+        _$FirestoreSubscriptionUpdatedImpl>
+    implements _$$FirestoreSubscriptionUpdatedImplCopyWith<$Res> {
+  __$$FirestoreSubscriptionUpdatedImplCopyWithImpl(
+      _$FirestoreSubscriptionUpdatedImpl _value,
+      $Res Function(_$FirestoreSubscriptionUpdatedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? connect = null,
+  }) {
+    return _then(_$FirestoreSubscriptionUpdatedImpl(
+      connect: null == connect
+          ? _value.connect
+          : connect // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$FirestoreSubscriptionUpdatedImpl
+    with DiagnosticableTreeMixin
+    implements _FirestoreSubscriptionUpdated {
+  const _$FirestoreSubscriptionUpdatedImpl({this.connect = true});
+
+  @override
+  @JsonKey()
+  final bool connect;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'FirestoreEvent.firestoreSubscriptionUpdated(connect: $connect)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty(
+          'type', 'FirestoreEvent.firestoreSubscriptionUpdated'))
+      ..add(DiagnosticsProperty('connect', connect));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FirestoreSubscriptionUpdatedImpl &&
+            (identical(other.connect, connect) || other.connect == connect));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, connect);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FirestoreSubscriptionUpdatedImplCopyWith<
+          _$FirestoreSubscriptionUpdatedImpl>
+      get copyWith => __$$FirestoreSubscriptionUpdatedImplCopyWithImpl<
+          _$FirestoreSubscriptionUpdatedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(UserModel user) savedUser,
+    required TResult Function(String emailAddress) userGot,
+    required TResult Function(bool reload) retrievedUsers,
+    required TResult Function(bool connect) firestoreSubscriptionUpdated,
+  }) {
+    return firestoreSubscriptionUpdated(connect);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(UserModel user)? savedUser,
+    TResult? Function(String emailAddress)? userGot,
+    TResult? Function(bool reload)? retrievedUsers,
+    TResult? Function(bool connect)? firestoreSubscriptionUpdated,
+  }) {
+    return firestoreSubscriptionUpdated?.call(connect);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(UserModel user)? savedUser,
+    TResult Function(String emailAddress)? userGot,
+    TResult Function(bool reload)? retrievedUsers,
+    TResult Function(bool connect)? firestoreSubscriptionUpdated,
+    required TResult orElse(),
+  }) {
+    if (firestoreSubscriptionUpdated != null) {
+      return firestoreSubscriptionUpdated(connect);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_SavedUser value) savedUser,
+    required TResult Function(_UserGot value) userGot,
+    required TResult Function(_RetrievedUsers value) retrievedUsers,
+    required TResult Function(_FirestoreSubscriptionUpdated value)
+        firestoreSubscriptionUpdated,
+  }) {
+    return firestoreSubscriptionUpdated(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_SavedUser value)? savedUser,
+    TResult? Function(_UserGot value)? userGot,
+    TResult? Function(_RetrievedUsers value)? retrievedUsers,
+    TResult? Function(_FirestoreSubscriptionUpdated value)?
+        firestoreSubscriptionUpdated,
+  }) {
+    return firestoreSubscriptionUpdated?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_SavedUser value)? savedUser,
+    TResult Function(_UserGot value)? userGot,
+    TResult Function(_RetrievedUsers value)? retrievedUsers,
+    TResult Function(_FirestoreSubscriptionUpdated value)?
+        firestoreSubscriptionUpdated,
+    required TResult orElse(),
+  }) {
+    if (firestoreSubscriptionUpdated != null) {
+      return firestoreSubscriptionUpdated(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _FirestoreSubscriptionUpdated implements FirestoreEvent {
+  const factory _FirestoreSubscriptionUpdated({final bool connect}) =
+      _$FirestoreSubscriptionUpdatedImpl;
+
+  bool get connect;
+  @JsonKey(ignore: true)
+  _$$FirestoreSubscriptionUpdatedImplCopyWith<
+          _$FirestoreSubscriptionUpdatedImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -738,12 +988,20 @@ class __$$UserSavingInitialImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserSavingInitialImpl implements UserSavingInitial {
+class _$UserSavingInitialImpl
+    with DiagnosticableTreeMixin
+    implements UserSavingInitial {
   const _$UserSavingInitialImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'UserSavingState.initial()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'UserSavingState.initial'));
   }
 
   @override
@@ -852,12 +1110,21 @@ class __$$UserSavingInProgressImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserSavingInProgressImpl implements UserSavingInProgress {
+class _$UserSavingInProgressImpl
+    with DiagnosticableTreeMixin
+    implements UserSavingInProgress {
   const _$UserSavingInProgressImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'UserSavingState.userSavingInProgress()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(
+        DiagnosticsProperty('type', 'UserSavingState.userSavingInProgress'));
   }
 
   @override
@@ -992,15 +1259,25 @@ class __$$UserSavingSuccessImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserSavingSuccessImpl implements UserSavingSuccess {
+class _$UserSavingSuccessImpl
+    with DiagnosticableTreeMixin
+    implements UserSavingSuccess {
   const _$UserSavingSuccessImpl(this.user);
 
   @override
   final UserModel user;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'UserSavingState.userSavingSuccess(user: $user)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'UserSavingState.userSavingSuccess'))
+      ..add(DiagnosticsProperty('user', user));
   }
 
   @override
@@ -1139,15 +1416,25 @@ class __$$UserSavingFailureImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserSavingFailureImpl implements UserSavingFailure {
+class _$UserSavingFailureImpl
+    with DiagnosticableTreeMixin
+    implements UserSavingFailure {
   const _$UserSavingFailureImpl({required this.exception});
 
   @override
   final String exception;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'UserSavingState.userSavingFailure(exception: $exception)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'UserSavingState.userSavingFailure'))
+      ..add(DiagnosticsProperty('exception', exception));
   }
 
   @override
@@ -1344,12 +1631,20 @@ class __$$ObtainUserInitialImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ObtainUserInitialImpl implements ObtainUserInitial {
+class _$ObtainUserInitialImpl
+    with DiagnosticableTreeMixin
+    implements ObtainUserInitial {
   const _$ObtainUserInitialImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ObtainUserState.initial()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'ObtainUserState.initial'));
   }
 
   @override
@@ -1458,12 +1753,21 @@ class __$$ObtainUserInProgressImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ObtainUserInProgressImpl implements ObtainUserInProgress {
+class _$ObtainUserInProgressImpl
+    with DiagnosticableTreeMixin
+    implements ObtainUserInProgress {
   const _$ObtainUserInProgressImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ObtainUserState.obtainUserInProgress()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(
+        DiagnosticsProperty('type', 'ObtainUserState.obtainUserInProgress'));
   }
 
   @override
@@ -1598,15 +1902,25 @@ class __$$ObtainUserSuccessImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ObtainUserSuccessImpl implements ObtainUserSuccess {
+class _$ObtainUserSuccessImpl
+    with DiagnosticableTreeMixin
+    implements ObtainUserSuccess {
   const _$ObtainUserSuccessImpl(this.user);
 
   @override
   final UserModel user;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ObtainUserState.obtainUserSuccess(user: $user)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ObtainUserState.obtainUserSuccess'))
+      ..add(DiagnosticsProperty('user', user));
   }
 
   @override
@@ -1745,15 +2059,25 @@ class __$$ObtainUserFailureImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ObtainUserFailureImpl implements ObtainUserFailure {
+class _$ObtainUserFailureImpl
+    with DiagnosticableTreeMixin
+    implements ObtainUserFailure {
   const _$ObtainUserFailureImpl({required this.exception});
 
   @override
   final String exception;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ObtainUserState.obtainUserFailure(exception: $exception)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ObtainUserState.obtainUserFailure'))
+      ..add(DiagnosticsProperty('exception', exception));
   }
 
   @override
@@ -1951,12 +2275,20 @@ class __$$RetrieveUsersInitialImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$RetrieveUsersInitialImpl implements RetrieveUsersInitial {
+class _$RetrieveUsersInitialImpl
+    with DiagnosticableTreeMixin
+    implements RetrieveUsersInitial {
   const _$RetrieveUsersInitialImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'RetrieveUsersState.initial()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'RetrieveUsersState.initial'));
   }
 
   @override
@@ -2070,12 +2402,21 @@ class __$$RetrieveUsersInProgressImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$RetrieveUsersInProgressImpl implements RetrieveUsersInProgress {
+class _$RetrieveUsersInProgressImpl
+    with DiagnosticableTreeMixin
+    implements RetrieveUsersInProgress {
   const _$RetrieveUsersInProgressImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'RetrieveUsersState.retrieveUsersInProgress()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty(
+        'type', 'RetrieveUsersState.retrieveUsersInProgress'));
   }
 
   @override
@@ -2201,7 +2542,9 @@ class __$$RetrieveUsersSuccessImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$RetrieveUsersSuccessImpl implements RetrieveUsersSuccess {
+class _$RetrieveUsersSuccessImpl
+    with DiagnosticableTreeMixin
+    implements RetrieveUsersSuccess {
   const _$RetrieveUsersSuccessImpl(final List<UserModel> users)
       : _users = users;
 
@@ -2214,8 +2557,17 @@ class _$RetrieveUsersSuccessImpl implements RetrieveUsersSuccess {
   }
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'RetrieveUsersState.retrieveUsersSuccess(users: $users)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty(
+          'type', 'RetrieveUsersState.retrieveUsersSuccess'))
+      ..add(DiagnosticsProperty('users', users));
   }
 
   @override
@@ -2357,15 +2709,26 @@ class __$$RetrieveUsersFailureImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$RetrieveUsersFailureImpl implements RetrieveUsersFailure {
+class _$RetrieveUsersFailureImpl
+    with DiagnosticableTreeMixin
+    implements RetrieveUsersFailure {
   const _$RetrieveUsersFailureImpl({required this.exception});
 
   @override
   final String exception;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'RetrieveUsersState.retrieveUsersFailure(exception: $exception)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty(
+          'type', 'RetrieveUsersState.retrieveUsersFailure'))
+      ..add(DiagnosticsProperty('exception', exception));
   }
 
   @override

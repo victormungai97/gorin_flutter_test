@@ -19,6 +19,11 @@ class CustomRouter {
         path: Paths.root,
         builder: (context, state) {
           final state = context.read<AuthenticatedUserCubit>().state;
+          context.read<FirestoreBloc>().add(
+                FirestoreEvent.firestoreSubscriptionUpdated(
+                  connect: state != null,
+                ),
+              );
           return state == null ? const LoginPage() : const HomePage();
         },
       ),

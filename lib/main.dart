@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gorin_test_project/blocs/blocs.dart';
 import 'package:gorin_test_project/cubits/cubits.dart';
 import 'package:gorin_test_project/firebase_options/firebase_options.dart';
+import 'package:gorin_test_project/models/models.dart';
 import 'package:gorin_test_project/navigation/navigation.dart';
 import 'package:gorin_test_project/services/services.dart';
 import 'package:gorin_test_project/utils/utils.dart';
@@ -140,11 +141,20 @@ class _App extends StatelessWidget {
           final router = CustomRouter(
             environment ?? Environment.unspecified,
           );
-          return MaterialApp.router(
-            routerConfig: router.routerConfig,
-            theme: theme,
-            title: "Gorin Test Project",
-            debugShowCheckedModeBanner: false,
+          return BlocListener<AuthenticatedUserCubit, UserModel?>(
+            listener: (context, state) {
+              context.read<FirestoreBloc>().add(
+                    FirestoreEvent.firestoreSubscriptionUpdated(
+                      connect: state != null,
+                    ),
+                  );
+            },
+            child: MaterialApp.router(
+              routerConfig: router.routerConfig,
+              theme: theme,
+              title: "Gorin Test Project",
+              debugShowCheckedModeBanner: false,
+            ),
           );
         },
       ),
