@@ -8,5 +8,7 @@ class FirestoreEvent with _$FirestoreEvent {
 
   const factory FirestoreEvent.userGot(String emailAddress) = _UserGot;
 
-  const factory FirestoreEvent.retrievedUsers() = _RetrievedUsers;
+  const factory FirestoreEvent.retrievedUsers({
+    @Default(true) bool reload,
+  }) = _RetrievedUsers;
 }

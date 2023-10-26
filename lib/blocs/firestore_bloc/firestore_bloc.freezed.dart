@@ -21,7 +21,7 @@ mixin _$FirestoreEvent {
     required TResult Function() started,
     required TResult Function(UserModel user) savedUser,
     required TResult Function(String emailAddress) userGot,
-    required TResult Function() retrievedUsers,
+    required TResult Function(bool reload) retrievedUsers,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -29,7 +29,7 @@ mixin _$FirestoreEvent {
     TResult? Function()? started,
     TResult? Function(UserModel user)? savedUser,
     TResult? Function(String emailAddress)? userGot,
-    TResult? Function()? retrievedUsers,
+    TResult? Function(bool reload)? retrievedUsers,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -37,7 +37,7 @@ mixin _$FirestoreEvent {
     TResult Function()? started,
     TResult Function(UserModel user)? savedUser,
     TResult Function(String emailAddress)? userGot,
-    TResult Function()? retrievedUsers,
+    TResult Function(bool reload)? retrievedUsers,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -127,7 +127,7 @@ class _$StartedImpl implements _Started {
     required TResult Function() started,
     required TResult Function(UserModel user) savedUser,
     required TResult Function(String emailAddress) userGot,
-    required TResult Function() retrievedUsers,
+    required TResult Function(bool reload) retrievedUsers,
   }) {
     return started();
   }
@@ -138,7 +138,7 @@ class _$StartedImpl implements _Started {
     TResult? Function()? started,
     TResult? Function(UserModel user)? savedUser,
     TResult? Function(String emailAddress)? userGot,
-    TResult? Function()? retrievedUsers,
+    TResult? Function(bool reload)? retrievedUsers,
   }) {
     return started?.call();
   }
@@ -149,7 +149,7 @@ class _$StartedImpl implements _Started {
     TResult Function()? started,
     TResult Function(UserModel user)? savedUser,
     TResult Function(String emailAddress)? userGot,
-    TResult Function()? retrievedUsers,
+    TResult Function(bool reload)? retrievedUsers,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -277,7 +277,7 @@ class _$SavedUserImpl implements _SavedUser {
     required TResult Function() started,
     required TResult Function(UserModel user) savedUser,
     required TResult Function(String emailAddress) userGot,
-    required TResult Function() retrievedUsers,
+    required TResult Function(bool reload) retrievedUsers,
   }) {
     return savedUser(user);
   }
@@ -288,7 +288,7 @@ class _$SavedUserImpl implements _SavedUser {
     TResult? Function()? started,
     TResult? Function(UserModel user)? savedUser,
     TResult? Function(String emailAddress)? userGot,
-    TResult? Function()? retrievedUsers,
+    TResult? Function(bool reload)? retrievedUsers,
   }) {
     return savedUser?.call(user);
   }
@@ -299,7 +299,7 @@ class _$SavedUserImpl implements _SavedUser {
     TResult Function()? started,
     TResult Function(UserModel user)? savedUser,
     TResult Function(String emailAddress)? userGot,
-    TResult Function()? retrievedUsers,
+    TResult Function(bool reload)? retrievedUsers,
     required TResult orElse(),
   }) {
     if (savedUser != null) {
@@ -423,7 +423,7 @@ class _$UserGotImpl implements _UserGot {
     required TResult Function() started,
     required TResult Function(UserModel user) savedUser,
     required TResult Function(String emailAddress) userGot,
-    required TResult Function() retrievedUsers,
+    required TResult Function(bool reload) retrievedUsers,
   }) {
     return userGot(emailAddress);
   }
@@ -434,7 +434,7 @@ class _$UserGotImpl implements _UserGot {
     TResult? Function()? started,
     TResult? Function(UserModel user)? savedUser,
     TResult? Function(String emailAddress)? userGot,
-    TResult? Function()? retrievedUsers,
+    TResult? Function(bool reload)? retrievedUsers,
   }) {
     return userGot?.call(emailAddress);
   }
@@ -445,7 +445,7 @@ class _$UserGotImpl implements _UserGot {
     TResult Function()? started,
     TResult Function(UserModel user)? savedUser,
     TResult Function(String emailAddress)? userGot,
-    TResult Function()? retrievedUsers,
+    TResult Function(bool reload)? retrievedUsers,
     required TResult orElse(),
   }) {
     if (userGot != null) {
@@ -506,6 +506,8 @@ abstract class _$$RetrievedUsersImplCopyWith<$Res> {
   factory _$$RetrievedUsersImplCopyWith(_$RetrievedUsersImpl value,
           $Res Function(_$RetrievedUsersImpl) then) =
       __$$RetrievedUsersImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({bool reload});
 }
 
 /// @nodoc
@@ -515,26 +517,52 @@ class __$$RetrievedUsersImplCopyWithImpl<$Res>
   __$$RetrievedUsersImplCopyWithImpl(
       _$RetrievedUsersImpl _value, $Res Function(_$RetrievedUsersImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? reload = null,
+  }) {
+    return _then(_$RetrievedUsersImpl(
+      reload: null == reload
+          ? _value.reload
+          : reload // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$RetrievedUsersImpl implements _RetrievedUsers {
-  const _$RetrievedUsersImpl();
+  const _$RetrievedUsersImpl({this.reload = true});
+
+  @override
+  @JsonKey()
+  final bool reload;
 
   @override
   String toString() {
-    return 'FirestoreEvent.retrievedUsers()';
+    return 'FirestoreEvent.retrievedUsers(reload: $reload)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$RetrievedUsersImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$RetrievedUsersImpl &&
+            (identical(other.reload, reload) || other.reload == reload));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, reload);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RetrievedUsersImplCopyWith<_$RetrievedUsersImpl> get copyWith =>
+      __$$RetrievedUsersImplCopyWithImpl<_$RetrievedUsersImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -542,9 +570,9 @@ class _$RetrievedUsersImpl implements _RetrievedUsers {
     required TResult Function() started,
     required TResult Function(UserModel user) savedUser,
     required TResult Function(String emailAddress) userGot,
-    required TResult Function() retrievedUsers,
+    required TResult Function(bool reload) retrievedUsers,
   }) {
-    return retrievedUsers();
+    return retrievedUsers(reload);
   }
 
   @override
@@ -553,9 +581,9 @@ class _$RetrievedUsersImpl implements _RetrievedUsers {
     TResult? Function()? started,
     TResult? Function(UserModel user)? savedUser,
     TResult? Function(String emailAddress)? userGot,
-    TResult? Function()? retrievedUsers,
+    TResult? Function(bool reload)? retrievedUsers,
   }) {
-    return retrievedUsers?.call();
+    return retrievedUsers?.call(reload);
   }
 
   @override
@@ -564,11 +592,11 @@ class _$RetrievedUsersImpl implements _RetrievedUsers {
     TResult Function()? started,
     TResult Function(UserModel user)? savedUser,
     TResult Function(String emailAddress)? userGot,
-    TResult Function()? retrievedUsers,
+    TResult Function(bool reload)? retrievedUsers,
     required TResult orElse(),
   }) {
     if (retrievedUsers != null) {
-      return retrievedUsers();
+      return retrievedUsers(reload);
     }
     return orElse();
   }
@@ -612,7 +640,12 @@ class _$RetrievedUsersImpl implements _RetrievedUsers {
 }
 
 abstract class _RetrievedUsers implements FirestoreEvent {
-  const factory _RetrievedUsers() = _$RetrievedUsersImpl;
+  const factory _RetrievedUsers({final bool reload}) = _$RetrievedUsersImpl;
+
+  bool get reload;
+  @JsonKey(ignore: true)
+  _$$RetrievedUsersImplCopyWith<_$RetrievedUsersImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
