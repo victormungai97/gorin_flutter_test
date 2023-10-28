@@ -1,15 +1,12 @@
 import 'package:bloc/bloc.dart';
-import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:firebase_storage/firebase_storage.dart' as fs;
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:gorin_test_project/repositories/repositories.dart';
 import 'package:gorin_test_project/services/services.dart';
 import 'package:gorin_test_project/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mime/mime.dart';
-import 'package:permission_handler/permission_handler.dart' as perm;
 
 part 'image_event.dart';
 part 'image_state.dart';
@@ -18,7 +15,7 @@ part 'image_bloc.freezed.dart';
 const _logger = LoggingService.instance;
 
 class ImageBloc extends Bloc<ImageEvent, ImageState> {
-  ImageBloc(this._environment) : super(ImageInitial()) {
+  ImageBloc(this._fileRepository) : super(const ImageInitial()) {
     on<ImageEvent>((event, emit) {
       event.when(
         imagePicked: _pickImage,
@@ -30,90 +27,21 @@ class ImageBloc extends Bloc<ImageEvent, ImageState> {
 
   Future<void> _pickImage(
     BuildContext context, [
-    String source = 'gallery',
+    FileSource source = FileSource.GALLERY,
   ]) async {
     try {
-      emit(const ImagePickingLoading());
+      emit(const ImagePickingState.loading());
 
-      if (!kIsWeb) {
-        perm.Permission permission;
-        if (source == 'gallery') {
-          switch (defaultTargetPlatform) {
-            case TargetPlatform.iOS:
-              permission = perm.Permission.photos;
-              break;
-            case TargetPlatform.android:
-              final deviceInfo = DeviceInfoPlugin();
-              final androidInfo = await deviceInfo.androidInfo;
-              final sdk = androidInfo.version.sdkInt;
-              if (sdk >= 33) {
-                permission = perm.Permission.photos;
-              } else {
-                permission = perm.Permission.storage;
-              }
-              break;
-            default:
-              permission = perm.Permission.unknown;
-          }
-        } else if (source == 'camera') {
-          permission = perm.Permission.camera;
-        } else {
-          permission = perm.Permission.unknown;
-        }
+      final result = await _fileRepository.pickFile(
+        context,
+        FileType.IMAGE,
+        source,
+      );
 
-        final granted = await PermissionService.request(permission, context);
-        if (!granted) {
-          emit(
-            ImagePickingState.exception(
-              message: 'Unable to access device $source. Tap to retry',
-            ),
-          );
-          return;
-        }
-      }
-
-      final picker = ImagePicker();
-      XFile? image;
-
-      switch (source) {
-        case 'gallery':
-          image = await picker.pickImage(
-            source: ImageSource.gallery,
-            imageQuality: 100,
-          );
-        case 'camera':
-          image = await picker.pickImage(
-            source: ImageSource.camera,
-            maxWidth: 640,
-            maxHeight: 480,
-            preferredCameraDevice: CameraDevice.front,
-          );
-        default:
-          emit(
-            const ImagePickingState.exception(
-              message: 'Unable to determine where to pick image',
-            ),
-          );
-          return;
-      }
-
-      if (image == null) {
-        emit(
-          const ImagePickingState.exception(
-            message: 'No image selected. Please retry',
-          ),
-        );
-        return;
-      }
-
-      if (await image.length() > (5 * 1024 * 1024)) {
-        emit(
-          const ImagePickingState.exception(message: 'Maximum size is 5 MBs'),
-        );
-        return;
-      }
-
-      emit(ImagePickingDone(image));
+      result.when(
+        done: ((image) => emit(ImagePickingDone(image))),
+        error: (message) => emit(ImagePickingState.exception(message: message)),
+      );
     } catch (error, stackTrace) {
       await _logger.log(
         error,
@@ -130,83 +58,71 @@ class ImageBloc extends Bloc<ImageEvent, ImageState> {
 
   Future<void> _uploadFile([XFile? image]) async {
     try {
-      emit(const FileUploadingLoading());
+      emit(const FileUploadingState.loading());
 
-      if (image == null) {
-        emit(const FileUploadingState.exception(message: 'No image provided'));
-        return;
-      }
+      final result = await _fileRepository.uploadFile<fs.UploadTask>(image);
 
-      final fileName = image.name;
-      final env = _environment;
-      final parent = env == null ? '' : '${env.name}/';
-      final destination = '${parent}images/$fileName';
-
-      try {
-        // Create the file metadata
-        final contentType = lookupMimeType(fileName);
-        final metadata = fs.SettableMetadata(contentType: contentType);
-
-        // Create a reference to the Firebase Storage bucket
-        final storageRef = fs.FirebaseStorage.instance.ref();
-
-        // Upload file and metadata
-        final uploadTask = storageRef.child(destination).putData(
-              await image.readAsBytes(),
-              metadata,
-            );
-
-        // Listen for state changes, errors, and completion of the upload.
-        uploadTask.snapshotEvents.listen((fs.TaskSnapshot taskSnapshot) async {
-          switch (taskSnapshot.state) {
-            case fs.TaskState.running:
-              final progress =
-                  taskSnapshot.bytesTransferred / taskSnapshot.totalBytes;
-              emit(FileUploadingLoading(progress: progress));
-              break;
-            case fs.TaskState.paused:
+      await result.when(
+        done: (uploadTask) async {
+          // Listen for state changes, errors, and completion of the upload.
+          uploadTask.snapshotEvents.listen(
+            (fs.TaskSnapshot taskSnapshot) async {
+              switch (taskSnapshot.state) {
+                case fs.TaskState.running:
+                  final progress =
+                      taskSnapshot.bytesTransferred / taskSnapshot.totalBytes;
+                  emit(FileUploadingLoading(progress: progress));
+                  break;
+                case fs.TaskState.paused:
+                  emit(
+                    const FileUploadingState.exception(
+                      message: "Upload is paused.",
+                    ),
+                  );
+                  break;
+                case fs.TaskState.canceled:
+                  emit(
+                    const FileUploadingState.exception(
+                      message: "Upload was canceled",
+                    ),
+                  );
+                  break;
+                case fs.TaskState.error:
+                  emit(
+                    const FileUploadingState.exception(
+                      message: 'Problem uploading image. Contact support',
+                    ),
+                  );
+                  break;
+                case fs.TaskState.success:
+                  emit(
+                    FileUploadingDone(
+                      downloadUrl: await taskSnapshot.ref.getDownloadURL(),
+                    ),
+                  );
+                  break;
+              }
+            },
+            onError: (Object error, StackTrace stackTrace) async {
               emit(
-                const FileUploadingState.exception(
-                  message: ("Upload is paused."),
+                const FileUploadingError(
+                  message:
+                      'There was an issue with the upload. Please contact support',
                 ),
               );
-              break;
-            case fs.TaskState.canceled:
-              emit(
-                const FileUploadingState.exception(
-                  message: ("Upload was canceled"),
-                ),
+              await _logger.log(
+                error,
+                label: "IMAGE UPLOAD STREAM EXCEPTION",
+                stackTrace: stackTrace,
               );
-              break;
-            case fs.TaskState.error:
-              emit(
-                const FileUploadingState.exception(
-                  message: 'Problem uploading image. Contact support',
-                ),
-              );
-              break;
-            case fs.TaskState.success:
-              emit(
-                FileUploadingDone(
-                  downloadUrl: await taskSnapshot.ref.getDownloadURL(),
-                ),
-              );
-              break;
-          }
-        });
-      } on firebase_core.FirebaseException catch (e, stack) {
-        await _logger.log(
-          e.message,
-          stackTrace: e.stackTrace ?? stack,
-          label: e.code,
-        );
-        emit(
-          const FileUploadingState.exception(
-            message: 'Unable to upload image. Contact support',
-          ),
-        );
-        return;
-      }
+            },
+            cancelOnError: true,
+          );
+          // so that the event doesn't end before the stream
+          await uploadTask.snapshotEvents.last;
+        },
+        error: (e) async => emit(FileUploadingState.exception(message: e)),
+      );
     } catch (error, stackTrace) {
       await _logger.log(
         error,
@@ -221,5 +137,5 @@ class ImageBloc extends Bloc<ImageEvent, ImageState> {
     }
   }
 
-  final Environment? _environment;
+  final FileRepository _fileRepository;
 }

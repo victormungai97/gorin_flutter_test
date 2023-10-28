@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gorin_test_project/utils/utils.dart';
 
 class ImagePickerDialog extends StatelessWidget {
   const ImagePickerDialog({super.key});
@@ -25,7 +26,7 @@ class ImagePickerDialog extends StatelessWidget {
                   textStyle: const TextStyle(fontWeight: FontWeight.w600),
                   elevation: 0,
                 ),
-                onPressed: () => Navigator.pop(context, 'camera'),
+                onPressed: () => Navigator.pop(context, FileSource.CAMERA),
                 icon: Icon(Icons.camera, color: color),
                 label: const Text('Use Camera'),
               ),
@@ -36,7 +37,7 @@ class ImagePickerDialog extends StatelessWidget {
                   textStyle: const TextStyle(fontWeight: FontWeight.w600),
                   elevation: 0,
                 ),
-                onPressed: () => Navigator.pop(context, 'gallery'),
+                onPressed: () => Navigator.pop(context, FileSource.GALLERY),
                 icon: Icon(Icons.image, color: color),
                 label: const Text('Use Gallery'),
               ),

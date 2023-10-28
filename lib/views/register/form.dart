@@ -122,10 +122,10 @@ class _Form extends StatelessWidget {
                                     : null,
                                 onTap: () async {
                                   try {
-                                    String source = 'gallery';
+                                    FileSource source = FileSource.GALLERY;
                                     if (!kIsWeb) {
-                                      final option =
-                                          await showModalBottomSheet<String>(
+                                      final option = await showModalBottomSheet<
+                                          FileSource>(
                                         shape: const RoundedRectangleBorder(
                                           borderRadius: BorderRadius.vertical(
                                             top: Radius.circular(10),

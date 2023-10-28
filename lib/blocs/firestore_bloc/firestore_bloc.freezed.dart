@@ -113,18 +113,12 @@ class __$$StartedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
+class _$StartedImpl implements _Started {
   const _$StartedImpl();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'FirestoreEvent.started()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'FirestoreEvent.started'));
   }
 
   @override
@@ -267,23 +261,15 @@ class __$$SavedUserImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SavedUserImpl with DiagnosticableTreeMixin implements _SavedUser {
+class _$SavedUserImpl implements _SavedUser {
   const _$SavedUserImpl(this.user);
 
   @override
   final UserModel user;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'FirestoreEvent.savedUser(user: $user)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'FirestoreEvent.savedUser'))
-      ..add(DiagnosticsProperty('user', user));
   }
 
   @override
@@ -429,23 +415,15 @@ class __$$UserGotImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserGotImpl with DiagnosticableTreeMixin implements _UserGot {
+class _$UserGotImpl implements _UserGot {
   const _$UserGotImpl(this.emailAddress);
 
   @override
   final String emailAddress;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'FirestoreEvent.userGot(emailAddress: $emailAddress)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'FirestoreEvent.userGot'))
-      ..add(DiagnosticsProperty('emailAddress', emailAddress));
   }
 
   @override
@@ -592,9 +570,7 @@ class __$$RetrievedUsersImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$RetrievedUsersImpl
-    with DiagnosticableTreeMixin
-    implements _RetrievedUsers {
+class _$RetrievedUsersImpl implements _RetrievedUsers {
   const _$RetrievedUsersImpl({this.reload = true});
 
   @override
@@ -602,16 +578,8 @@ class _$RetrievedUsersImpl
   final bool reload;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'FirestoreEvent.retrievedUsers(reload: $reload)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'FirestoreEvent.retrievedUsers'))
-      ..add(DiagnosticsProperty('reload', reload));
   }
 
   @override
@@ -762,7 +730,6 @@ class __$$FirestoreSubscriptionUpdatedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$FirestoreSubscriptionUpdatedImpl
-    with DiagnosticableTreeMixin
     implements _FirestoreSubscriptionUpdated {
   const _$FirestoreSubscriptionUpdatedImpl({this.connect = true});
 
@@ -771,17 +738,8 @@ class _$FirestoreSubscriptionUpdatedImpl
   final bool connect;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'FirestoreEvent.firestoreSubscriptionUpdated(connect: $connect)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty(
-          'type', 'FirestoreEvent.firestoreSubscriptionUpdated'))
-      ..add(DiagnosticsProperty('connect', connect));
   }
 
   @override
@@ -988,20 +946,12 @@ class __$$UserSavingInitialImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserSavingInitialImpl
-    with DiagnosticableTreeMixin
-    implements UserSavingInitial {
+class _$UserSavingInitialImpl implements UserSavingInitial {
   const _$UserSavingInitialImpl();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'UserSavingState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'UserSavingState.initial'));
   }
 
   @override
@@ -1110,21 +1060,12 @@ class __$$UserSavingInProgressImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserSavingInProgressImpl
-    with DiagnosticableTreeMixin
-    implements UserSavingInProgress {
+class _$UserSavingInProgressImpl implements UserSavingInProgress {
   const _$UserSavingInProgressImpl();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'UserSavingState.userSavingInProgress()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(
-        DiagnosticsProperty('type', 'UserSavingState.userSavingInProgress'));
   }
 
   @override
@@ -1259,25 +1200,15 @@ class __$$UserSavingSuccessImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserSavingSuccessImpl
-    with DiagnosticableTreeMixin
-    implements UserSavingSuccess {
+class _$UserSavingSuccessImpl implements UserSavingSuccess {
   const _$UserSavingSuccessImpl(this.user);
 
   @override
   final UserModel user;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'UserSavingState.userSavingSuccess(user: $user)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'UserSavingState.userSavingSuccess'))
-      ..add(DiagnosticsProperty('user', user));
   }
 
   @override
@@ -1416,25 +1347,15 @@ class __$$UserSavingFailureImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserSavingFailureImpl
-    with DiagnosticableTreeMixin
-    implements UserSavingFailure {
+class _$UserSavingFailureImpl implements UserSavingFailure {
   const _$UserSavingFailureImpl({required this.exception});
 
   @override
   final String exception;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'UserSavingState.userSavingFailure(exception: $exception)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'UserSavingState.userSavingFailure'))
-      ..add(DiagnosticsProperty('exception', exception));
   }
 
   @override
@@ -1631,20 +1552,12 @@ class __$$ObtainUserInitialImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ObtainUserInitialImpl
-    with DiagnosticableTreeMixin
-    implements ObtainUserInitial {
+class _$ObtainUserInitialImpl implements ObtainUserInitial {
   const _$ObtainUserInitialImpl();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'ObtainUserState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'ObtainUserState.initial'));
   }
 
   @override
@@ -1753,21 +1666,12 @@ class __$$ObtainUserInProgressImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ObtainUserInProgressImpl
-    with DiagnosticableTreeMixin
-    implements ObtainUserInProgress {
+class _$ObtainUserInProgressImpl implements ObtainUserInProgress {
   const _$ObtainUserInProgressImpl();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'ObtainUserState.obtainUserInProgress()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(
-        DiagnosticsProperty('type', 'ObtainUserState.obtainUserInProgress'));
   }
 
   @override
@@ -1902,25 +1806,15 @@ class __$$ObtainUserSuccessImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ObtainUserSuccessImpl
-    with DiagnosticableTreeMixin
-    implements ObtainUserSuccess {
+class _$ObtainUserSuccessImpl implements ObtainUserSuccess {
   const _$ObtainUserSuccessImpl(this.user);
 
   @override
   final UserModel user;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'ObtainUserState.obtainUserSuccess(user: $user)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'ObtainUserState.obtainUserSuccess'))
-      ..add(DiagnosticsProperty('user', user));
   }
 
   @override
@@ -2059,25 +1953,15 @@ class __$$ObtainUserFailureImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ObtainUserFailureImpl
-    with DiagnosticableTreeMixin
-    implements ObtainUserFailure {
+class _$ObtainUserFailureImpl implements ObtainUserFailure {
   const _$ObtainUserFailureImpl({required this.exception});
 
   @override
   final String exception;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'ObtainUserState.obtainUserFailure(exception: $exception)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'ObtainUserState.obtainUserFailure'))
-      ..add(DiagnosticsProperty('exception', exception));
   }
 
   @override
@@ -2275,20 +2159,12 @@ class __$$RetrieveUsersInitialImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$RetrieveUsersInitialImpl
-    with DiagnosticableTreeMixin
-    implements RetrieveUsersInitial {
+class _$RetrieveUsersInitialImpl implements RetrieveUsersInitial {
   const _$RetrieveUsersInitialImpl();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'RetrieveUsersState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'RetrieveUsersState.initial'));
   }
 
   @override
@@ -2402,21 +2278,12 @@ class __$$RetrieveUsersInProgressImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$RetrieveUsersInProgressImpl
-    with DiagnosticableTreeMixin
-    implements RetrieveUsersInProgress {
+class _$RetrieveUsersInProgressImpl implements RetrieveUsersInProgress {
   const _$RetrieveUsersInProgressImpl();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'RetrieveUsersState.retrieveUsersInProgress()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty(
-        'type', 'RetrieveUsersState.retrieveUsersInProgress'));
   }
 
   @override
@@ -2542,9 +2409,7 @@ class __$$RetrieveUsersSuccessImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$RetrieveUsersSuccessImpl
-    with DiagnosticableTreeMixin
-    implements RetrieveUsersSuccess {
+class _$RetrieveUsersSuccessImpl implements RetrieveUsersSuccess {
   const _$RetrieveUsersSuccessImpl(final List<UserModel> users)
       : _users = users;
 
@@ -2557,17 +2422,8 @@ class _$RetrieveUsersSuccessImpl
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'RetrieveUsersState.retrieveUsersSuccess(users: $users)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty(
-          'type', 'RetrieveUsersState.retrieveUsersSuccess'))
-      ..add(DiagnosticsProperty('users', users));
   }
 
   @override
@@ -2709,26 +2565,15 @@ class __$$RetrieveUsersFailureImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$RetrieveUsersFailureImpl
-    with DiagnosticableTreeMixin
-    implements RetrieveUsersFailure {
+class _$RetrieveUsersFailureImpl implements RetrieveUsersFailure {
   const _$RetrieveUsersFailureImpl({required this.exception});
 
   @override
   final String exception;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'RetrieveUsersState.retrieveUsersFailure(exception: $exception)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty(
-          'type', 'RetrieveUsersState.retrieveUsersFailure'))
-      ..add(DiagnosticsProperty('exception', exception));
   }
 
   @override

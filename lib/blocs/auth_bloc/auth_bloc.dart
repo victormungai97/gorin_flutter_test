@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gorin_test_project/responses/responses.dart';
 import 'package:gorin_test_project/services/services.dart';
+import 'package:gorin_test_project/repositories/repositories.dart';
 import 'package:gorin_test_project/utils/utils.dart';
 
 part 'auth_event.dart';
@@ -11,7 +13,7 @@ part 'auth_bloc.freezed.dart';
 const _logger = LoggingService.instance;
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc() : super(const AuthInitial()) {
+  AuthBloc(this._userRepository) : super(const AuthInitial()) {
     on<AuthEvent>((event, emit) {
       event.when(
         registeredUser: _registerUser,
@@ -21,19 +23,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
     });
   }
-
-  /// Validate an email address using regex
-  bool _validateEmail(String? email) {
-    if (email == null || email.isEmpty) return false;
-    final regExp = RegExp(
-      r'^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\])|(([a-zA-Z\-\d]+\.)+[a-zA-Z]{2,}))$',
-    );
-    return regExp.hasMatch(email);
-  }
-
-  /// Validate a password
-  bool _validatePassword(String? password) =>
-      password != null && password.length >= 8;
 
   Future<void> _registerUser(String emailAddress, String password) async {
     await _authenticateUser(
@@ -57,73 +46,35 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       emit(const AuthState.authenticationInProgress());
 
-      if (!_validateEmail(emailAddress)) {
-        emit(
-          const AuthState.authenticationFailure(
-            exception: 'Please provide a valid email address',
-          ),
-        );
-        return;
-      }
-      if (!_validatePassword(password)) {
-        emit(
-          const AuthState.authenticationFailure(
-            exception: 'Input a password with at least 8 characters',
-          ),
-        );
-        return;
-      }
-
-      final user = (switch (authentication) {
-        Authentication.REGISTRATION =>
-          await _firebaseAuth.createUserWithEmailAndPassword(
-            email: emailAddress,
-            password: password,
-          ),
-        Authentication.LOGIN => await _firebaseAuth.signInWithEmailAndPassword(
-            email: emailAddress,
-            password: password,
-          ),
-      })
-          .user;
-
-      if (user == null) {
-        emit(
-          const AuthState.authenticationFailure(
-            exception: 'User not found for given email.',
-          ),
-        );
-        return;
-      }
-
-      emit(AuthState.authenticationSuccess(user: user));
-    } on FirebaseAuthException catch (e) {
-      await _logger.log(
-        e.message,
-        stackTrace: e.stackTrace,
-        label: e.code,
-      );
-
-      String exception;
-      final code =
-          e.code.replaceAll('-', ' ').replaceAll('_', ' ').toLowerCase();
+      RepositoryResponse<User>? result;
 
       switch (authentication) {
-        case Authentication.LOGIN:
-          exception = switch (code) {
-            'user not found' => "User not found for given email",
-            'wrong password' => "Wrong password provided for that user",
-            'invalid login credentials' => 'Invalid email or password entered',
-            _ => "Something went wrong. Please contact support",
-          };
         case Authentication.REGISTRATION:
-          exception = switch (code) {
-            'email already in use' => "User with given email already created",
-            'weak password' => "The password provided is too weak",
-            _ => "Something went wrong. Please contact support",
-          };
+          result = await _userRepository.registerUser<User>(
+            emailAddress,
+            password,
+          );
+          break;
+        case Authentication.LOGIN:
+          result = await _userRepository.logInUser<User>(
+            emailAddress,
+            password,
+          );
+          break;
+        default:
       }
-      emit(AuthState.authenticationFailure(exception: exception));
+
+      if (result == null) {
+        emit(
+          const AuthenticationFailure(exception: 'Undefined error occurred'),
+        );
+        return;
+      }
+
+      result.when(
+        error: (exc) => emit(AuthState.authenticationFailure(exception: exc)),
+        done: (user) => emit(AuthState.authenticationSuccess(user: user)),
+      );
     } catch (ex, stackTrace) {
       await _logger.log(
         ex,
@@ -139,23 +90,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _logUserOut() async {
-    try {
-      await _firebaseAuth.signOut();
+    final result = await _userRepository.logUserOut();
+    if (result != null) {
+      emit(AuthState.authenticationFailure(exception: result));
+    } else {
       emit(const AuthState.authenticationSuccess());
-      await _logger.log('User logged out successfully', isException: false);
-    } catch (ex, stackTrace) {
-      await _logger.log(
-        ex,
-        label: 'FAILED DURING LOGOUT',
-        stackTrace: stackTrace,
-      );
-      emit(
-        AuthState.authenticationFailure(
-          exception: 'Error during logging out',
-        ),
-      );
     }
   }
 
-  static final _firebaseAuth = FirebaseAuth.instance;
+  final UserRepository _userRepository;
 }

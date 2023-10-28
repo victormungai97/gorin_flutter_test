@@ -20,7 +20,7 @@ class ImagePickingState extends ImageState with _$ImagePickingState {
   const factory ImagePickingState.loading() = ImagePickingLoading;
 
   /// Factory constructor to state that image picking has finished
-  const factory ImagePickingState.complete(XFile? file) = ImagePickingDone;
+  const factory ImagePickingState.complete(XFile file) = ImagePickingDone;
 
   /// Factory constructor for error that may occur while picking a image
   const factory ImagePickingState.exception({required String message}) =
