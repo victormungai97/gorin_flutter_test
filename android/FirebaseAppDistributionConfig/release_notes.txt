@@ -1,0 +1,1 @@
+This is a trial run to confirm fastlane and Firebase App Distribution configured correctly locally
