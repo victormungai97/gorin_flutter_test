@@ -13,3 +13,9 @@ enum Authentication {
 
   REGISTRATION,
 }
+
+/// Categories of files that can be used
+enum FileType { IMAGE }
+
+/// Avenues from which to access a file
+enum FileSource { GALLERY, CAMERA, NETWORK }

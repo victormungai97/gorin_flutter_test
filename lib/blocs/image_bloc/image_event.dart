@@ -6,7 +6,7 @@ class ImageEvent with _$ImageEvent {
 
   const factory ImageEvent.imagePicked({
     required BuildContext context,
-    @Default('gallery') String source,
+    @Default(FileSource.GALLERY) FileSource source,
   }) = _PickedImage;
 
   const factory ImageEvent.fileUploaded({XFile? image}) = _UploadedFile;

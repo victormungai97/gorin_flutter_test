@@ -19,21 +19,22 @@ mixin _$ImageEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(BuildContext context, String source) imagePicked,
+    required TResult Function(BuildContext context, FileSource source)
+        imagePicked,
     required TResult Function(XFile? image) fileUploaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(BuildContext context, String source)? imagePicked,
+    TResult? Function(BuildContext context, FileSource source)? imagePicked,
     TResult? Function(XFile? image)? fileUploaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(BuildContext context, String source)? imagePicked,
+    TResult Function(BuildContext context, FileSource source)? imagePicked,
     TResult Function(XFile? image)? fileUploaded,
     required TResult orElse(),
   }) =>
@@ -125,7 +126,8 @@ class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(BuildContext context, String source) imagePicked,
+    required TResult Function(BuildContext context, FileSource source)
+        imagePicked,
     required TResult Function(XFile? image) fileUploaded,
   }) {
     return started();
@@ -135,7 +137,7 @@ class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(BuildContext context, String source)? imagePicked,
+    TResult? Function(BuildContext context, FileSource source)? imagePicked,
     TResult? Function(XFile? image)? fileUploaded,
   }) {
     return started?.call();
@@ -145,7 +147,7 @@ class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(BuildContext context, String source)? imagePicked,
+    TResult Function(BuildContext context, FileSource source)? imagePicked,
     TResult Function(XFile? image)? fileUploaded,
     required TResult orElse(),
   }) {
@@ -200,7 +202,7 @@ abstract class _$$PickedImageImplCopyWith<$Res> {
           _$PickedImageImpl value, $Res Function(_$PickedImageImpl) then) =
       __$$PickedImageImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({BuildContext context, String source});
+  $Res call({BuildContext context, FileSource source});
 }
 
 /// @nodoc
@@ -225,7 +227,7 @@ class __$$PickedImageImplCopyWithImpl<$Res>
       source: null == source
           ? _value.source
           : source // ignore: cast_nullable_to_non_nullable
-              as String,
+              as FileSource,
     ));
   }
 }
@@ -233,13 +235,14 @@ class __$$PickedImageImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$PickedImageImpl with DiagnosticableTreeMixin implements _PickedImage {
-  const _$PickedImageImpl({required this.context, this.source = 'gallery'});
+  const _$PickedImageImpl(
+      {required this.context, this.source = FileSource.GALLERY});
 
   @override
   final BuildContext context;
   @override
   @JsonKey()
-  final String source;
+  final FileSource source;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -277,7 +280,8 @@ class _$PickedImageImpl with DiagnosticableTreeMixin implements _PickedImage {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(BuildContext context, String source) imagePicked,
+    required TResult Function(BuildContext context, FileSource source)
+        imagePicked,
     required TResult Function(XFile? image) fileUploaded,
   }) {
     return imagePicked(context, source);
@@ -287,7 +291,7 @@ class _$PickedImageImpl with DiagnosticableTreeMixin implements _PickedImage {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(BuildContext context, String source)? imagePicked,
+    TResult? Function(BuildContext context, FileSource source)? imagePicked,
     TResult? Function(XFile? image)? fileUploaded,
   }) {
     return imagePicked?.call(context, source);
@@ -297,7 +301,7 @@ class _$PickedImageImpl with DiagnosticableTreeMixin implements _PickedImage {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(BuildContext context, String source)? imagePicked,
+    TResult Function(BuildContext context, FileSource source)? imagePicked,
     TResult Function(XFile? image)? fileUploaded,
     required TResult orElse(),
   }) {
@@ -345,10 +349,10 @@ class _$PickedImageImpl with DiagnosticableTreeMixin implements _PickedImage {
 abstract class _PickedImage implements ImageEvent {
   const factory _PickedImage(
       {required final BuildContext context,
-      final String source}) = _$PickedImageImpl;
+      final FileSource source}) = _$PickedImageImpl;
 
   BuildContext get context;
-  String get source;
+  FileSource get source;
   @JsonKey(ignore: true)
   _$$PickedImageImplCopyWith<_$PickedImageImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -427,7 +431,8 @@ class _$UploadedFileImpl with DiagnosticableTreeMixin implements _UploadedFile {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(BuildContext context, String source) imagePicked,
+    required TResult Function(BuildContext context, FileSource source)
+        imagePicked,
     required TResult Function(XFile? image) fileUploaded,
   }) {
     return fileUploaded(image);
@@ -437,7 +442,7 @@ class _$UploadedFileImpl with DiagnosticableTreeMixin implements _UploadedFile {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(BuildContext context, String source)? imagePicked,
+    TResult? Function(BuildContext context, FileSource source)? imagePicked,
     TResult? Function(XFile? image)? fileUploaded,
   }) {
     return fileUploaded?.call(image);
@@ -447,7 +452,7 @@ class _$UploadedFileImpl with DiagnosticableTreeMixin implements _UploadedFile {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(BuildContext context, String source)? imagePicked,
+    TResult Function(BuildContext context, FileSource source)? imagePicked,
     TResult Function(XFile? image)? fileUploaded,
     required TResult orElse(),
   }) {
@@ -507,7 +512,7 @@ mixin _$ImagePickingState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(XFile? file) complete,
+    required TResult Function(XFile file) complete,
     required TResult Function(String message) exception,
   }) =>
       throw _privateConstructorUsedError;
@@ -515,7 +520,7 @@ mixin _$ImagePickingState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(XFile? file)? complete,
+    TResult? Function(XFile file)? complete,
     TResult? Function(String message)? exception,
   }) =>
       throw _privateConstructorUsedError;
@@ -523,7 +528,7 @@ mixin _$ImagePickingState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(XFile? file)? complete,
+    TResult Function(XFile file)? complete,
     TResult Function(String message)? exception,
     required TResult orElse(),
   }) =>
@@ -622,7 +627,7 @@ class _$ImagePickingInitialImpl
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(XFile? file) complete,
+    required TResult Function(XFile file) complete,
     required TResult Function(String message) exception,
   }) {
     return initial();
@@ -633,7 +638,7 @@ class _$ImagePickingInitialImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(XFile? file)? complete,
+    TResult? Function(XFile file)? complete,
     TResult? Function(String message)? exception,
   }) {
     return initial?.call();
@@ -644,7 +649,7 @@ class _$ImagePickingInitialImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(XFile? file)? complete,
+    TResult Function(XFile file)? complete,
     TResult Function(String message)? exception,
     required TResult orElse(),
   }) {
@@ -745,7 +750,7 @@ class _$ImagePickingLoadingImpl
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(XFile? file) complete,
+    required TResult Function(XFile file) complete,
     required TResult Function(String message) exception,
   }) {
     return loading();
@@ -756,7 +761,7 @@ class _$ImagePickingLoadingImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(XFile? file)? complete,
+    TResult? Function(XFile file)? complete,
     TResult? Function(String message)? exception,
   }) {
     return loading?.call();
@@ -767,7 +772,7 @@ class _$ImagePickingLoadingImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(XFile? file)? complete,
+    TResult Function(XFile file)? complete,
     TResult Function(String message)? exception,
     required TResult orElse(),
   }) {
@@ -825,7 +830,7 @@ abstract class _$$ImagePickingDoneImplCopyWith<$Res> {
           $Res Function(_$ImagePickingDoneImpl) then) =
       __$$ImagePickingDoneImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({XFile? file});
+  $Res call({XFile file});
 }
 
 /// @nodoc
@@ -839,13 +844,13 @@ class __$$ImagePickingDoneImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? file = freezed,
+    Object? file = null,
   }) {
     return _then(_$ImagePickingDoneImpl(
-      freezed == file
+      null == file
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
-              as XFile?,
+              as XFile,
     ));
   }
 }
@@ -858,7 +863,7 @@ class _$ImagePickingDoneImpl
   const _$ImagePickingDoneImpl(this.file);
 
   @override
-  final XFile? file;
+  final XFile file;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -896,7 +901,7 @@ class _$ImagePickingDoneImpl
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(XFile? file) complete,
+    required TResult Function(XFile file) complete,
     required TResult Function(String message) exception,
   }) {
     return complete(file);
@@ -907,7 +912,7 @@ class _$ImagePickingDoneImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(XFile? file)? complete,
+    TResult? Function(XFile file)? complete,
     TResult? Function(String message)? exception,
   }) {
     return complete?.call(file);
@@ -918,7 +923,7 @@ class _$ImagePickingDoneImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(XFile? file)? complete,
+    TResult Function(XFile file)? complete,
     TResult Function(String message)? exception,
     required TResult orElse(),
   }) {
@@ -967,9 +972,9 @@ class _$ImagePickingDoneImpl
 }
 
 abstract class ImagePickingDone implements ImagePickingState {
-  const factory ImagePickingDone(final XFile? file) = _$ImagePickingDoneImpl;
+  const factory ImagePickingDone(final XFile file) = _$ImagePickingDoneImpl;
 
-  XFile? get file;
+  XFile get file;
   @JsonKey(ignore: true)
   _$$ImagePickingDoneImplCopyWith<_$ImagePickingDoneImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1052,7 +1057,7 @@ class _$ImagePickingErrorImpl
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(XFile? file) complete,
+    required TResult Function(XFile file) complete,
     required TResult Function(String message) exception,
   }) {
     return exception(message);
@@ -1063,7 +1068,7 @@ class _$ImagePickingErrorImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(XFile? file)? complete,
+    TResult? Function(XFile file)? complete,
     TResult? Function(String message)? exception,
   }) {
     return exception?.call(message);
@@ -1074,7 +1079,7 @@ class _$ImagePickingErrorImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(XFile? file)? complete,
+    TResult Function(XFile file)? complete,
     TResult Function(String message)? exception,
     required TResult orElse(),
   }) {

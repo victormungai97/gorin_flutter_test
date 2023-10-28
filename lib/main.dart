@@ -9,6 +9,7 @@ import 'package:gorin_test_project/cubits/cubits.dart';
 import 'package:gorin_test_project/firebase_options/firebase_options.dart';
 import 'package:gorin_test_project/models/models.dart';
 import 'package:gorin_test_project/navigation/navigation.dart';
+import 'package:gorin_test_project/repositories/repositories.dart';
 import 'package:gorin_test_project/services/services.dart';
 import 'package:gorin_test_project/utils/utils.dart';
 import 'package:gorin_test_project/views/error/error.dart';
@@ -73,9 +74,19 @@ class App extends StatelessWidget {
                 ],
                 child: MultiBlocProvider(
                   providers: [
-                    BlocProvider(create: (_) => FirestoreBloc(environment)),
-                    BlocProvider(create: (_) => AuthBloc()),
-                    BlocProvider(create: (_) => ImageBloc(environment)),
+                    BlocProvider(
+                      create: (_) => FirestoreBloc(
+                        FirestoreDatabaseRepository(environment),
+                      ),
+                    ),
+                    BlocProvider(
+                      create: (_) => AuthBloc(FirebaseUserRepository()),
+                    ),
+                    BlocProvider(
+                      create: (_) => ImageBloc(
+                        DisplayPictureRepository(environment),
+                      ),
+                    ),
                     BlocProvider(create: (_) => AuthenticatedUserCubit()),
                   ],
                   child: const _App(),
