@@ -45,3 +45,22 @@ app.*.map.json
 
 #Environment files
 *.env
+
+#Credential files
+*credentials*
+
+# Hide reports generated from fastlane runs
+**/fastlane/report*
+
+# App signing related
+**.jks
+**/android/debug_key.properties
+**/android/release_key.properties
+
+# Passwords
+*.pwd
+
+# Hide files generated from fastlane runs
+**/fastlane/report*
+**/android/**/*.apk
+**/android/**/*.json
