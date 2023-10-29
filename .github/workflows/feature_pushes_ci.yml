@@ -31,9 +31,9 @@ env:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # id of job, a string that is unique to the "jobs" node above.
-  build_web:
+  build_and_release_feature:
     # Title that will appear for job when specific workflow runs
-    name: Build a web app
+    name: Build and Release feature
     # Type of virtual machine (runner) on which to execute the job
     runs-on: ubuntu-latest
     # Sequence of tasks/actions/shell commands with which to which to execute / install the needed pre-requisites for the job

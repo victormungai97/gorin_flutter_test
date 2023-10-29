@@ -31,9 +31,9 @@ env:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # id of job, a string that is unique to the "jobs" node above.
-  build_apk:
+  build_and_deploy_release:
     # Title that will appear for job when specific workflow runs
-    name: Build an Android APK
+    name: Build and Deploy release
     # Type of virtual machine (runner) on which to execute the job
     runs-on: ubuntu-latest
     # Sequence of tasks/actions/shell commands with which to which to execute / install the needed pre-requisites for the job
