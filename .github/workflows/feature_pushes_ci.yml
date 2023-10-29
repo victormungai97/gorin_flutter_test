@@ -1,6 +1,6 @@
-# This file defines a CI/CD workflow to run in Github Actions on pushes to feature (non-production branches)
+# This file defines a CI/CD workflow to run in Github Actions on pushes to feature (non-production) branches
 
-# This workflow shall build the flutter app and release to test tracks e.g. on web
+# This workflow shall build the flutter app and release to test tracks e.g. on web and firebase app distribution
 
 
 # Name of workflow.
@@ -20,6 +20,12 @@ on:
 env:
   ENVIRONMENT: development
   FIREBASE_WEB_APPID: gorin-flutter-test
+  KEY_PROPERTIES_FILE_CONTENTS: ${{ secrets.DEBUG_KEY_PROPERTIES_FILE_CONTENTS }}
+  PROPERTIES_PATH: "./android/debug_key.properties"
+  KEYSTORE_CONTENTS: ${{ secrets.DEBUG_KEYSTORE_CONTENTS }}
+  KEYSTORE_PATH: "./android/app/debug-upload-keystore.jks"
+  FIREBASE_APP_DISTRIBUTION_SERVICE_CREDENTIALS_FILE_PATH: android/firebase_app_distribution_credentials.json
+  FIREBASE_ANDROID_APPID: ${{ vars.DEVELOPMENT_FIREBASE_ANDROID_APPID }}
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -75,6 +81,36 @@ jobs:
           projectId: ${{ env.FIREBASE_WEB_APPID }}
           channelId: 'pr-${{ github.event.head_commit.author.username }}-${{ steps.extract_branch.outputs.branch }}'
 
+      - name: Clean up and Get dependencies
+        run: |
+          flutter clean
+          rm -rf android/.gradle
+          flutter pub get
+
+      - name: Creating the `key.properties` file
+        run: |
+          echo "${{ env.KEY_PROPERTIES_FILE_CONTENTS }}" | base64 --decode > ${{env.PROPERTIES_PATH}}
+
+      - name: Decoding base64 key into a file
+        run: echo "${{ env.KEYSTORE_CONTENTS }}" | base64 --decode > ${{env.KEYSTORE_PATH}}
+
+      - name: Build apk for distribution
+        run: flutter build apk --flavor $ENVIRONMENT --debug
+
+      - name: Generate service account file for Firebase App Distribution authentication
+        run: |
+          echo "${{ secrets.FIREBASE_APP_DISTRIBUTION_CREDENTIAL_FILE_CONTENT }}" | base64 --decode > ${FIREBASE_APP_DISTRIBUTION_SERVICE_CREDENTIALS_FILE_PATH}.gpg  
+          gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.GPG_PASSPHRASE }}" --output ${FIREBASE_APP_DISTRIBUTION_SERVICE_CREDENTIALS_FILE_PATH} ${FIREBASE_APP_DISTRIBUTION_SERVICE_CREDENTIALS_FILE_PATH}.gpg
+
+      - name: Upload APK to Firebase App Distribution (Preview)
+        id: firebase_app_distribution_preview
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.5.0
+        with:
+          appId: ${{env.FIREBASE_ANDROID_APPID}}
+          serviceCredentialsFile: ${{env.FIREBASE_APP_DISTRIBUTION_SERVICE_CREDENTIALS_FILE_PATH}}
+          file: build/app/outputs/flutter-apk/app-${{env.ENVIRONMENT}}-debug.apk
+          debug: true
+
       - name: Create Pull Request
         uses: repo-sync/pull-request@v2.12.1
         with:
@@ -84,12 +120,14 @@ jobs:
           pr_body: |
             :crown: *An automated PR*
             
-            Author: ${{ github.event.head_commit.author.name }}
+            **Author**: ${{ github.event.head_commit.author.name }}
 
-            Message: ${{ github.event.head_commit.message }}
+            __Message__: ${{ github.event.head_commit.message }}
 
-            Preview URL: "${{ steps.firebase_hosting_preview.outputs.details_url }}"
-            
+            **Web Preview URL**: "${{ steps.firebase_hosting_preview.outputs.details_url }}"
+
+            **APK Preview URL**: "${{ steps.firebase_app_distribution_preview.outputs.TESTING_URI }}"
+
             _Created by [repo-sync/pull-request](https://github.com/repo-sync/pull-request)_
           source_branch: ""
           pr_label: "automated-pr"
