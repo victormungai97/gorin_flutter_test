@@ -1,1 +1,1 @@
-This is a trial run to confirm fastlane and Firebase App Distribution configured correctly locally
+This is the initial APK released via Firebase App Distribution
