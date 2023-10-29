@@ -45,7 +45,7 @@ platform :android do
       sh "flutter build apk -v --flavor #{ENV['ENVIRONMENT']}"
       firebase_app_distribution(
           app: ENV['FIREBASE_APP_ID'],
-          service_credentials_file: "../firebase_app_distribution_credentials.json",
+          service_credentials_file: "firebase_app_distribution_credentials.json",
           apk_path: "../build/app/outputs/flutter-apk/app-#{ENV['ENVIRONMENT']}-release.apk",
           release_notes_file: "FirebaseAppDistributionConfig/release_notes.txt",
           groups_file: "FirebaseAppDistributionConfig/groups.txt"

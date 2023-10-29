@@ -1,0 +1,112 @@
+# This file defines a CI/CD workflow to run in Github Actions on pushes to release (production) branches
+
+# This workflow shall build the flutter app and deploy to release tracks e.g. on web and firebase app distribution
+
+
+# Name of workflow.
+name: Flutter Build and Deploy to Release Tracks
+
+
+# Controls when the workflow will run depending on given event(s) e.g. pushing code using git push
+on:
+  push:
+    branches: [ master, main ]
+
+  # Allows one to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+
+# Set environment variables that are scoped at the workflow level
+env:
+  ENVIRONMENT: production
+  KEY_PROPERTIES_FILE_CONTENTS: ${{ secrets.RELEASE_KEY_PROPERTIES_FILE_CONTENTS }}
+  PROPERTIES_PATH: "./android/release_key.properties"
+  KEYSTORE_CONTENTS: ${{ secrets.RELEASE_KEYSTORE_CONTENTS }}
+  KEYSTORE_PATH: "./android/app/release-upload-keystore.jks"
+  FIREBASE_WEB_APPID: gorin-flutter-test
+  FIREBASE_ANDROID_APPID: ${{ vars.PRODUCTION_FIREBASE_ANDROID_APPID }}
+  FIREBASE_APP_DISTRIBUTION_SERVICE_CREDENTIALS_FILE_PATH: android/firebase_app_distribution_credentials.json
+
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # id of job, a string that is unique to the "jobs" node above.
+  build_and_deploy_release:
+    # Title that will appear for job when specific workflow runs
+    name: Build and Deploy release
+    # Type of virtual machine (runner) on which to execute the job
+    runs-on: ubuntu-latest
+    # Sequence of tasks/actions/shell commands with which to which to execute / install the needed pre-requisites for the job
+    steps:
+      # The branch or tag ref that triggered the workflow will be checked out.
+      # See: https://github.com/actions/checkout
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      # Install Java from previously created Github Action
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '12.x'
+      - run: java -version
+
+      # Install Flutter from previously created Github Action
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+      - run: flutter --version
+
+      - name: Get all Flutter Packages # Label for one's step to display on GitHub.
+        run: flutter pub get # This will execute the command provided to it
+
+      - name: Build application for deployment on website
+        run: flutter build web --web-renderer canvaskit --dart-define="flavor=${ENVIRONMENT}"
+
+      # Release via Firebase Hosting
+      - name: Deploy to Firebase Hosting (Live)
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_GORIN_FLUTTER_TEST }}'
+          projectId: ${{ env.FIREBASE_WEB_APPID }}
+          channelId: 'live'
+
+      - name: Clean up and Get dependencies
+        run: flutter clean && flutter pub get
+
+      - name: 'Create env file'
+        uses: SpicyPizza/create-envfile@v1.3.0
+        with:
+          envkey_FIREBASE_APP_ID: ${{ env.FIREBASE_ANDROID_APPID }}
+          envkey_ENVIRONMENT: ${{env.ENVIRONMENT}}
+          file_name: .env
+          fail_on_empty: false
+      - run: touch android/fastlane/.env
+
+      # Install Ruby from previously created Github Action
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '3.1.x'
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+      - run: ruby -v
+
+      # Set up Ruby for the workflow
+      - name: Install Ruby bundle
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
+      - name: Creating the `key.properties` file
+        run: echo "${{ env.KEY_PROPERTIES_FILE_CONTENTS }}" | base64 --decode > ${{env.PROPERTIES_PATH}}
+
+      - name: Decoding base64 key into a file
+        run: echo "${{ env.KEYSTORE_CONTENTS }}" | base64 --decode > ${{env.KEYSTORE_PATH}}
+
+      - name: Generate service account file for Firebase App Distribution authentication
+        run: |
+          echo "${{ secrets.FIREBASE_APP_DISTRIBUTION_CREDENTIAL_FILE_CONTENT }}" | base64 --decode > ${FIREBASE_APP_DISTRIBUTION_SERVICE_CREDENTIALS_FILE_PATH}.gpg  
+          gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.GPG_PASSPHRASE }}" --output ${FIREBASE_APP_DISTRIBUTION_SERVICE_CREDENTIALS_FILE_PATH} ${FIREBASE_APP_DISTRIBUTION_SERVICE_CREDENTIALS_FILE_PATH}.gpg
+
+      # Release via Firebase App Distribution
+      - name: Build and Distribute APK to Firebase App Distribution using Fastlane
+        run: bundle exec fastlane distribute_android_apk
