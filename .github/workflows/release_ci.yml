@@ -19,10 +19,11 @@ on:
 # Set environment variables that are scoped at the workflow level
 env:
   ENVIRONMENT: production
+  BUILD: release
   KEY_PROPERTIES_FILE_CONTENTS: ${{ secrets.RELEASE_KEY_PROPERTIES_FILE_CONTENTS }}
-  PROPERTIES_PATH: "./android/release_key.properties"
+  PROPERTIES_PATH: "android/release_key.properties"
   KEYSTORE_CONTENTS: ${{ secrets.RELEASE_KEYSTORE_CONTENTS }}
-  KEYSTORE_PATH: "./android/app/release-upload-keystore.jks"
+  KEYSTORE_PATH: "android/app/release-upload-keystore.jks"
   FIREBASE_WEB_APPID: gorin-flutter-test
   FIREBASE_ANDROID_APPID: ${{ vars.PRODUCTION_FIREBASE_ANDROID_APPID }}
   FIREBASE_APP_DISTRIBUTION_SERVICE_CREDENTIALS_FILE_PATH: android/firebase_app_distribution_credentials.json
@@ -74,14 +75,14 @@ jobs:
       - name: Clean up and Get dependencies
         run: flutter clean && flutter pub get
 
-      - name: 'Create env file'
-        uses: SpicyPizza/create-envfile@v1.3.0
-        with:
-          envkey_FIREBASE_APP_ID: ${{ env.FIREBASE_ANDROID_APPID }}
-          envkey_ENVIRONMENT: ${{env.ENVIRONMENT}}
-          file_name: .env
-          fail_on_empty: false
-      - run: touch android/fastlane/.env
+      - name: Get working directory
+        shell: bash
+        run: echo "cwd=$(echo ${PWD})" >>$GITHUB_OUTPUT
+        id: get_working_directory
+
+      # Navigate into Android
+      - name: Enter Android directory for fastlane operations
+        run: cd ${{ steps.get_working_directory.outputs.cwd }}/android
 
       # Install Ruby from previously created Github Action
       - uses: actions/setup-ruby@v1
@@ -96,17 +97,31 @@ jobs:
           bundle config path vendor/bundle
           bundle install --jobs 4 --retry 3
 
+      - name: 'Create env file'
+        uses: SpicyPizza/create-envfile@v1.3.0
+        with:
+          envkey_FIREBASE_APP_ID: ${{ env.FIREBASE_ANDROID_APPID }}
+          envkey_ENVIRONMENT: ${{env.ENVIRONMENT}}
+          envkey_BUILD: ${{env.BUILD}}
+          file_name: .env
+          fail_on_empty: false
+      - run: touch ${{ steps.get_working_directory.outputs.cwd }}/android/fastlane/.env
+
       - name: Creating the `key.properties` file
-        run: echo "${{ env.KEY_PROPERTIES_FILE_CONTENTS }}" | base64 --decode > ${{env.PROPERTIES_PATH}}
+        run: echo "${{ env.KEY_PROPERTIES_FILE_CONTENTS }}" | base64 --decode > ${{ steps.get_working_directory.outputs.cwd }}/${{env.PROPERTIES_PATH}}
 
       - name: Decoding base64 key into a file
-        run: echo "${{ env.KEYSTORE_CONTENTS }}" | base64 --decode > ${{env.KEYSTORE_PATH}}
+        run: echo "${{ env.KEYSTORE_CONTENTS }}" | base64 --decode > ${{ steps.get_working_directory.outputs.cwd }}/${{env.KEYSTORE_PATH}}
 
       - name: Generate service account file for Firebase App Distribution authentication
         run: |
-          echo "${{ secrets.FIREBASE_APP_DISTRIBUTION_CREDENTIAL_FILE_CONTENT }}" | base64 --decode > ${FIREBASE_APP_DISTRIBUTION_SERVICE_CREDENTIALS_FILE_PATH}.gpg  
-          gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.GPG_PASSPHRASE }}" --output ${FIREBASE_APP_DISTRIBUTION_SERVICE_CREDENTIALS_FILE_PATH} ${FIREBASE_APP_DISTRIBUTION_SERVICE_CREDENTIALS_FILE_PATH}.gpg
+          echo "${{ secrets.FIREBASE_APP_DISTRIBUTION_CREDENTIAL_FILE_CONTENT }}" | base64 --decode > ${{ steps.get_working_directory.outputs.cwd }}/${FIREBASE_APP_DISTRIBUTION_SERVICE_CREDENTIALS_FILE_PATH}.gpg
+          gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.GPG_PASSPHRASE }}" --output ${{ steps.get_working_directory.outputs.cwd }}/${FIREBASE_APP_DISTRIBUTION_SERVICE_CREDENTIALS_FILE_PATH} ${{ steps.get_working_directory.outputs.cwd }}/${FIREBASE_APP_DISTRIBUTION_SERVICE_CREDENTIALS_FILE_PATH}.gpg
 
       # Release via Firebase App Distribution
       - name: Build and Distribute APK to Firebase App Distribution using Fastlane
         run: bundle exec fastlane distribute_android_apk
+
+      # Navigate into Android
+      - name: Return to root directory
+        run: cd ${{ steps.get_working_directory.outputs.cwd }}
