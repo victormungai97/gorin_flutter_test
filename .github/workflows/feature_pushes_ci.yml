@@ -19,6 +19,7 @@ on:
 # Set environment variables that are scoped at the workflow level
 env:
   ENVIRONMENT: development
+  FIREBASE_WEB_APPID: gorin-flutter-test
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -58,11 +59,20 @@ jobs:
       - name: Build application for deployment on website
         run: flutter build web --web-renderer canvaskit --dart-define="flavor=${ENVIRONMENT}"
 
+      - name: Extract branch name
+        shell: bash
+        run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >>$GITHUB_OUTPUT
+        id: extract_branch
+
         # Release via Firebase Hosting
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Deploy to Firebase Hosting (Preview)
+        id: firebase_hosting_preview
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_GORIN_FLUTTER_TEST }}'
-          projectId: gorin-flutter-test
+          expires: 30d  # length of time preview channel should remain active after the last deploy
+          projectId: ${{ env.FIREBASE_WEB_APPID }}
+          channelId: 'pr-${{ github.event.number }}-${{ steps.extract_branch.outputs.branch }}'
 
 
