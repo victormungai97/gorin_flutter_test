@@ -73,6 +73,27 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_GORIN_FLUTTER_TEST }}'
           expires: 30d  # length of time preview channel should remain active after the last deploy
           projectId: ${{ env.FIREBASE_WEB_APPID }}
-          channelId: 'pr-${{ github.event.number }}-${{ steps.extract_branch.outputs.branch }}'
+          channelId: 'pr-${{ github.event.head_commit.author.username }}-${{ steps.extract_branch.outputs.branch }}'
 
+      - name: Create Pull Request
+        uses: repo-sync/pull-request@v2.12.1
+        with:
+          destination_branch: "master"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_title: "Pulling '${{ github.ref }}' into 'master'"
+          pr_body: |
+            :crown: *An automated PR*
+            
+            Author: ${{ github.event.head_commit.author.name }}
+
+            Message: ${{ github.event.head_commit.message }}
+
+            Preview URL: "${{ steps.firebase_hosting_preview.outputs.details_url }}"
+            
+            _Created by [repo-sync/pull-request](https://github.com/repo-sync/pull-request)_
+          source_branch: ""
+          pr_label: "automated-pr"
+          pr_allow_empty: true                              # Creates pull request even if there are no changes
+          pr_assignee: "${{ github.actor }}"
+          pr_reviewer: "${{ github.repository_owner }}"
 
