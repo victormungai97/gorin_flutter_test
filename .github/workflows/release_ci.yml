@@ -91,6 +91,13 @@ jobs:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
       - run: ruby -v
 
+      # Set up Ruby for the workflow
+      - name: Install Ruby bundle
+        run: |
+          cd ${{ steps.get_working_directory.outputs.cwd }}/android
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
       - name: 'Create env file'
         uses: SpicyPizza/create-envfile@v1.3.0
         with:
@@ -114,7 +121,7 @@ jobs:
 
       # Release via Firebase App Distribution
       - name: Build and Distribute APK to Firebase App Distribution using Fastlane
-        run: bundle exec fastlane distribute_android_apk
+        run: cd ${{ steps.get_working_directory.outputs.cwd }}/android && bundle exec fastlane distribute_android_apk
 
       # Navigate into Android
       - name: Return to root directory
