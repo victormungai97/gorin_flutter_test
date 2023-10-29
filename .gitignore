@@ -61,6 +61,5 @@ app.*.map.json
 *.pwd
 
 # Hide files generated from fastlane runs
-**/fastlane/report*
 **/android/**/*.apk
 **/android/**/*.json

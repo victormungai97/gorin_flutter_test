@@ -19,6 +19,7 @@ on:
 # Set environment variables that are scoped at the workflow level
 env:
   ENVIRONMENT: production
+  BUILD: release
   KEY_PROPERTIES_FILE_CONTENTS: ${{ secrets.RELEASE_KEY_PROPERTIES_FILE_CONTENTS }}
   PROPERTIES_PATH: "android/release_key.properties"
   KEYSTORE_CONTENTS: ${{ secrets.RELEASE_KEYSTORE_CONTENTS }}
@@ -101,6 +102,7 @@ jobs:
         with:
           envkey_FIREBASE_APP_ID: ${{ env.FIREBASE_ANDROID_APPID }}
           envkey_ENVIRONMENT: ${{env.ENVIRONMENT}}
+          envkey_BUILD: ${{env.BUILD}}
           file_name: .env
           fail_on_empty: false
       - run: touch ${{ steps.get_working_directory.outputs.cwd }}/android/fastlane/.env

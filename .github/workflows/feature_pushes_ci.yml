@@ -19,11 +19,12 @@ on:
 # Set environment variables that are scoped at the workflow level
 env:
   ENVIRONMENT: development
+  BUILD: debug
   FIREBASE_WEB_APPID: gorin-flutter-test
   KEY_PROPERTIES_FILE_CONTENTS: ${{ secrets.DEBUG_KEY_PROPERTIES_FILE_CONTENTS }}
-  PROPERTIES_PATH: "./android/debug_key.properties"
+  PROPERTIES_PATH: "android/debug_key.properties"
   KEYSTORE_CONTENTS: ${{ secrets.DEBUG_KEYSTORE_CONTENTS }}
-  KEYSTORE_PATH: "./android/app/debug-upload-keystore.jks"
+  KEYSTORE_PATH: "android/app/debug-upload-keystore.jks"
   FIREBASE_APP_DISTRIBUTION_SERVICE_CREDENTIALS_FILE_PATH: android/firebase_app_distribution_credentials.json
   FIREBASE_ANDROID_APPID: ${{ vars.DEVELOPMENT_FIREBASE_ANDROID_APPID }}
 
@@ -95,7 +96,7 @@ jobs:
         run: echo "${{ env.KEYSTORE_CONTENTS }}" | base64 --decode > ${{env.KEYSTORE_PATH}}
 
       - name: Build apk for distribution
-        run: flutter build apk --flavor $ENVIRONMENT --debug
+        run: flutter build apk --flavor $ENVIRONMENT --$BUILD
 
       - name: Generate service account file for Firebase App Distribution authentication
         run: |
@@ -108,7 +109,7 @@ jobs:
         with:
           appId: ${{env.FIREBASE_ANDROID_APPID}}
           serviceCredentialsFile: ${{env.FIREBASE_APP_DISTRIBUTION_SERVICE_CREDENTIALS_FILE_PATH}}
-          file: build/app/outputs/flutter-apk/app-${{env.ENVIRONMENT}}-debug.apk
+          file: build/app/outputs/flutter-apk/app-${{env.ENVIRONMENT}}-${{env.BUILD}}.apk
           debug: true
 
       - name: Create Pull Request

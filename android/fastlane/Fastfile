@@ -42,11 +42,11 @@ platform :android do
   desc "Lane for distributing app using Firebase App Distributions"
   lane :distribute_android_apk do
       gradle(task: "clean assembleRelease")
-      sh "flutter build apk -v --flavor #{ENV['ENVIRONMENT']}"
+      sh "flutter build apk -v --flavor #{ENV['ENVIRONMENT']} --#{ENV['BUILD']}"
       firebase_app_distribution(
           app: ENV['FIREBASE_APP_ID'],
           service_credentials_file: "firebase_app_distribution_credentials.json",
-          apk_path: "../build/app/outputs/flutter-apk/app-#{ENV['ENVIRONMENT']}-release.apk",
+          apk_path: "../build/app/outputs/flutter-apk/app-#{ENV['ENVIRONMENT']}-#{ENV['BUILD']}.apk",
           release_notes_file: "FirebaseAppDistributionConfig/release_notes.txt",
           groups_file: "FirebaseAppDistributionConfig/groups.txt"
       )
