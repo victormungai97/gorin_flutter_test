@@ -1,10 +1,10 @@
-# This file defines a CI/CD workflow to run in Github Actions with focus on Flutter Web
+# This file defines a CI/CD workflow to run in Github Actions on pushes to feature (non-production branches)
 
-# This workflow shall build the flutter app for the web
+# This workflow shall build the flutter app and release to test tracks e.g. on web
 
 
 # Name of workflow.
-name: Flutter Build and Deploy to Web
+name: Flutter Build and Release to Test Tracks
 
 
 # Controls when the workflow will run depending on given event(s) e.g. pushing code using git push
@@ -58,11 +58,11 @@ jobs:
       - name: Build application for deployment on website
         run: flutter build web --web-renderer canvaskit --dart-define="flavor=${ENVIRONMENT}"
 
-        # Release via Github
-      - name: Deploy to Github Pages (gh-pages)
-        uses: peaceiris/actions-gh-pages@v3
+        # Release via Firebase Hosting
+      - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build/web
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_GORIN_FLUTTER_TEST }}'
+          projectId: gorin-flutter-test
 
 
