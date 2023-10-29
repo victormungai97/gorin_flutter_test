@@ -73,7 +73,7 @@ jobs:
           channelId: 'live'
 
       - name: Clean up and Get dependencies
-        run: flutter clean && flutter pub get
+        run: flutter clean && rm -rf android/.gradle && flutter pub get
 
       - name: Get working directory
         shell: bash
@@ -121,8 +121,6 @@ jobs:
 
       # Release via Firebase App Distribution
       - name: Build and Distribute APK to Firebase App Distribution using Fastlane
-        run: cd ${{ steps.get_working_directory.outputs.cwd }}/android && bundle exec fastlane distribute_android_apk
-
-      # Navigate into Android
-      - name: Return to root directory
-        run: cd ${{ steps.get_working_directory.outputs.cwd }}
+        run: |
+          cd ${{ steps.get_working_directory.outputs.cwd }}/android
+          bundle exec fastlane distribute_android_apk

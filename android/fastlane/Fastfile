@@ -41,7 +41,6 @@ platform :android do
 
   desc "Lane for distributing app using Firebase App Distributions"
   lane :distribute_android_apk do
-      gradle(task: "clean assembleRelease")
       sh "flutter build apk -v --flavor #{ENV['ENVIRONMENT']} --#{ENV['BUILD']}"
       firebase_app_distribution(
           app: ENV['FIREBASE_APP_ID'],
