@@ -25,34 +25,36 @@ class DisplayPictureRepository implements FileRepository {
     try {
       if (!kIsWeb) {
         perm.Permission permission;
-        if (source == 'gallery') {
-          switch (defaultTargetPlatform) {
-            case TargetPlatform.iOS:
-              permission = perm.Permission.photos;
-              break;
-            case TargetPlatform.android:
-              final deviceInfo = DeviceInfoPlugin();
-              final androidInfo = await deviceInfo.androidInfo;
-              final sdk = androidInfo.version.sdkInt;
-              if (sdk >= 33) {
+        switch (source) {
+          case FileSource.GALLERY:
+            switch (defaultTargetPlatform) {
+              case TargetPlatform.iOS:
                 permission = perm.Permission.photos;
-              } else {
-                permission = perm.Permission.storage;
-              }
-              break;
-            default:
-              permission = perm.Permission.unknown;
-          }
-        } else if (source == 'camera') {
-          permission = perm.Permission.camera;
-        } else {
-          permission = perm.Permission.unknown;
+                break;
+              case TargetPlatform.android:
+                final deviceInfo = DeviceInfoPlugin();
+                final androidInfo = await deviceInfo.androidInfo;
+                final sdk = androidInfo.version.sdkInt;
+                if (sdk >= 33) {
+                  permission = perm.Permission.photos;
+                } else {
+                  permission = perm.Permission.storage;
+                }
+                break;
+              default:
+                permission = perm.Permission.unknown;
+            }
+          case FileSource.CAMERA:
+            permission = perm.Permission.camera;
+          default:
+            permission = perm.Permission.unknown;
         }
 
         final granted = await PermissionService.request(permission, context);
         if (!granted) {
+          final feature = source.name;
           return RepositoryResponse.error(
-            'Unable to access device $source. Tap to retry',
+            'Unable to access device ${feature.toLowerCase()}. Tap to retry',
           );
         }
       }
